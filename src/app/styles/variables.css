@@ -1,0 +1,17 @@
+:root {
+	--color-black: #000;
+	--color-white: #fff;
+	--color-breaking: #c00;
+	--color-advertisement: var(--color-black);
+	--grid-column-size: 32px;
+	--grid-gap: var(--grid-column-size);
+	--border-section: 1px solid var(--color-black);
+
+	--color-bg: var(--color-white);
+	--color-text: var(--color-black);
+
+	--font-serif: "Georgia", "Times New Roman", serif;
+	--font-sans: "Helvetica Neue", Arial, sans-serif;
+
+	--max-width-site: 1280px;
+}

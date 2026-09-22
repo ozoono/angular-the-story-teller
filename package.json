@@ -1,0 +1,40 @@
+{
+  "name": "newspaper",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "generate:fixtures": "node scripts/generate-news-fixtures.mjs",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/",
+    "lint:stylelint": "stylelint \"src/**/*.{css}\"",
+    "lint:all": "npm run lint && npm run lint:style"
+  },
+  "private": true,
+  "packageManager": "npm@11.13.0",
+  "dependencies": {
+    "@angular/common": "^22.1.0",
+    "@angular/compiler": "^22.1.0",
+    "@angular/core": "^22.1.0",
+    "@angular/forms": "^22.1.0",
+    "@angular/platform-browser": "^22.1.0",
+    "@angular/router": "^22.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.1.8",
+    "@angular/cli": "^22.1.8",
+    "@angular/compiler-cli": "^22.1.0",
+    "@biomejs/biome": "2.5.14",
+    "jsdom": "^28.0.0",
+    "stylelint": "^17.15.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}

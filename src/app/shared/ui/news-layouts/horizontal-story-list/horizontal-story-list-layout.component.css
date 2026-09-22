@@ -1,0 +1,19 @@
+:host {
+	display: block;
+}
+
+.horizontal-story-list-layout {
+	display: grid;
+	gap: var(--grid-gap);
+}
+
+.horizontal-story-list-layout__item {
+	border-bottom: var(--border-section);
+	padding-bottom: var(--grid-gap);
+}
+
+@media (width >= 768px) {
+	.horizontal-story-list-layout__item {
+		container-type: inline-size;
+	}
+}

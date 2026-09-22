@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+    "uuid": "1cd972e3-4149-45b4-9ec2-29c3e5c8d767",
+    "title": "Tokyo Game Show cancels its last day due to typhoon",
+    "thumbnail": "https://gamesbeat.com/wp-content/uploads/2026/09/tgs-7-1.jpg",
+    "publisher": "GamesBeat",
+    "authors": [
+      "Dean Takahashi"
+    ],
+    "topics": [
+      "gaming"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "languages": [
+      "en"
+    ],
+    "published_at": "2026-09-19T23:26:28.000Z",
+    "original_url": "https://gamesbeat.com/tokyo-game-show-cancels-its-last-day-due-to-typhoon/",
+    "incipit": "Become a member of GB MAX to gain exclusive access to the industry and to the most influential global B2B leadership community in the business of gaming, entertainment, and tech. Join now and also get a VIP...",
+    "body": "Become a member of GB MAX to gain exclusive access to the industry and to the most influential global B2B leadership community in the business of gaming, entertainment, and tech. Join now and also get a VIP ticket to GamesBeat Next (Nov 2-3, SF). The organizers of the Tokyo Game Show announced that they are canceling the last day of the multi-day expo because of a typhoon. Heavy winds and rain are expected to intensify (GamesBeat’s Alex Lee will be holed up in his room) and so the show organizers decided to drop the fifth day of the show. “Given concerns about potential disruptions to public transportation, we have decided to cancel the event for the entire day, prioritizing the safety of all attendees, exhibitors, and staff, as well as ensuring everyone can return home safely,” the organizers said. The Tokyo Game Show in 2025 drew 263,101 people. Source: GamesBeat/Dean Takahashi Ticket refunds will be available for attendees for both Sunday and Monday (which is Saturday and Sunday, U.S. time). Clearly, the show will have fewer people this year than last year. On day three, TGS drew 78,000 attendees; on day two, 52,000 attended, and 53,000 attended on day one. All told, that adds up to about 183,000. It’s not clear how many attended on day four, while day five is canceled. Last year, more than 263,000 people attended ."
+  },
+    {
+    "uuid": "a6a96562-1ea0-461e-be78-6dc72d2003ad",
+    "title": "DLSS 5 turns 2004's Need for Speed ​​Underground 2 into a modern 4K remaster",
+    "thumbnail": "https://gamegpu.com/images/1_2026/NEWS/Q3/Sent/Image_v88wwnv88wwnv88w_ggpu.webp#joomlaImage://local-images/1_2026/NEWS/Q3/Sent/Image_v88wwnv88wwnv88w_ggpu.webp?width=1920&height=1080",
+    "publisher": "GameGPU",
+    "authors": [
+      "Evgen Kovalov"
+    ],
+    "topics": [
+      "gaming"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "languages": [
+      "en"
+    ],
+    "published_at": "2026-09-19T23:19:00.000Z",
+    "original_url": "https://en.gamegpu.com/news/igry/dlss-5-prevratil-need-for-speed-underground-2-2004-goda-v-sovremennyj-remaster-v-4k",
+    "incipit": "The iconic racing simulator Need for Speed: Underground 2 has launched in 4K with ultra-high-quality textures and DLSS 5 algorithms, which eliminate compression artifacts in cutscenes and transform Rachel Teller's appearance.",
+    "body": "Evgen Kovalov GAMES 20 September 2026 Views: 38 A detailed graphical comparison of the iconic 2004 arcade racing simulator Need for Speed: Underground 2 has been published online, featuring the integration of NVIDIA DLSS 5, an experimental neural network rendering technology, and a comprehensive high-resolution texture pack. The project was launched in 4K resolution with ultra graphics settings, designed to demonstrate the capabilities of modern machine learning algorithms when updating classic racing games from the DirectX 9 era. In the original, unmodified version, the image suffers from pronounced aliasing, low-resolution textures, and compression artifacts in cutscenes, while the neural network reconstruction brings the visuals of the twenty-year-old project closer to the level of modern remasters. The most striking example of the neural network's performance was the frame-by-frame comparison of cutscenes featuring the game's key character, Rachel Teller, played by American actress Brooke Burke . With DLSS 5 disabled, the character's face appears flat and blurry due to the low-resolution video stream compression, fine details of facial expressions are lost, and strands of hair merge into a single, uniform mass . Activating the deep learning algorithm completely eliminates compression defects, recreating benchmark-quality skin microstructure with realistic pores, fine wrinkles, and physically accurate light scattering, and also separates hair into distinct, well-defined strands without aliasing or contour noise. During gameplay on the night streets of the fictional city of Bayview, the modification provided a profound transformation of the lighting and environmental materials. DLSS 5 algorithms eliminated subpixel flickering on road markings, metal fences, and wires, giving the wet asphalt a monolithic density and clear structure. The bodies of iconic Japanese sports cars received photorealistic reflections of neon signs and streetlights with benchmark-quality light gradients without blurring geometry at high speeds when drifting and using nitrous oxide. At the same time, the modified graphics pipeline preserved the original atmosphere of illegal street racing from the mid-2000s. Source DISCUSSION CENTER @GameGPU_com Join the discussion, share your benchmark results, and debate hardware performance in X. Discuss on X"
+  },
+    {
+      "uuid": "bd077b10-45af-43c3-a1a7-6369f272a32a",
+      "title": "4 Classic Gaming Franchises That Should Be Rebooted in a New Genre Like StarCraft",
+      "published_at": "2026-09-19T22:00:00.000Z",
+      "publisher": "ComicBook.com"
+    },
+    {
+      "uuid": "26edea8a-6789-4e0d-9d5c-9f179ec2c226",
+      "title": "2005's Need for Speed ​​Most Wanted gets a cinematic look with DLSS 5 in 4K",
+      "published_at": "2026-09-19T21:44:17.000Z",
+      "publisher": "GameGPU"
+    },
+    {
+      "uuid": "d7b5c1b5-65bd-45b4-99ae-46de47271b73",
+      "title": "Cult-Classic PS3, Xbox 360 Game Getting New Sequel After 14 Years",
+      "published_at": "2026-09-19T20:27:50.000Z",
+      "publisher": "ComicBook.com"
+    },
+    {
+      "uuid": "a3a8264a-4979-482f-8aed-86aba123b909",
+      "title": "Fire Emblem: Fortune's Weave Returns to the Series' Best-Ever Era",
+      "published_at": "2026-09-19T20:00:15.000Z",
+      "publisher": "Polygon.com"
+    },
+    {
+      "uuid": "4a9917fd-4b2a-4106-a57e-ffadbd886ed2",
+      "title": "Evidence of canceled Grand Theft Auto 5 Liberty City and 'Agent Trevor' DLC, plus early version of GTA6's map surface online",
+      "published_at": "2026-09-19T19:47:25.000Z",
+      "publisher": "Yahoo Tech"
+    },
+    {
+      "uuid": "03d3a74d-3629-4cc4-8890-1952660aa355",
+      "title": "Diablo IV and PoE 2 competitor to get fifth season - Last Epoch new content trailer",
+      "published_at": "2026-09-19T19:35:41.000Z",
+      "publisher": "IXBT.games"
+    },
+    {
+      "uuid": "d5c565ef-2734-4675-880d-8a89b23a8dfb",
+      "title": "Montgomery Parks and Rec. to host community gaming tournament",
+      "published_at": "2026-09-19T19:24:00.000Z",
+      "publisher": "WSFA"
+    },
+    {
+      "uuid": "d65b0f78-f575-4376-93db-1b8353cfb34a",
+      "title": "Typhoon Dujuan Forces Tokyo Game Show 2026 To Shut Down A Day Early",
+      "published_at": "2026-09-19T18:33:03.000Z",
+      "publisher": "Kotaku"
+    }
+  ]
+}

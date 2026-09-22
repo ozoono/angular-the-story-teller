@@ -1,0 +1,45 @@
+<article class="news-title-photo">
+  <a
+    class="news-title-photo__link"
+    href="/article/{{ article().id }}"
+    [routerLink]="['/article', article().id]"
+  >
+    @if (hasTop()) {
+      <div class="news-title-photo__top">
+        @if (article().headline; as headline) {
+          <app-news-headline [text]="headline" />
+        }
+
+        @if (article().category; as category) {
+          <app-news-category [text]="category" />
+        }
+      </div>
+    }
+
+    @if (article().photoUrl; as photoUrl) {
+      <img
+        class="news-title-photo__photo"
+        [src]="photoUrl"
+        alt="{{ article().photoAlt ?? article().title }}"
+      />
+    }
+
+    <h2 class="news-title-photo__title">{{ article().title }}</h2>
+
+    @if (hasBottom()) {
+      <div class="news-title-photo__bottom">
+        @if (article().date; as date) {
+          <app-news-date [date]="date" />
+        }
+
+        @if (article().author; as author) {
+          <app-news-author [text]="author" />
+        }
+
+        @if (article().source; as source) {
+          <app-news-source [text]="source" />
+        }
+      </div>
+    }
+  </a>
+</article>

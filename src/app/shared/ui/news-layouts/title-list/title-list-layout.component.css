@@ -1,0 +1,13 @@
+:host {
+	display: block;
+}
+
+.title-list-layout {
+	display: grid;
+	gap: calc(var(--grid-gap) * 0.5);
+}
+
+.title-list-layout__item {
+	border-bottom: var(--border-section);
+	padding-bottom: calc(var(--grid-gap) * 0.5);
+}

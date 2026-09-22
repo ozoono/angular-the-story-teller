@@ -1,0 +1,5 @@
+<div class="horizontal-story-list-layout">
+  @for (article of articles(); track article.id) {
+    <app-news-title-photo-summary class="horizontal-story-list-layout__item" [article]="article" />
+  }
+</div>

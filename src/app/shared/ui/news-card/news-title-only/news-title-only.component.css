@@ -1,0 +1,33 @@
+.news-title-only__link {
+	display: grid;
+	grid-template-areas:
+		"top"
+		"title"
+		"bottom";
+	gap: 0.5rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.news-title-only__top,
+.news-title-only__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.news-title-only__top {
+	grid-area: top;
+}
+
+.news-title-only__title {
+	grid-area: title;
+	margin: 0;
+	line-height: 1.1;
+	font-family: var(--font-serif);
+	font-size: 1rem;
+}
+
+.news-title-only__bottom {
+	grid-area: bottom;
+}

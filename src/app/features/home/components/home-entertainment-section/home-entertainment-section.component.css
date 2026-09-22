@@ -1,0 +1,21 @@
+:host {
+	display: block;
+}
+
+.home-entertainment-section {
+	display: grid;
+	gap: var(--grid-gap);
+	border-top: var(--border-section);
+	padding-block: var(--grid-gap);
+}
+
+.home-entertainment-section__title {
+	grid-column: 1 / -1;
+	margin: 0;
+}
+
+@media (width >= 768px) {
+	.home-entertainment-section {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}

@@ -1,0 +1,12 @@
+:host {
+	display: block;
+}
+
+.home-popular-section {
+	border-top: var(--border-section);
+	padding-block: var(--grid-gap);
+}
+
+.home-popular-section__title {
+	margin: 0 0 var(--grid-gap);
+}

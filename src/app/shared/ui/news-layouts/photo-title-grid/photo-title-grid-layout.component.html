@@ -1,0 +1,5 @@
+<div class="photo-title-grid-layout">
+  @for (article of articles(); track article.id) {
+    <app-news-title-photo [article]="article" />
+  }
+</div>

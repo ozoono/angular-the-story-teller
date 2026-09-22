@@ -1,0 +1,41 @@
+<article class="news-title-summary">
+  <a
+    class="news-title-summary__link"
+    href="/article/{{ article().id }}"
+    [routerLink]="['/article', article().id]"
+  >
+    @if (hasTop()) {
+      <div class="news-title-summary__top">
+        @if (article().headline; as headline) {
+          <app-news-headline [text]="headline" />
+        }
+
+        @if (article().category; as category) {
+          <app-news-category [text]="category" />
+        }
+      </div>
+    }
+
+    <h2 class="news-title-summary__title">{{ article().title }}</h2>
+
+    @if (article().summary; as summary) {
+      <p class="news-title-summary__summary">{{ summary }}</p>
+    }
+
+    @if (hasBottom()) {
+      <div class="news-title-summary__bottom">
+        @if (article().date; as date) {
+          <app-news-date [date]="date" />
+        }
+
+        @if (article().author; as author) {
+          <app-news-author [text]="author" />
+        }
+
+        @if (article().source; as source) {
+          <app-news-source [text]="source" />
+        }
+      </div>
+    }
+  </a>
+</article>

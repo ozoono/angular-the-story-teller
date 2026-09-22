@@ -1,0 +1,20 @@
+<section class="home-entertainment-section" aria-label="Entertainment">
+  <h2 class="home-entertainment-section__title">Entertainment</h2>
+
+  <app-photo-title-list-layout
+    [article]="featuredMoviesArticle()"
+    [listArticles]="listMoviesArticles()" 
+  />
+  <app-photo-title-list-layout
+    [article]="featuredTvArticle()"
+    [listArticles]="listTvArticles()" 
+  />
+  <app-photo-title-list-layout
+    [article]="featuredMusicArticle()"
+    [listArticles]="listMusicArticles()" 
+  />
+    <app-photo-title-list-layout
+    [article]="featuredGamingArticle()"
+    [listArticles]="listGamingArticles()" 
+  />
+</section>
