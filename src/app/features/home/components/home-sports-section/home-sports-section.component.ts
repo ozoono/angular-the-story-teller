@@ -1,22 +1,33 @@
 import { Component, computed, inject } from '@angular/core'
+import type { NewsArticle } from '@/core/models/news-article.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
-import { PhotoTitleListLayoutComponent } from '@/shared/ui/news-layouts/photo-title-list/photo-title-list-layout.component.ts'
+import { HorizontalStoryListLayoutComponent } from '@/shared/ui/news-layouts/horizontal-story-list/horizontal-story-list-layout.component.ts'
 
 @Component({
 	selector: 'app-home-sports-section',
-	imports: [PhotoTitleListLayoutComponent],
+	imports: [HorizontalStoryListLayoutComponent],
 	templateUrl: './home-sports-section.component.html',
 	styleUrl: './home-sports-section.component.css',
 })
 export class HomeSportsSectionComponent {
-	private readonly articles = inject(NewsStore).articlesFor('BUSINESS')
+	private readonly newsStore = inject(NewsStore)
+	private readonly articles = this.newsStore.articlesFor('SPORTS')
 
-	protected readonly leftColumnArticle = computed(() => this.articles()[12])
-	protected readonly leftColumnTitleArticles = computed(() =>
-		this.articles().slice(13, 16),
+	protected readonly listArticles = computed(() =>
+		this.articles()
+			.slice(0, 2)
+			.map((article) => this.toListArticle(article)),
 	)
-	protected readonly rightColumnArticle = computed(() => this.articles()[16])
-	protected readonly rightColumnTitleArticles = computed(() =>
-		this.articles().slice(17, 20),
-	)
+
+	private toListArticle(article: NewsArticle): NewsArticle {
+		return {
+			id: article.id,
+			title: article.title,
+			summary: article.summary,
+			photoUrl: article.photoUrl,
+			photoAlt: article.photoAlt,
+			author: article.author,
+			source: article.source,
+		}
+	}
 }

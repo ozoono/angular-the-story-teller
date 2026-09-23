@@ -10,7 +10,7 @@
 		"title"
 		"summary"
 		"bottom";
-	gap: 0.5rem;
+	gap: 1rem;
 	text-decoration: none;
 	color: inherit;
 }
@@ -19,7 +19,6 @@
 .news-title-photo-summary__bottom {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem;
 }
 
 .news-title-photo-summary__photo {
@@ -57,5 +56,24 @@
 			"title photo"
 			"summary photo"
 			"bottom photo";
+	}
+}
+
+@container (min-width: 900px) {
+	.news-title-photo-summary__link {
+		grid-template: 
+		"top top top" auto 
+		"bottom title photo" auto 
+		"bottom summary photo" 1fr 
+		/ 170px minmax(0, 1fr) 300px;
+	}
+
+	.news-title-photo-summary__photo {
+		width: 100%;
+		height: auto;
+	}
+
+	.news-title-photo-summary__bottom {
+		flex-direction: column;
 	}
 }

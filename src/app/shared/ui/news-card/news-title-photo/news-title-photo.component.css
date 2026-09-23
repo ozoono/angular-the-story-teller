@@ -17,8 +17,7 @@
 .news-title-photo__top,
 .news-title-photo__bottom {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
+	flex-flow: column wrap;
 }
 
 .news-title-photo__top {

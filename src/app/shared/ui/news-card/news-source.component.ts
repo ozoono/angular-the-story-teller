@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core'
 
 @Component({
 	selector: 'app-news-source',
-	template: '<p class="news-source">{{ text() }}</p>',
+	template: '<p class="news-source"><i>({{ text() }})</i></p>',
 	styles: `
 		:host {
 			display: block;

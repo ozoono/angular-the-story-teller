@@ -4,7 +4,7 @@
 
 .home-popular-section {
 	border-top: var(--border-section);
-	padding-block: var(--grid-gap);
+	padding-top: var(--grid-gap);
 }
 
 .home-popular-section__title {

@@ -72,6 +72,8 @@ export class HomeEntertainmentSectionComponent {
 			photoUrl: article.photoUrl,
 			photoAlt: article.photoAlt,
 			category: article.category,
+			author: article.author,
+			source: article.source,
 		}
 	}
 

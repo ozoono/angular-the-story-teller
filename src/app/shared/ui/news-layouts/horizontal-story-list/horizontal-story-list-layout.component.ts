@@ -9,5 +9,5 @@ import { NewsTitlePhotoSummaryComponent } from '@/shared/ui/news-card/news-title
 	styleUrl: './horizontal-story-list-layout.component.css',
 })
 export class HorizontalStoryListLayoutComponent {
-	articles = input<NewsArticle[]>([])
+	listArticles = input<NewsArticle[]>([])
 }

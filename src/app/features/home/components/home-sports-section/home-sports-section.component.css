@@ -3,14 +3,10 @@
 }
 
 .home-sports-section {
-	display: grid;
-	gap: var(--grid-gap);
 	border-top: var(--border-section);
 	padding-block: var(--grid-gap);
 }
 
-@media (width >= 768px) {
-	.home-sports-section {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
+.home-sports-section__title {
+	margin: 0 0 var(--grid-gap);
 }
