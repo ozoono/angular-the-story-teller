@@ -1,0 +1,5 @@
+<div class="photo-title-card-grid-layout">
+  @for (article of articles(); track article.id) {
+    <app-title-photo-card [article]="article" />
+  }
+</div>

@@ -1,0 +1,33 @@
+.title-only-card__link {
+	display: grid;
+	grid-template-areas:
+		"top"
+		"title"
+		"bottom";
+	gap: 0.5rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.title-only-card__top,
+.title-only-card__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.title-only-card__top {
+	grid-area: top;
+}
+
+.title-only-card__title {
+	grid-area: title;
+	margin: 0;
+	line-height: 1.1;
+	font-family: var(--font-serif);
+	font-size: 1rem;
+}
+
+.title-only-card__bottom {
+	grid-area: bottom;
+}

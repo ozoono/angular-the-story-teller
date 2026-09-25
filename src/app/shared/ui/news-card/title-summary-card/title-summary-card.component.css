@@ -1,0 +1,39 @@
+.title-summary-card__link {
+	display: grid;
+	grid-template-areas:
+		"top"
+		"title"
+		"summary"
+		"bottom";
+	gap: 0.5rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.title-summary-card__top,
+.title-summary-card__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.title-summary-card__top {
+	grid-area: top;
+}
+
+.title-summary-card__title {
+	grid-area: title;
+	margin: 0;
+	line-height: 1.1;
+	font-family: var(--font-serif);
+}
+
+.title-summary-card__summary {
+	grid-area: summary;
+	margin: 0;
+	line-height: 1.5;
+}
+
+.title-summary-card__bottom {
+	grid-area: bottom;
+}

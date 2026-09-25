@@ -1,8 +1,8 @@
 import { Component, inject, type OnInit } from '@angular/core'
-import { HomeEntertainmentSectionComponent } from '@/features/home/components/home-entertainment-section/home-entertainment-section.component.ts'
-import { HomeMainSectionComponent } from '@/features/home/components/home-main-section/home-main-section.component.ts'
-import { HomePopularSectionComponent } from '@/features/home/components/home-popular-section/home-popular-section.component.ts'
-import { HomeSportsSectionComponent } from '@/features/home/components/home-sports-section/home-sports-section.component.ts'
+import { HomeEntertainmentSectionComponent } from '@/features/home/sections/home-entertainment-section/home-entertainment-section.component.ts'
+import { HomeMainSectionComponent } from '@/features/home/sections/home-main-section/home-main-section.component.ts'
+import { HomePopularSectionComponent } from '@/features/home/sections/home-popular-section/home-popular-section.component.ts'
+import { HomeSportsSectionComponent } from '@/features/home/sections/home-sports-section/home-sports-section.component.ts'
 import { newsTopics } from '@/core/models/news-topic.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 

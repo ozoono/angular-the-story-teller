@@ -1,0 +1,37 @@
+<article class="title-only-card">
+  <a
+    class="title-only-card__link"
+    href="/article/{{ article().id }}"
+    [routerLink]="['/article', article().id]"
+  >
+    @if (hasTop()) {
+      <div class="title-only-card__top">
+        @if (article().headline; as headline) {
+          <app-news-headline [text]="headline" />
+        }
+
+        @if (article().category; as category) {
+          <app-news-category [text]="category" />
+        }
+      </div>
+    }
+
+    <h2 class="title-only-card__title">{{ article().title }}</h2>
+
+    @if (hasBottom()) {
+      <div class="title-only-card__bottom">
+        @if (article().date; as date) {
+          <app-news-date [date]="date" />
+        }
+
+        @if (article().author; as author) {
+          <app-news-author [text]="author" />
+        }
+
+        @if (article().source; as source) {
+          <app-news-source [text]="source" />
+        }
+      </div>
+    }
+  </a>
+</article>

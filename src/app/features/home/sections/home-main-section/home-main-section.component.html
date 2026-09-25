@@ -1,0 +1,16 @@
+<section class="home-main-section" aria-label="Main news">
+  <div class="home-main-section__content">
+    @if (leadArticle(); as article) {
+      <app-lead-story-card [article]="article" />
+    }
+
+    <app-featured-story-with-title-list-layout
+      [article]="secondaryArticle()"
+      [listArticles]="secondaryTitleArticles()"
+    />
+  </div>
+
+  <aside class="home-main-section__sidebar" aria-label="Featured news">
+    <app-stacked-title-list-layout [articles]="sidebarTitleArticles()" />
+  </aside>
+</section>

@@ -1,0 +1,19 @@
+:host {
+	display: block;
+}
+
+.story-summary-list-layout {
+	display: grid;
+	gap: var(--grid-gap);
+}
+
+.story-summary-list-layout__item {
+	border-bottom: var(--border-section);
+	padding-bottom: var(--grid-gap);
+}
+
+@media (width >= 768px) {
+	.story-summary-list-layout__item {
+		container-type: inline-size;
+	}
+}

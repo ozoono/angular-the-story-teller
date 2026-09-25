@@ -1,0 +1,5 @@
+<div class="stacked-title-list-layout">
+  @for (article of articles(); track article.id) {
+    <app-title-only-card class="stacked-title-list-layout__item" [article]="article" />
+  }
+</div>

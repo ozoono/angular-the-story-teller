@@ -1,0 +1,25 @@
+:host {
+	display: block;
+	container-type: inline-size;
+}
+
+.featured-story-with-title-list-layout {
+	display: grid;
+	gap: var(--grid-gap);
+}
+
+.featured-story-with-title-list-layout__list {
+	margin-top: 17px;
+}
+
+@media (width >= 768px) {
+	.featured-story-with-title-list-layout {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@container (max-width: 400px) {
+	.featured-story-with-title-list-layout {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,8 @@
+<div class="featured-story-with-title-list-layout">
+  @if (article(); as featuredArticle) {
+    <app-title-photo-card [article]="featuredArticle" />
+  }
+  <div class="featured-story-with-title-list-layout__list">
+    <app-stacked-title-list-layout [articles]="listArticles()" />
+  </div>
+</div>
