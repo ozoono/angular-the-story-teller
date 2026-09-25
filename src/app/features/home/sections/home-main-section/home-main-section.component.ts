@@ -18,23 +18,52 @@ import { StackedTitleListLayoutComponent } from '@/shared/ui/news-layouts/stacke
 export class HomeMainSectionComponent {
 	private readonly newsStore = inject(NewsStore)
 	private readonly articles = this.newsStore.articlesFor('BUSINESS')
+	private readonly politicalArticles = this.newsStore.articlesFor('POLITICS')
 
-	protected readonly leadArticle = computed(() =>
-		this.articleWithDetail(this.articles()[0]),
-	)
-	protected readonly secondaryArticle = computed(() =>
-		this.articleWithDetail(this.articles()[1]),
-	)
+	protected readonly leadArticle = computed(() => {
+		const article = this.articleWithDetail(this.articles()[0])
+
+		return article === undefined ? undefined : this.toFeaturedArticle(article)
+	})
+	protected readonly secondaryArticle = computed(() => {
+		const article = this.articleWithDetail(this.articles()[1])
+
+		return article === undefined ? undefined : this.toFeaturedArticle(article)
+	})
 	protected readonly secondaryTitleArticles = computed(() =>
-		this.articles().slice(2, 5),
+		this.articles()
+			.slice(2, 6)
+			.map((article) => this.toReducedArticle(article)),
 	)
 	protected readonly sidebarTitleArticles = computed(() =>
-		this.articles().slice(5, 8),
+		this.politicalArticles()
+			.slice(0, 4)
+			.map((article) => this.toReducedArticle(article)),
 	)
 
 	private articleWithDetail(article: NewsArticle | undefined) {
 		return article === undefined
 			? undefined
 			: this.newsStore.articleDetails()[article.id]
+	}
+
+	private toFeaturedArticle(article: NewsArticle): NewsArticle {
+		return {
+			id: article.id,
+			title: article.title,
+			summary: article.summary,
+			photoUrl: article.photoUrl,
+			photoAlt: article.photoAlt,
+			author: article.author,
+			source: article.source,
+		}
+	}
+
+	private toReducedArticle(article: NewsArticle): NewsArticle {
+		return {
+			id: article.id,
+			title: article.title,
+			source: article.source,
+		}
 	}
 }

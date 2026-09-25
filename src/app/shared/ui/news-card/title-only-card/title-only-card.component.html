@@ -4,18 +4,6 @@
     href="/article/{{ article().id }}"
     [routerLink]="['/article', article().id]"
   >
-    @if (hasTop()) {
-      <div class="title-only-card__top">
-        @if (article().headline; as headline) {
-          <app-news-headline [text]="headline" />
-        }
-
-        @if (article().category; as category) {
-          <app-news-category [text]="category" />
-        }
-      </div>
-    }
-
     <h2 class="title-only-card__title">{{ article().title }}</h2>
 
     @if (hasBottom()) {

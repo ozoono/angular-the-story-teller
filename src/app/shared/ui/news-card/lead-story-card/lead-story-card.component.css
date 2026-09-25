@@ -5,7 +5,6 @@
 .lead-story-card__link {
 	display: grid;
 	grid-template-areas:
-		"top"
 		"photo"
 		"title"
 		"summary"
@@ -15,10 +14,10 @@
 	color: inherit;
 }
 
-.lead-story-card__top,
 .lead-story-card__bottom {
 	display: flex;
-	flex-wrap: wrap;
+	grid-area: bottom;
+	flex-direction: column;
 }
 
 .lead-story-card__photo {
@@ -26,10 +25,6 @@
 	width: 100%;
 	height: auto;
 	object-fit: cover;
-}
-
-.lead-story-card__top {
-	grid-area: top;
 }
 
 .lead-story-card__title {
@@ -45,35 +40,17 @@
 	line-height: 1.5;
 }
 
-.lead-story-card__bottom {
-	grid-area: bottom;
-}
-
-@container (min-width: 416px) {
+@container (min-width: 600px) {
 	.lead-story-card__link {
+		grid-template-columns: 1fr 1fr;
 		grid-template-areas:
-			"top top"
 			"title photo"
 			"summary photo"
 			"bottom photo";
-	}
-}
-
-@container (min-width: 900px) {
-	.lead-story-card__link {
-		grid-template:
-			"top top top" auto
-			"bottom title photo" auto
-			"bottom summary photo" 1fr
-			/ 170px minmax(0, 1fr) 300px;
 	}
 
 	.lead-story-card__photo {
 		width: 100%;
 		height: auto;
-	}
-
-	.lead-story-card__bottom {
-		flex-direction: column;
 	}
 }

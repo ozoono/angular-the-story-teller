@@ -8,10 +8,6 @@
 	gap: var(--grid-gap);
 }
 
-.featured-story-with-title-list-layout__list {
-	margin-top: 17px;
-}
-
 @media (width >= 768px) {
 	.featured-story-with-title-list-layout {
 		grid-template-columns: repeat(2, minmax(0, 1fr));

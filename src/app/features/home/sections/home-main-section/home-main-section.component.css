@@ -20,7 +20,7 @@
 
 @media (width >= 768px) {
 	.home-main-section {
-		grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
+		grid-template-columns: minmax(0, 3fr) minmax(14rem, 1fr);
 	}
 
 	.home-main-section__sidebar {
