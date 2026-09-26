@@ -97,25 +97,29 @@ export class NewsStore {
 		const businessTopicIndex = topics.indexOf('BUSINESS')
 
 		if (businessTopicIndex !== -1) {
-			const businessArticles = await topicLoads[businessTopicIndex]
+			try {
+				const businessArticles = await topicLoads[businessTopicIndex]
 
-			if (this.topicStatesState().BUSINESS?.source === 'api') {
-				await Promise.all(
-					businessArticles
-						.slice(0, 2)
-						.map((article) => this.loadDetail(article.id)),
-				)
+				if (this.topicStatesState().BUSINESS?.source === 'api') {
+					await Promise.allSettled(
+						businessArticles
+							.slice(0, 2)
+							.map((article) => this.loadDetail(article.id)),
+					)
+				}
+			} catch {
+				// Ignored, loadTopic handles error state
 			}
 		}
 
-		await Promise.all(topicLoads)
+		await Promise.allSettled(topicLoads)
 	}
 
 	// Loads and caches a full article detail by UUID.
 	async loadDetail(id: string): Promise<NewsArticle> {
 		const cachedDetail = this.articleDetailsState()[id]
 
-		if (cachedDetail !== undefined) {
+		if (cachedDetail !== undefined && cachedDetail.body !== undefined) {
 			return cachedDetail
 		}
 
@@ -135,10 +139,15 @@ export class NewsStore {
 
 				return detail
 			})
+			.catch(async (error) => {
+				if (cachedDetail !== undefined) {
+					return cachedDetail
+				}
+				throw error
+			})
 			.finally(() => this.pendingDetailLoads.delete(id))
 
 		this.pendingDetailLoads.set(id, load)
-
 		return load
 	}
 
@@ -154,8 +163,8 @@ export class NewsStore {
 		}
 
 		this.articleDetailsState.update((cachedDetails) => ({
-			...Object.fromEntries(details.map((article) => [article.id, article])),
 			...cachedDetails,
+			...Object.fromEntries(details.map((article) => [article.id, article])),
 		}))
 	}
 
@@ -169,7 +178,12 @@ export class NewsStore {
 
 		return this.newsContent
 			.loadBusinessList()
-			.then((articles) => ({ articles, source: 'api' as const }))
+			.then((articles) => {
+				if (articles.length === 0) {
+					throw new Error('No articles returned from API')
+				}
+				return { articles, source: 'api' as const }
+			})
 			.catch(() =>
 				this.newsContent.loadFixture(topic).then((articles) => ({
 					articles,

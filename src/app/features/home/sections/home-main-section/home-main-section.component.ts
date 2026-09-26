@@ -44,7 +44,7 @@ export class HomeMainSectionComponent {
 	private articleWithDetail(article: NewsArticle | undefined) {
 		return article === undefined
 			? undefined
-			: this.newsStore.articleDetails()[article.id]
+			: (this.newsStore.articleDetails()[article.id] ?? article)
 	}
 
 	private toFeaturedArticle(article: NewsArticle): NewsArticle {
