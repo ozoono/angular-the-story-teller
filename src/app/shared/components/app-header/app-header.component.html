@@ -1,18 +1,26 @@
 <header class="header">
-  <div class="header-top">
+  <div class="header__top">
     <span class="header-date">{{ currentDate }}</span>
   </div>
 
-  <div class="header-branding">
-    <a href="/" routerLink="/" class="header-logo">
-      <h1>The StoryTeller</h1>
+  <div class="header__logo">
+    <a href="/" routerLink="/">
+      <img src="/logo.webp" alt="The StoryTeller" />
     </a>
   </div>
 
-  <nav class="header-nav">
+  <nav class="header__nav">
     <ul class="nav-list">
-      <li><a href="/" routerLink="/" class="nav-link">Home</a></li>
-      <li><a href="/category/economy" routerLink="/category/economy" class="nav-link">Economy</a></li>
+      @for (category of categories; track category) {
+        <li>
+          <a
+            class="nav-link"
+            href="/category/{{ category.toLowerCase() }}"
+            [routerLink]="['/category', category.toLowerCase()]"
+          >
+            {{ category }}</a>
+        </li>
+      }
     </ul>
   </nav>
 </header>

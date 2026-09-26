@@ -35,6 +35,7 @@ export class HomePopularSectionComponent {
 			photoUrl: article.photoUrl,
 			photoAlt: article.photoAlt,
 			category: article.category,
+			source: article.source,
 		}
 	}
 }

@@ -6,6 +6,8 @@
 .featured-story-with-title-list-layout {
 	display: grid;
 	gap: var(--grid-gap);
+	border-top: var(--border-section);
+	padding-top: var(--grid-gap);
 }
 
 @media (width >= 768px) {

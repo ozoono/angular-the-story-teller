@@ -5,7 +5,6 @@
 .home-main-section {
 	display: grid;
 	gap: var(--grid-gap);
-	padding-bottom: var(--grid-gap);
 }
 
 .home-main-section__content {

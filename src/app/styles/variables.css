@@ -1,17 +1,37 @@
+@font-face {
+	font-family: "PT Serif";
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+	src: url("/fonts/PTSerif-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Playfair Display";
+	font-weight: 400 900;
+	font-style: normal;
+	font-display: swap;
+	src: url("/fonts/PlayfairDisplay-VariableFont_wght.ttf") format("truetype");
+}
+
 :root {
 	--color-black: #000;
+	--color-gray-dark: #666;
+	--color-gray-light: #bbb;
+	--color-red: rgb(251 60 60);
 	--color-white: #fff;
 
 	--color-bg: var(--color-white);
 	--color-text: var(--color-black);
-	--color-breaking: #c00;
+	--color-breaking: var(--color-red);
 	--color-advertisement: var(--color-black);
-	
+
 	--grid-column-size: 32px;
 	--grid-gap: var(--grid-column-size);
-	--border-section: 1px solid var(--color-black);
+	--border-section: 1px solid var(--color-gray-light);
 
-	--font-serif: "Times New Roman", serif;
+	--font-serif-text: "PT Serif", "Times New Roman", serif;
+	--font-serif-titles: "Playfair Display", "Times New Roman", serif;
 	--font-sans: "Helvetica Neue", Arial, sans-serif;
 
 	--max-width-site: 1280px;

@@ -1,9 +1,46 @@
 .header {
-  width: 100%;
+	width: 100%;
 	margin-right: auto;
 	margin-left: auto;
 	padding-right: 1.25rem;
 	padding-left: 1.25rem;
+}
+
+.header__logo {
+	text-align: center;
+}
+
+.header__logo img {
+	display: inline;
+	width: 400px;
+	height: auto;
+}
+
+.header__nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	justify-items: center;
+	margin: 1rem 0 0.5rem;
+	border-top: 1px solid var(--color-black);
+	border-bottom: 1px solid var(--color-black);
+	padding: 0.5rem 1rem;
+	list-style: none;
+
+	a {
+		margin: 0 0.7em;
+		font-size: 0.9rem;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	li:not(:last-child) {
+		&::after {
+			content: '•';
+		}
+	}
 }
 
 @media (width >= 798px) {

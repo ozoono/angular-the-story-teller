@@ -6,10 +6,6 @@
   >
     @if (hasTop()) {
       <div class="title-summary-card__top">
-        @if (article().headline; as headline) {
-          <app-news-headline [text]="headline" />
-        }
-
         @if (article().category; as category) {
           <app-news-category [text]="category" />
         }

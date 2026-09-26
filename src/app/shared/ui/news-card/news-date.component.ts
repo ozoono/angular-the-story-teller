@@ -12,7 +12,7 @@ import { Component, input } from '@angular/core'
 			margin: 0;
 			text-transform: uppercase;
 			letter-spacing: 0.08em;
-			font-family: var(--font-sans);
+			font-family: var(--font-serif-text);
 			font-size: 0.75rem;
 		}
 	`,

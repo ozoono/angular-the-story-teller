@@ -18,8 +18,7 @@
 .title-only-card__title {
 	grid-area: title;
 	margin: 0;
-	line-height: 1.1;
-	font-family: var(--font-serif);
-	font-size: 1rem;
+	line-height: 1.2;
+	font-family: var(--font-serif-titles);
+	font-size: 1.1rem;
 }
-

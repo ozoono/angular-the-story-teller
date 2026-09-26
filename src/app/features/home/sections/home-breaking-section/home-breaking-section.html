@@ -1,0 +1,12 @@
+@if (breakingArticle(); as article) {
+  <section class="home-breaking-section">
+    <a
+      class="home-breaking-section__link"
+      href="/article/{{ article.id }}"
+      [routerLink]="['/article', article.id]"
+    >
+      <span class="home-breaking-section__badge">BREAKING:</span>
+      <span class="home-breaking-section__title">{{ article.title }}</span>
+    </a>
+  </section>
+}

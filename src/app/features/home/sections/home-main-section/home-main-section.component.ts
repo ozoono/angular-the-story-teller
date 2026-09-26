@@ -32,7 +32,7 @@ export class HomeMainSectionComponent {
 	})
 	protected readonly secondaryTitleArticles = computed(() =>
 		this.articles()
-			.slice(2, 6)
+			.slice(2, 4)
 			.map((article) => this.toReducedArticle(article)),
 	)
 	protected readonly sidebarTitleArticles = computed(() =>

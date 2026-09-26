@@ -30,23 +30,25 @@
 .lead-story-card__title {
 	grid-area: title;
 	margin: 0;
-	line-height: 1.1;
-	font-family: var(--font-serif);
+	line-height: 1.2;
+	font-family: var(--font-serif-titles);
+	font-size: 1.6rem;
 }
 
 .lead-story-card__summary {
 	grid-area: summary;
 	margin: 0;
 	line-height: 1.5;
+	font-family: var(--font-serif-text);
 }
 
 @container (min-width: 600px) {
 	.lead-story-card__link {
-		grid-template-columns: 1fr 1fr;
-		grid-template-areas:
-			"title photo"
-			"summary photo"
-			"bottom photo";
+		grid-template:
+			"title photo" auto
+			"summary photo" auto
+			"bottom photo" 1fr
+			/ 1fr 1fr;
 	}
 
 	.lead-story-card__photo {

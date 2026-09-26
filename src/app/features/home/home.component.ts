@@ -3,6 +3,7 @@ import { HomeEntertainmentSectionComponent } from '@/features/home/sections/home
 import { HomeMainSectionComponent } from '@/features/home/sections/home-main-section/home-main-section.component.ts'
 import { HomePopularSectionComponent } from '@/features/home/sections/home-popular-section/home-popular-section.component.ts'
 import { HomeSportsSectionComponent } from '@/features/home/sections/home-sports-section/home-sports-section.component.ts'
+import { HomeBreakingSectionComponent } from '@/features/home/sections/home-breaking-section/home-breaking-section.ts'
 import { newsTopics } from '@/core/models/news-topic.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 
@@ -13,6 +14,7 @@ import { NewsStore } from '@/core/stores/news.store.ts'
 		HomeMainSectionComponent,
 		HomePopularSectionComponent,
 		HomeSportsSectionComponent,
+		HomeBreakingSectionComponent,
 	],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',

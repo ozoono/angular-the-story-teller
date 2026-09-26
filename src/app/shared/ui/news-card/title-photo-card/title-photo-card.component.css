@@ -9,7 +9,6 @@
 		"photo"
 		"title"
 		"bottom";
-	gap: 0.5rem;
 	text-decoration: none;
 	color: inherit;
 }
@@ -22,13 +21,15 @@
 
 .title-photo-card__top {
 	grid-area: top;
+	margin-bottom: 0.5rem;
 }
 
 .title-photo-card__title {
 	grid-area: title;
 	margin: 0;
-	line-height: 1.1;
-	font-family: var(--font-serif);
+	margin-top: 0.5rem;
+	line-height: 1.2;
+	font-family: var(--font-serif-titles);
 	font-size: 1.2rem;
 }
 
@@ -41,18 +42,5 @@
 
 .title-photo-card__bottom {
 	grid-area: bottom;
-}
-
-@container (min-width: 416px) {
-	.title-photo-card__link {
-		grid-template-columns: 1fr 1fr;
-		grid-template-areas:
-			"top top"
-			"title photo"
-			"bottom photo";
-	}
-
-	.title-photo-card__photo {
-		height: 8rem;
-	}
+	margin-top: 0.5rem;
 }

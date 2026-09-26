@@ -10,4 +10,8 @@
 .stacked-title-list-layout__item {
 	border-bottom: var(--border-section);
 	padding-bottom: calc(var(--grid-gap) * 0.5);
+
+	&:last-of-type {
+		border-bottom: none;
+	}
 }

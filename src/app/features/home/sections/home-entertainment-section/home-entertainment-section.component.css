@@ -5,8 +5,6 @@
 .home-entertainment-section {
 	display: grid;
 	gap: var(--grid-gap);
-	border-top: var(--border-section);
-	padding-block: var(--grid-gap);
 }
 
 .home-entertainment-section__title {
