@@ -34,28 +34,20 @@ const imageUrlFor = (topic, index) => {
 	return `/news-images/${imageName}`
 }
 
-const toArticle = (article, topic, index) => {
-	const isFeatured = index < 2
+const toHeadline = (article) => ({
+	uuid: article.uuid,
+	title: article.title,
+	publisher: article.publisher,
+	authors: article.authors ?? [],
+})
 
-	return {
-		id: article.uuid,
-		title: article.title,
-		date: article.published_at,
-		source: article.publisher,
-		category: topic.toUpperCase(),
-		...(isFeatured
-			? {
-					author: article.authors?.join(', ') || undefined,
-					body: article.body,
-					originalUrl: article.original_url,
-					summary: article.incipit,
-					photoUrl: imageUrlFor(topic, index),
-				}
-			: {}),
-	}
-}
+const toDetail = (article, topic, index) => ({
+	...article,
+	authors: article.authors ?? [],
+	// Keep the local images used by the home page's featured articles.
+	...(index < 2 ? { thumbnail: imageUrlFor(topic, index) } : {}),
+})
 
-await rm(fixturesDirectory, { force: true, recursive: true })
 await mkdir(fixturesDirectory, { recursive: true })
 await cp(sourceImagesDirectory, imagesDirectory, {
 	force: true,
@@ -69,12 +61,20 @@ for (const topic of topics) {
 		'utf8',
 	)
 	const response = JSON.parse(source)
-	const articles = response.data.map((article, index) =>
-		toArticle(article, topic, index),
+	const headlines = response.data.map(toHeadline)
+	const details = Object.fromEntries(
+		response.data.map((article, index) => [
+			article.uuid,
+			toDetail(article, topic, index),
+		]),
 	)
 
 	await writeFile(
 		resolve(fixturesDirectory, `${topic}.json`),
-		`${JSON.stringify(articles, null, 2)}\n`,
+		`${JSON.stringify(headlines, null, 2)}\n`,
+	)
+	await writeFile(
+		resolve(fixturesDirectory, `${topic}_data.json`),
+		`${JSON.stringify(details, null, 2)}\n`,
 	)
 }

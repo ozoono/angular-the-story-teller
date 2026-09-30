@@ -7,6 +7,8 @@ import {
 	newsListUrl,
 } from '@/core/config/news-api.config.ts'
 import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import { NEWS_DATA_SOURCE } from '@/core/config/news-data.config.ts'
+import type { NewsDataSource } from '@/core/models/news-data-source.model.ts'
 import type { NewsTopic } from '@/core/models/news-topic.model.ts'
 import {
 	toNewsArticles,
@@ -14,8 +16,17 @@ import {
 } from '@/core/services/news-api.mapper.ts'
 
 @Injectable({ providedIn: 'root' })
-export class NewsContentService {
+export class NewsContentService implements NewsDataSource {
 	private readonly http = inject(HttpClient)
+	private readonly dataSource = inject(NEWS_DATA_SOURCE)
+
+	getCategory(category: NewsTopic) {
+		return this.dataSource.getCategory(category)
+	}
+
+	getArticleDetail(category: NewsTopic, uuid: string) {
+		return this.dataSource.getArticleDetail(category, uuid)
+	}
 
 	loadBusinessList(): Promise<NewsArticle[]> {
 		return firstValueFrom(

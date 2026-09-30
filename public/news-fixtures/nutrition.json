@@ -1,82 +1,78 @@
 [
   {
-    "id": "bf41d8c4-e54c-4926-9f4c-2b00ea220270",
-    "title": "Genetic tests that could help you live a long, healthy life",
-    "date": "2026-09-19T20:15:00.000Z",
-    "source": "The West Australian",
-    "category": "NUTRITION",
-    "author": "Angela Pownall",
-    "body": "The No. 1 source of news for every West Australian No lock-in contract Digital $8 $4 Save $32! / week for 8 weeks, billed weekly. All access digital Daily Digital Edition Papers delivered Cancel anytime. Min term 4 weeks. Min cost $16. Pay in advance Annual digital $6 / week Save $104! Billed as $312 per annum. All access digital Daily Digital Edition Papers delivered Cancel anytime. Min cost $312. Pay as you go Digital + weekend newspapers $12 / week Billed monthly or quarterly. All access digital Daily Digital Edition Sat &amp; Sun Papers delivered Saturday Paper delivered Sunday Paper delivered Cancel anytime. Min term 4 weeks. Min cost $48.",
-    "originalUrl": "https://thewest.com.au/news/health/the-three-genetic-tests-that-could-help-you-live-a-long-healthy-life-according-to-perth-genetic-counsellor-c-22873857",
-    "summary": "The No. 1 source of news for every West AustralianNo lock-in contractDigital$8$4Save $32!/ week for 8 weeks, billed weekly.All access digitalDaily Digital EditionPapers deliveredCancel anytime. Min term 4...",
-    "photoUrl": "/news-images/nutrition1.jpg"
-  },
-  {
-    "id": "6c894a18-a494-45da-b7f6-c40073885d9c",
+    "uuid": "6c894a18-a494-45da-b7f6-c40073885d9c",
     "title": "A reasonably healthy diet can still put your gut at risk. A dietitian explains why",
-    "date": "2026-09-19T19:00:00.000Z",
-    "source": "SMH.com.au",
-    "category": "NUTRITION",
-    "author": "Nicole Economos",
-    "body": "September 20, 2026 — 5:00am Joshua Hinton is an actor and musician. The 27-year-old shares his day on a plate. Photo: Art by Eliza Iredale 8.25am Start the day with a glass of water and two brown rice cakes topped with ham and cheese. After breakfast, I feed the dog and get ready for the day. 10.20am Another glass of water and a small bowl of assorted nuts. 12.35pm A ham and cheese toastie and a Coke Zero, while I prepare for some drama classes that I will be teaching that afternoon. 7.50pm A grilled chicken burrito and some fries on my way home from work. 9.10pm A glass of water and a few squares of dark chocolate while I watch TV. Dr Joanna McMillan says: Top marks for... Terrific snack choices – the nuts provide fibre, healthy fats and vitamin E, while the dark chocolate adds polyphenols and both are high in magnesium. A chicken burrito can also be a great takeaway choice if it comes loaded with salad, salsa and black beans. If you keep eating like this you’ll... Put your long-term gut health at risk. Processed meats, including ham, are best eaten as an occasional treat given their association with bowel cancer and the way they push up sodium levels. Combined with no fruit and few vegetables, you’re also missing the gut protection fibre and diverse plant compounds provide. Why don’t you try... Cutting back on the ham and filling your toastie with tuna, leftover roast chicken or other lean meat and sliced hard-boiled egg, then adding tomato, spinach or roasted veg. With the burrito, choose extra beans, salsa and salad and skip the fries most days. A healthier at-home alternative is skin-on potato wedges tossed in extra virgin olive oil and air-fried, which gives you more fibre and potassium without losing crispy-potato pleasure. Joshua Hinton’s A Place in the Sultan’s Kitchen plays at the Sydney Opera House, October 14-17. Get the best of Sunday Life magazine delivered to your inbox every Sunday morning. Sign up for our newsletter. Nicole Economos is a Social Media Producer/Journalist for The Sydney Morning Herald and The Age. Connect via email . From our partners",
-    "originalUrl": "https://www.smh.com.au/lifestyle/health-and-wellness/a-reasonably-healthy-diet-can-still-put-your-gut-at-risk-a-dietitian-explains-why-20260920-p60vh0.html",
-    "summary": "September 20, 2026 — 5:00amJoshua Hinton is an actor and musician. The 27-year-old shares his day on a plate. Photo: Art by Eliza Iredale8.25am Start the day with a glass of water and two brown rice cakes...",
-    "photoUrl": "/news-images/nutrition2.webp"
+    "publisher": "SMH.com.au",
+    "authors": [
+      "Nicole Economos"
+    ]
   },
   {
-    "id": "50b361f3-cbda-4c26-8536-a761eeb8dd74",
+    "uuid": "0b4a9a0d-0ac1-4329-9b05-3628f3e4cc2a",
+    "title": "Is it healthy to eat avocado every day? Dietitians explain",
+    "publisher": "Good Housekeeping",
+    "authors": []
+  },
+  {
+    "uuid": "50b361f3-cbda-4c26-8536-a761eeb8dd74",
     "title": "'I've been taking expensive probiotics every day' — the supplement may not be doing what you think",
-    "date": "2026-09-19T13:59:46.000Z",
-    "source": "mbiz.heraldcorp.com",
-    "category": "NUTRITION"
+    "publisher": "mbiz.heraldcorp.com",
+    "authors": [
+      "The Herald Business Mobile"
+    ]
   },
   {
-    "id": "cb2d5081-787c-4ad0-af81-c0cabee7aa0c",
+    "uuid": "cb2d5081-787c-4ad0-af81-c0cabee7aa0c",
     "title": "Herself battling cancer, city woman helps fellow warriors with protein powder",
-    "date": "2026-09-19T13:31:00.000Z",
-    "source": "The Times of India",
-    "category": "NUTRITION"
+    "publisher": "The Times of India",
+    "authors": [
+      "Diana Sahu"
+    ]
   },
   {
-    "id": "3f24fd42-01b4-4812-9875-945e27e4bfac",
+    "uuid": "3f24fd42-01b4-4812-9875-945e27e4bfac",
     "title": "When’s the Best Time to Take Magnesium?",
-    "date": "2026-09-19T13:26:12.000Z",
-    "source": "gq.com",
-    "category": "NUTRITION"
+    "publisher": "gq.com",
+    "authors": [
+      "Dean Stattmann"
+    ]
   },
   {
-    "id": "ed6b372b-cc9b-4467-99f3-07a7243d1c07",
+    "uuid": "ed6b372b-cc9b-4467-99f3-07a7243d1c07",
     "title": "Oklahoma State Fair expands accessibility with sensory-friendly hours",
-    "date": "2026-09-19T11:03:00.000Z",
-    "source": "oklahoman.com",
-    "category": "NUTRITION"
+    "publisher": "oklahoman.com",
+    "authors": [
+      "Brandy Mcdonnell"
+    ]
   },
   {
-    "id": "e5f6c931-1284-48cd-b376-c6c723943cb6",
-    "title": "Creatine isn't just for bodybuilders. Connecticut experts explain who may benefit",
-    "date": "2026-09-19T10:00:00.000Z",
-    "source": "Yahoo Health",
-    "category": "NUTRITION"
+    "uuid": "87921e3b-a301-49e6-bea9-6fcc40fa2420",
+    "title": "Canadian ambassador visits Seattle, seeks to strengthen ties with Washington state",
+    "publisher": "KOMO",
+    "authors": [
+      "Stella Sun"
+    ]
   },
   {
-    "id": "6036d4fa-2eb6-4d6a-a9f9-68e11b0fcf19",
-    "title": "Creatine isn’t just for bodybuilders. Here’s who may benefit",
-    "date": "2026-09-19T09:48:38.000Z",
-    "source": "Greenwich Time",
-    "category": "NUTRITION"
+    "uuid": "ade4cf96-3efb-4293-803d-44a1a63a7262",
+    "title": "Popular Joint Supplement Linked to 25% Higher Dementia Risk in People With Early Memory Loss",
+    "publisher": "ScienceAlert",
+    "authors": [
+      "Carly Cassella"
+    ]
   },
   {
-    "id": "6c22a282-ac15-4264-b514-f7f0f9f2b83b",
-    "title": "Creatine isn’t just for bodybuilders. Here’s who may benefit",
-    "date": "2026-09-19T09:23:25.000Z",
-    "source": "Norwalk Hour",
-    "category": "NUTRITION"
+    "uuid": "1e1430b0-53b9-4527-870a-2b5c1b14bee8",
+    "title": "She is almost 101 years old: the centenarian shared what she starts each morning with and what she considers most important in life",
+    "publisher": "Inbox.eu",
+    "authors": []
   },
   {
-    "id": "844acbcc-a807-4390-8acf-1af42e85f82d",
-    "title": "Creatine isn’t just for bodybuilders. Here’s who may benefit",
-    "date": "2026-09-19T09:11:46.000Z",
-    "source": "nhregister.com",
-    "category": "NUTRITION"
+    "uuid": "704a427c-21a8-46cb-87ff-39615a175059",
+    "title": "Doctor says ‘protein maxxing’ short on real health benefits",
+    "publisher": "ABC17NEWS",
+    "authors": [
+      "Demetra Alarcon"
+    ]
   }
 ]

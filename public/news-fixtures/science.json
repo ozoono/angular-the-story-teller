@@ -1,81 +1,76 @@
 [
   {
-    "id": "ef0e12be-ad6d-4ec7-b395-c3799bfe1f57",
+    "uuid": "ef0e12be-ad6d-4ec7-b395-c3799bfe1f57",
     "title": "Researchers Measure the Environment Where the First Supermassive Black Holes Formed",
-    "date": "2026-09-19T22:43:00.000Z",
-    "source": "Universe Today",
-    "category": "SCIENCE",
-    "author": "Matthew Williams",
-    "body": "When the James Webb Space Telescope pointed its powerful instruments toward the early Universe, scientists were surprised by what it found. At high-redshift (z) values, corresponding to less than one billion years after the Big Bang, astronomers witnessed an abundance of galaxies that hosted what appeared to be the \"seeds\" of supermassive black holes (SMBHs). The existence of such massive black holes so early in the Universe challenged existing models of black hole formation, in which stars collapse at the end of their lives to form black holes that gradually come together to create SMBHs. This led astronomers to consider a different pathway where massive clouds of cold gas coalesced at the center of early galaxies and collapsed to form black holes - known as the Direct-Collapse Black Hole (DCBH) scenario. However, there remain a lot of unanswered questions about the environments in which these DCBHs formed. To investigate this, an international team of astronomers considers how Dark Matter mergers and regions of space packed with massive amounts of gas, dust, and stars (cosmic overdensities) are favorable environments for forming SMBH \"seeds.\" The research was led by Alessandro Trinca, a Postdoctoral Research Associate at the University of Edinburgh's Institute for Astronomy and Royal Observatory. He was joined by researchers from the Como Lake Center for Astrophysics, the INAF Osservatorio Astronomico di Roma, the INAF Osservatorio di Astrofisica e Scienza dello Spazio di Bologna, the Institute of Science and Technology Austria (ISTA), the Institut d’Astrophysique, the Sapienza School for Advanced Studies, and multiple universities. The paper describing their work appears in the Monthly Notices of the Royal Astronomical Society (MNRAS). Little Red Dots are extremely compact objects recently observed by NASA's James Webb Space Telescope. Credit: NASA Central to teams' work is the concept of Dark Matter (DM) merger trees. Within the Lambda Cold Dark Matter (ΛCDM) cosmological model, DM halos are theorized to have formed through the merger of smaller clumps. This is similar to earlier theories of SMBH formation, which suggested they formed through mergers of smaller stellar-mass and intermediate-mass black holes. The team combined high-resolution N -body simulations of these trees with a semi-analytic model of BH formation and galaxy co-evolution. The halo merger history was simulated using the cosmological zoom-in software based on the GIZMO particle-based code . This was followed by simulations of the baryonic (aka. \"visible\" matter) component in all the progenitor halos using the Cosmic Archaeology Tool (CAT), a semi-analytic model used to interpret the properties of observed high-redshift sources and test different black hole evolution scenarios against observations. As the team wrote: This allowed us to trace the abundance, spatial distribution, and environmental conditions of haloes capable of forming DCBHs over cosmic time, exploring how these trends depend on the specific physical requirements for heavy seed formation... Building on this, we focused on predicting the observational features of the population of DCBH descendants expected to reside near high-redshift quasars at ⁠z ~7 [12.9 billion years ago]. The results revealed that massive black hole seeds could form via direct collapse as early as 13.64 billion years ago (less than 500 million years after the Big Bang). This would have continued until about 13.5 to 13.4 billion years ago, at which point metal enrichment of the intergalactic medium (IGM) - caused by the earliest Population III stars exploding in supernovae - would have inhibited further episodes of direct collapse. These results bolster the case for the DCBH scenario and present opportunities for future JWST surveys. As the team concluded: Our results provide a theoretical framework to test the conditions that favor heavy seed formation and to assess the role of direct collapse as a pathway to the SMBH population observed at very high redshift. The possible identification of a large population of quasar-companion AGN candidates in future surveys would represent a strong indication that early massive [black hole] formation preferentially occurs in highly clustered, overdense environments, and the number of detectable systems predicted here will serve as a concrete benchmark for upcoming observational campaigns. Further Reading: MNRAS",
-    "originalUrl": "https://www.universetoday.com/articles/researchers-measure-the-environment-where-the-first-supermassive-black-holes-formed",
-    "summary": "Scientists theorize that the rapid emergence of supermassive black holes (SMBHs) in the early Universe can be explained by the direct-collapse black hole (DCBH) scenario. In a recent study, astronomers investigated the potential host environments of DCBHs and found that this scenario is a plausible explanation for how the \"seeds\" of SMBH formed.",
-    "photoUrl": "/news-images/science1.webp"
+    "publisher": "Universe Today",
+    "authors": [
+      "Matthew Williams"
+    ]
   },
   {
-    "id": "1e0d5eb5-c7f1-41f9-bac2-42693095f2aa",
+    "uuid": "1e0d5eb5-c7f1-41f9-bac2-42693095f2aa",
     "title": "Pikachu, back from space station, kicks off ESA x Pokémon collab",
-    "date": "2026-09-19T21:20:42.000Z",
-    "source": "collectSPACE.com",
-    "category": "SCIENCE",
-    "body": "— A special visitor made a secret trip to the International Space Station earlier this year to spark interest in the European Space Agency (ESA) and its activities. As revealed on Saturday (Sept. 19), Pikachu spent 67 days on board the orbiting outpost from April 11 to June 17. The best known of all the Pokémon — in the form of a plush toy — the electrified yellow mouse arrived at the space station on a Northrop Grumman Cygnus cargo spacecraft and returned to Earth on board a SpaceX Dragon capsule. Dressed in a custom white spacesuit with his own mission patch, Pikachu's stay occurred during ESA astronaut Sophie Adenot's still ongoing mission. The announcement of the doll's 1,040 laps around Earth has now kicked off a tour of a different type — a traveling exhibition focused on space and Pokémon that will visit ESA sites and major museums across Europe. The first stop began Saturday as part of ESA's Open Days at its headquarters in Paris, France. \"Through this collaboration with Pokémon, we are unlocking new ways for people across Europe to connect with space,\" Josef Aschbacher, ESA's Director General, said in a statement . \"By taking space exploration beyond traditional settings, we hope to ignite curiosity, spark a sense of wonder about our universe and encourage people of all ages to discover the opportunities that space offers for the future.\" Exhibition, activations and merch The new, family-friendly ESA exhibition incorporates the Pokémon characters to engage the public in space and other scientific topics. At the agency's headquarters Saturday, among other displays, was a statue of Pikachu dressed in the same style spacesuit as the one worn by the plush flown to the space station. A freestanding panel introducing the Pokémon collaboration, titled \"Attention Trainers...\" also featured an illustration of Astronaut Pikachu. \"Every Pokémon journey begins with a sense of wonder about what lies beyond the world you know. From distant regions to encounters that reach into outer space, that spirit of discovery has always been part of being a Pokémon Trainer,\" said Mathieu Galante, senior director of licensing at The Pokémon Company International. \" Collaborating with ESA opens a new frontier for fans, bringing together the world of Pokémon and the wonder of space for visitors at locations across Europe.\" The Pokémon-adorned panels explore how Europe launches missions, supports astronauts on the International Space Station, studies the Sun and extends out into the Solar System and the wider universe. In addition to the touring exhibition, the collaboration will also extend into the digital world through a Pokémon GO in-game activation . Beginning during World Space Week on Oct. 4 through April 30, 2027, trainers (users of the app) visiting participating science and space museums across Europe will find special Pokémon GO gameplay inspired by the wonders of space, including encounters with Astronaut Pikachu. Some Pokémon encountered through one-star raids, timed research and other activities may feature a special location background commemorating their visit. During World Space Week , the United Nations-led celebration of the start of the Space Age, additional event-themed gameplay will be available, including Field Research and increased wild Pokémon spawns at participating museum locations. All of the gameplay, excluding the location backgrounds, will also be available at ESA's locations across Europe from Oct. 4 to 10. Exclusive ESA x Pokémon merchandise, including a range of apparel, accessories and collectibles will be available through both ESA and Pokémon retail channels, as well as in partner museum shops. Gotta catch 'em all After this weekend's stop in Paris, the Pokémon exhibition will travel to other ESA facilities, including the ESA Centre for Earth Observation (ESRIN) in Rome on Sept. 25 and the European Space Research and Technology Centre (ESTEC) in Noordwijk, The Netherlands, Sept. 26-27. Then in October, the tour will continue at the European Space Operations Centre (ESOC) in Darmstadt, Germany on the 2nd; the European Space Astronomy Centre (ESAC) in Villanueva de la Cañada, Spain on the 3rd; and the European Centre for Space Applications and Telecommunications (ECSAT) in Harwell, United Kingdom on the 10th. The displays will then visit museums and other venues through April, including: Cité de l'espace in Toulouse, France; Ciudad de las Artes y las Ciencias in Valencia, Spain; Deutsches Museum in Nuremberg, Germany; Euro Space Center in Transinne, Belgium; Lucca Comics &amp; Games in Lucca, Italy; Science Museum in London, United Kingdom and Space Expo in Noordwijk, Netherlands.",
-    "originalUrl": "http://www.collectspace.com/news/news-091926a-esa-pokemon-exhibition-astronaut-pikachu-experience.html",
-    "summary": "A special visitor made a secret trip to the International Space Station earlier this year to spark interest in the European Space Agency (ESA) and its activities. Pikachu spent 67 days on board the orbiting outpost kicking off a new collaboration.",
-    "photoUrl": "/news-images/science2.jpg"
+    "publisher": "collectSPACE.com",
+    "authors": []
   },
   {
-    "id": "1b79e4dd-f693-4652-a6db-8fa1a2a39f65",
-    "title": "Russian Progress cargo ship arrives at International Space Station",
-    "date": "2026-09-19T21:12:38.000Z",
-    "source": "Spaceflight Now",
-    "category": "SCIENCE"
+    "uuid": "e393324b-73b5-4e6e-910f-f5bc29833cb1",
+    "title": "Two Suns, one planet hunt, and no giant worlds in sight",
+    "publisher": "Tech Explorist",
+    "authors": [
+      "Amit Malewar"
+    ]
   },
   {
-    "id": "d46383ec-4ae5-48ba-af95-2dcb3befe2ff",
-    "title": "A diet containing Moringa oleifera alters the goat rumen microbiome and improves animal performance",
-    "date": "2026-09-19T20:41:56.000Z",
-    "source": "nature.com",
-    "category": "SCIENCE"
-  },
-  {
-    "id": "cca2cb50-f1e6-4136-9d1e-a665b773fdb8",
-    "title": "Network-based gene prioritization using hybrid scoring for complex disease module discovery",
-    "date": "2026-09-19T20:41:54.000Z",
-    "source": "nature.com",
-    "category": "SCIENCE"
-  },
-  {
-    "id": "bbfa9d2a-fab7-4bee-a59e-8c2afa53abc3",
+    "uuid": "bbfa9d2a-fab7-4bee-a59e-8c2afa53abc3",
     "title": "A new, huge crater has been discovered on the Moon",
-    "date": "2026-09-19T20:37:00.000Z",
-    "source": "Notebookcheck",
-    "category": "SCIENCE"
+    "publisher": "Notebookcheck",
+    "authors": [
+      "Alexis Stegmann"
+    ]
   },
   {
-    "id": "f132b03f-c055-4035-be53-37cbd65e6cb2",
-    "title": "NASA accidentally created five craters on Mars",
-    "date": "2026-09-19T20:01:25.000Z",
-    "source": "news.inbox.eu",
-    "category": "SCIENCE"
+    "uuid": "4a89f4d0-0859-40a3-8841-1695483c3c64",
+    "title": "Starship just reached orbit for the 1st time. What's next for the SpaceX megarocket?",
+    "publisher": "Space",
+    "authors": [
+      "Mike Wall"
+    ]
   },
   {
-    "id": "2d0e1d32-9078-45fa-b2fa-9d6f0f35807a",
-    "title": "An interpretable parametric representation and open dataset for oracle bone script",
-    "date": "2026-09-19T19:51:38.000Z",
-    "source": "nature.com",
-    "category": "SCIENCE"
+    "uuid": "0288ccdb-3c17-4699-9b9b-bfb998711bd8",
+    "title": "Could a human outrun a T. rex? New evidence offers an answer",
+    "publisher": "Yahoo",
+    "authors": [
+      "Stephanie Sokol"
+    ]
   },
   {
-    "id": "21d546eb-bc3e-4d7a-943a-2b41abc784c6",
-    "title": "Development and assessment of silver-zinc dual doped silymarin nanocrystals",
-    "date": "2026-09-19T19:49:20.000Z",
-    "source": "nature.com",
-    "category": "SCIENCE"
+    "uuid": "f132b03f-c055-4035-be53-37cbd65e6cb2",
+    "title": "NASA accidentally created five craters on Mars. They helped scientists make an unexpected discovery",
+    "publisher": "news.inbox.eu",
+    "authors": []
   },
   {
-    "id": "10cdd86d-3391-4316-83d3-ed595149f7bc",
-    "title": "NASA budgeted 200 kilograms of fuel for Roman’s first course correction, but the telescope used only 18",
-    "date": "2026-09-19T19:30:00.000Z",
-    "source": "Space Daily",
-    "category": "SCIENCE"
+    "uuid": "b3c957a9-3771-4beb-b013-17bc984fc8a5",
+    "title": "Radio Waves From Beta Pictoris b May Be a Cosmic First",
+    "publisher": "Gadget Review",
+    "authors": [
+      "@amnorth42"
+    ]
+  },
+  {
+    "uuid": "11c3e811-ae70-4cd6-97ab-998e761bfd57",
+    "title": "Astronomers discover a cold lava planet that may resemble early Earth",
+    "publisher": "Space",
+    "authors": [
+      "Chelsea Gohd"
+    ]
+  },
+  {
+    "uuid": "10cdd86d-3391-4316-83d3-ed595149f7bc",
+    "title": "NASA budgeted 200 kilograms of fuel for Roman’s first course correction, but the telescope used only 18. Combined with extra fuel loaded before launch and further expected savings, that could stretch its 10-year fuel plan to at least 22 years.",
+    "publisher": "Space Daily",
+    "authors": []
   }
 ]

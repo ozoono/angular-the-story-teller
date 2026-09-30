@@ -1,81 +1,75 @@
 [
   {
-    "id": "1a8b46d4-1333-46f3-99f8-90ab6491a4c9",
+    "uuid": "1a8b46d4-1333-46f3-99f8-90ab6491a4c9",
     "title": "OpenClaw Releases 2026.9.5 With Atomic Updates, Plugin Hot Reload, Conversation Sharing, and Expanded GPT Live",
-    "date": "2026-09-19T21:44:23.000Z",
-    "source": "MarkTechPost",
-    "category": "TECHNOLOGY",
-    "author": "@Marktechpost, Michal Sutter",
-    "body": "OpenClaw is an open-source, MIT-licensed personal AI agent that you run on your own machines. Its Gateway connects models, tools, and chat channels such as Telegram, Slack, and Discord. The project has now shipped version 2026.9.5 , announced on X . The release bundles 4,179 pull requests and 64 direct commits, with credits to 502 contributing accounts. The main change is Atomic Updates, which targets a long-running complaint: updates that break a working agent. Is it deployable? Yes, Version 2026.9.5 is the current latest tag on npm . It is self-hostable and needs Node 24.16+ or 26.1+. Why OpenClaw Updates Kept Breaking The OpenClaw team explained the problem in a blog post with maintainer Jason Sy . Before the fix, an update had 2 outcomes: incremental improvement or catastrophic failure. In the failure case, the old version went down as well. That left no agent online to help with the repair. Two factors made this hard. First, OpenClaw has thousands of config options, so testing every permutation is near impossible. Second, maintainers rarely felt the pain themselves. They are developers who ask Claude or Codex to update their claw. For many users, the claw is their only agent. The OpenClaw 2.0 launch in early September made the issue too large to ignore. How Atomic Updates Work According to the Claw team, the needed pieces already existed in the upgrade process. They were in the wrong order. The new flow works like this: The existing Gateway keeps running while the update is prepared. The next version is checked against a private copy of your setup. OpenClaw switches over, then verifies the updated installation. If the update fails, it rolls back to the last working configuration. OpenClaw always preserves a working agent, so it can help diagnose a failed upgrade. The team also added an issue reporting button for updates. The release notes list clear limits. Atomic Updates apply on supported update paths only. Rolling back the application cannot undo database migrations. The private validation copy is not a backup, so keep a verified backup before upgrading. If an interactive update fails, AI repair starts only after you choose Yes. It uses your account and tokens, and a 30-second timeout skips it. Interactive Explainer: OpenClaw 2026.9.5 What Else Ships in 2026.9.5 Plugin hot reload: you can install or reload supported plugins without restarting the Gateway. It works from the CLI or an authorized chat command. The CLI also accepts several plugins in 1 command. Conversation sharing: Session Share gives teammates on another paired installation read-only access to selected conversation groups. Recipients see conversation text and eligible forks. They do not see subagents, tool activity, or reasoning. Revocation cannot recall what was already received. Expanded GPT Live: you can speak while GPT Live replies in supported Meet, Teams, and Zoom meetings . It can consult your OpenClaw agent during meetings or phone calls . Live is audio-only, so the notes point to gpt-realtime-2.1 for camera use. Shared browser pages: a shared Browser dashboard lets you and your agent use the same page. It runs on a local OpenClaw-managed browser profile, not your laptop cookies. Conversation archiving: cold storage compresses older, inactive history. It is off by default and archives after 30 days once enabled. Reopening a conversation restores it and makes it searchable again. Specialist-agent setup: guided setup can create a chief of staff, researcher, writer, and reviewer. You can also pick a single specialist. Nothing is created before you approve the proposal. One upgrade warning applies to everyone. This release changes the conversation database even with archiving off. Going back requires the matching older build and a backup. How To Install or Upgrade New installs can use the official script: curl -fsSL https://openclaw.ai/install.sh | bash If you already manage Node.js, install the published package: npm install -g openclaw@latest --allow-scripts=openclaw openclaw onboard --install-daemon Existing users can run openclaw update . See the updating guide for manual paths. The release also adds a FreeBSD CLI install route using system Node and npm. Key Takeaways OpenClaw 2026.9.5 ships 4,179 pull requests from 502 contributing accounts. Atomic Updates validate the next version while the current Gateway keeps running. Failed updates roll back, and a working agent stays available to diagnose. Plugins now install or reload without a Gateway restart. Back up first: rollback cannot undo database migrations. Michal Sutter Michal Sutter is a data science professional with a Master of Science in Data Science from the University of Padova. With a solid foundation in statistical analysis, machine learning, and data engineering, Michal excels at transforming complex datasets into actionable insights.",
-    "originalUrl": "https://www.marktechpost.com/2026/09/19/openclaw-releases-2026-9-5/",
-    "summary": "OpenClaw is an open-source, MIT-licensed personal AI agent that you run on your own machines. Its Gateway connects models, tools, and chat channels such as Telegram, Slack, and Discord. The project has now...",
-    "photoUrl": "/news-images/technology1.jpg"
+    "publisher": "MarkTechPost",
+    "authors": [
+      "@Marktechpost",
+      "Michal Sutter"
+    ]
   },
   {
-    "id": "baf1ba73-becf-45de-9bec-1e717723d8c5",
+    "uuid": "baf1ba73-becf-45de-9bec-1e717723d8c5",
     "title": "Apple Confirms iPhone 18 Battery Lithium Ion Silicon Carbon Samsung",
-    "date": "2026-09-19T20:22:15.000Z",
-    "source": "Yahoo Tech",
-    "category": "TECHNOLOGY",
-    "body": "https://www.forbes.com/video/e0d8ea2c-8311-4252-9210-8edf542bcf22/ Despite the company's rivals diving head-first into silicon carbon battery tech and the extra power it brings , Apple played it safe with good ol' lithium-ion batteries for the iPhone 18 range. Why it didn't go for the new battery tech makes sense, but that doesn't mean Apple won't be tempted by the ultra-long battery life silicon carbon promises in the near future. The iPhone 18 Sticks Rather Than Twists Silicon-carbon batteries make a lot of sense, especially for foldable phones. They store significantly more energy in the same physical space as traditional lithium-ion cells, which is why Samsung used it in the Galaxy Z Fold 8 Ultra this summer , fitting a 5000mAh cell into a thinner frame than the Fold 7 while adding 600mAh more. Samsung isn't stopping there. The Galaxy S27 Pro and Ultra will use silicon-carbon cells of approximately 5,200mAh and 5,700mAh respectively. The first time a Galaxy S phone has gone beyond 5000mAh. Chinese manufacturers are already going further. Xiaomi's Redmi Note 17 Pro Max ships with a 10,000mAh silicon-carbon cell. Apple's iPhone 18 Pro Max delivers up to 45 hours of video playback, which is Apple's longest ever battery life figure. But it achieves that through software efficiency, A20 Pro chip power optimisation and the C2 modem's 15% energy reduction and the new M16 OLED display, rather than a larger or more energy-dense cell. Apple has squeezed more from the same technology rather than adopting new technology. Imagine what it could do with a significantly denser silicon carbon battery. Why Apple Played It Safe With The iPhone 18 Battery The accepted wisdom for Apple, or any other electronics manufacturer avoiding silicon-carbon, is the cycle life trade-off. Samsung's Galaxy Z Fold 8 is rated for 1,200 charge cycles, compared to 2,000 on the Z Fold 7's conventional lithium-ion cell. A 40% reduction in rated longevity on paper looks bleak. But that's not the full story. A board member at a silicon anode materials supplier that works with smartphone manufacturers, and asked to remain anonymous, told me the cycle life comparison isn't the full picture. The silicon-carbon battery starts with roughly 20% more energy than conventional lithium-ion. If a user charges their phone to the same level each day, the silicon-carbon cell depletes to a shallower depth. This, he explained, effectively extends the real-world cycle count beyond the rated figure. The new Xiaomi 17 flagship smartphone is displayed alongside the Xiaomi Pad 8 Pro using silicon carbon battery technology. (Photo by Joan Cros/NurPhoto via Getty Images) By his calculation, a 1,200-cycle silicon-carbon battery used at 50% average daily depth reaches 80% of its original capacity after approximately 7.9 years. A 2,000-cycle lithium-ion battery reaches the same threshold after around 11 years. When the silicon-carbon battery hits 80% of its original capacity, it is still holding roughly the same charge as a brand new lithium-ion battery because it started 20% higher. \"Whether it's 7.9 years or 11 years,\" he told me, \"that's way longer than most people ever keep their phones.\" There is also a separate and more interesting question about Samsung's 1,200-cycle rating itself. The Galaxy S26 Ultra, which uses a conventional lithium-ion battery, is also rated at 1,200 cycles this year, down from the S25 Ultra's 2,000. If the reduced rating were purely a silicon-carbon trade-off, it would not apply to a lithium-ion device. The same source suggested this could reflect a different internal voltage model applied across Samsung's entire 2026 lineup rather than anything specific to the battery chemistry. \"Batteries are the dark arts,\" he noted. None of which means Apple is wrong to wait. For Apple, the decision is less about cycle life maths and more about the reputational cost of a first-generation problem. An iPhone 18 Pro battery failure story is more damaging than a Galaxy Z Fold 8 battery story, because Apple's image is built directly on reliable hardware. Not just the latest and exciting tech. Apple prefers to be second with certainty than first with a footnote. Forget The iPhone 18, Will Apple Adopt Silicon-Carbon In 2027? The more likely candidate for Apple's first silicon-carbon deployment is the iPhone Air/2. Apple's ultra-thin device struggled because of poor battery life when it launched last year . A thinner phone needs a physically smaller battery, and silicon-carbon's superior density per millimetre makes the trade-off worthwhile when the alternative is poor battery life in a device marketed on thinness. It's also a somewhat experimental line for Apple, where mistakes might be forgiven more easily. If the iPhone Air 2 does come with a silicon carbon battery, don't be surprised if we see it deployed in the iPhone 19 too. iPhone 17 Price Slashed Further After iPhone 18 Price Hike Don't forget to subscribe to my free newsletter for instant deal updates, or follow my TikTok for more iPhone 18 news . This article was originally published on Forbes.com",
-    "originalUrl": "https://tech.yahoo.com/ai/apple-intelligence/articles/apple-confirms-iphone-18-battery-202215603.html",
-    "summary": "https://www.forbes.com/video/e0d8ea2c-8311-4252-9210-8edf542bcf22/ Despite the company's rivals diving head-first into silicon carbon battery tech and the extra power it brings , Apple played it safe with good ol' lithium-ion batteries for the iPhone 18 range. Why it didn't go for the new battery tech makes sense, but ",
-    "photoUrl": "/news-images/technology2.jpg"
+    "publisher": "Yahoo Tech",
+    "authors": []
   },
   {
-    "id": "44357ac2-02ca-405f-b70e-5826e834b393",
-    "title": "\"The Embodiment of Greed\": EA Sports FC 27 Receives Mixed Reviews on Steam",
-    "date": "2026-09-19T21:57:49.000Z",
-    "source": "IXBT.games",
-    "category": "TECHNOLOGY"
+    "uuid": "ba03c45e-9025-4d71-9236-b34f04938114",
+    "title": "OpenAI wants ChatGPT to be app store for AI",
+    "publisher": "Egyptian Gazette",
+    "authors": []
   },
   {
-    "id": "c329b1f6-f1cc-4d3e-ac10-67d4536cea6e",
-    "title": "The Expanse: Osiris Reborn is an Exodus to keep an eye on despite some teething problems",
-    "date": "2026-09-19T21:00:00.000Z",
-    "source": "GAMINGbible",
-    "category": "TECHNOLOGY"
-  },
-  {
-    "id": "e9f8f295-db13-4a44-9f1e-ea28341c5406",
-    "title": "Leaks confirm production lines are preparing for the PlayStation 6 release.",
-    "date": "2026-09-19T20:46:56.000Z",
-    "source": "GameGPU",
-    "category": "TECHNOLOGY"
-  },
-  {
-    "id": "0fb1785a-bb82-457f-8f7c-0312401d6f87",
+    "uuid": "0fb1785a-bb82-457f-8f7c-0312401d6f87",
     "title": "Galaxy S27 Pro and S27 Ultra reportedly getting major battery upgrade",
-    "date": "2026-09-19T19:41:00.000Z",
-    "source": "Notebookcheck",
-    "category": "TECHNOLOGY"
+    "publisher": "Notebookcheck",
+    "authors": [
+      "Jacob Fisher"
+    ]
   },
   {
-    "id": "074a7c8f-cd54-48ab-a123-38142ece6e8d",
-    "title": "NEW LEAK: Early Look at The Sims Project Rene - Back When It Was Meant to Be The Sims 5",
-    "date": "2026-09-19T20:40:37.000Z",
-    "source": "Sims Community",
-    "category": "TECHNOLOGY"
+    "uuid": "00abc8f8-1b5e-451b-a45b-ff706c2eaa9f",
+    "title": "ChatGPT Opens Its Sidebar to Outside Apps With Plugin Extensions and Event-Triggered Automations",
+    "publisher": "Nerd's Chalk",
+    "authors": []
   },
   {
-    "id": "29760606-b8da-4074-a203-c09e61f89dea",
+    "uuid": "29760606-b8da-4074-a203-c09e61f89dea",
     "title": "Nintendo has issued new batch of Switch 1 backwards compatibility fixes for Switch 2",
-    "date": "2026-09-19T20:32:33.000Z",
-    "source": "Nintendo Everything",
-    "category": "TECHNOLOGY"
+    "publisher": "Nintendo Everything",
+    "authors": [
+      "@NE_Brian"
+    ]
   },
   {
-    "id": "817decab-fa08-45e9-84ba-b7007093050f",
+    "uuid": "817decab-fa08-45e9-84ba-b7007093050f",
     "title": "Olight Unveils ArkTac Series and New ArkPro Ultra Colorway at O-Fan Day 2026",
-    "date": "2026-09-19T20:30:00.000Z",
-    "source": "PR Newswire Canada",
-    "category": "TECHNOLOGY"
+    "publisher": "PR Newswire Canada",
+    "authors": []
   },
   {
-    "id": "dda3a579-e08d-4081-9c63-87dc643d7e23",
+    "uuid": "dda3a579-e08d-4081-9c63-87dc643d7e23",
     "title": "Ferrari 296 Speciale and Lamborghini Revuelto Meet To See Which Reigns Supreme in the PHEV World",
-    "date": "2026-09-19T20:28:02.000Z",
-    "source": "autoevolution",
-    "category": "TECHNOLOGY"
+    "publisher": "autoevolution",
+    "authors": [
+      "Elena Luchian"
+    ]
+  },
+  {
+    "uuid": "954d6ab8-383e-4611-a97b-abbd2e0649cd",
+    "title": "An early Prime Day Kindle deal has finally dropped — save $90 on the Kindle Colorsoft Kids",
+    "publisher": "Mashable",
+    "authors": [
+      "Matt Ford"
+    ]
+  },
+  {
+    "uuid": "ffbb7535-57dc-43c9-9096-24b3bee23ae0",
+    "title": "iQOO Pad Ultra is here for gamers with the Snapdragon 8 Elite Extreme Gen 6, built-in fan - GSMArena.com news",
+    "publisher": "GSMArena.com",
+    "authors": [
+      "Vlad"
+    ]
   }
 ]
