@@ -1,86 +1,8 @@
-# Newspaper demo
+# Newspaper
 
-This project is a client-side Angular demo. Its content strategy combines generated static fixtures with a small number of live FreeNewsAPI requests. There is no backend and no persistent browser storage: all state lives in the Angular store for the current application session only.
+Periódico digital en Angular. HOME, CATEGORÍA y DETALLE utilizan el mismo flujo de datos tanto con API como con fixtures. El origen se selecciona al iniciar la aplicación; las páginas deciden qué necesitan y los adaptadores resuelven cómo obtenerlo.
 
-## Data sources
-
-Raw API responses are kept in `src/_data/`, one JSON file per supported news topic. The images for the first two stories of each topic are kept in `src/_data/imgs_newspaper/`.
-
-Those source files are not requested by the browser directly. Run the fixture generator whenever the raw data or images change:
-
-```bash
-npm run generate:fixtures
-```
-
-The generator creates the runtime assets below:
-
-```text
-public/news-fixtures/<topic>.json
-public/news-images/<topic>1.<extension>
-public/news-images/<topic>2.<extension>
-```
-
-Files in `public/` are served by Angular as static assets, so the application loads fixtures from paths such as `/news-fixtures/movies.json` and images from paths such as `/news-images/movies1.webp`.
-
-The active topics are defined in `src/app/core/models/news-topic.model.ts`. A raw file does not become an available application category unless it is included in that list. In particular, `ENTERTAINMENT` is not a topic: the Entertainment home section is composed from `MOVIES`, `TV`, `MUSIC`, and `GAMING`.
-
-## Fixture format
-
-The generator normalizes the raw API response into the application's `NewsArticle` model.
-
-Every fixture article includes the lightweight data needed by lists:
-
-- `id`, `title`, `date`, `source`, and `category`
-
-The first two articles of every topic also include the complete data needed by featured cards and article pages:
-
-- `author`, `summary`, `body`, `originalUrl`, and `photoUrl`
-
-This reflects the available source material: each topic has local images only for its first two stories. It also means that loading a fixture can immediately place those two complete articles in the detail cache.
-
-## Initial loading
-
-`HomeComponent` starts the process by calling `NewsStore.initTopics(newsTopics)`. The store loads all configured topics, sharing concurrent requests so a topic is never loaded twice at the same time.
-
-| Topic | Initial source | Fallback |
-| --- | --- | --- |
-| `BUSINESS` | FreeNewsAPI list endpoint | Its static `business` fixture, only if the list request fails |
-| Every other topic | Its static fixture | Not applicable |
-
-`BUSINESS` is deliberately the only live listing on the home page. When its list request succeeds, the static Business fixture is not loaded or merged with the live result. When that request fails, including a rate-limit response, the Business fixture is used instead.
-
-## When the API is called
-
-The API key is sent by the client-side HTTP interceptor. It is intentionally not repeated in this document.
-
-### Home page
-
-On a fresh application session, the home page can make these live requests:
-
-1. One `GET /news?language=en&topic=business` request to load the Business list.
-2. If that list came from the API, two `GET /details?uuid=...` requests run in parallel for its first two stories. These provide the full text, summary, and image data required by the featured stories.
-
-Therefore, the normal refreshed Business flow is three API calls. If the Business list request fails, it falls back to the fixture instead and its first two complete fixture stories are already available locally.
-
-All remaining category lists are loaded from static files and make no live API list request.
-
-### Article detail pages
-
-Complete articles are cached by UUID in `NewsStore`.
-
-1. If the UUID is already in the cache, the page uses it and makes no request.
-2. If it is not cached, `NewsStore.loadDetail(uuid)` requests `GET /details?uuid=...` and stores the returned complete article.
-3. Simultaneous requests for the same UUID share one in-flight request.
-
-Fixture articles that include `body` (the first two from each topic) are added to this cache when their fixture is loaded. Other fixture list entries remain previews; opening one for the first time requires its detail API request.
-
-`articleFor(uuid)` is read-only: it returns only a cached complete article. It does not scan a list preview and it never starts a network request itself.
-
-## Cache lifetime
-
-The store uses Angular signals and in-memory maps. Its cached topic lists, complete article details, and in-flight request tracking survive internal Angular navigation. They are cleared by a browser reload, which is intentional for this demo.
-
-## Development
+## Desarrollo y comprobaciones
 
 ```bash
 npm install
@@ -88,8 +10,254 @@ npm run generate:fixtures
 npm start
 ```
 
-To create a production build:
-
 ```bash
+npm test -- --watch=false
+npm run lint:all
 npm run build
 ```
+
+## Selección del origen
+
+Editar `src/app/core/config/news-data.config.ts`:
+
+```ts
+export const newsDataSource: NewsDataSourceName = 'fixtures'
+// Usar 'api' para obtener las noticias de FreeNewsAPI.
+```
+
+`appConfig` registra `provideNewsDataSource()`. Este proveedor asigna al token `NEWS_DATA_SOURCE` uno de estos adaptadores:
+
+- `NewsApiDataSourceService`.
+- `NewsFixtureDataSourceService`.
+
+`NewsContentService` delega en el adaptador seleccionado. No hay excepciones por categoría ni fallback automático entre orígenes. Los errores del origen elegido se guardan en el store.
+
+La clave de API se añade mediante `newsApiKeyInterceptor`, únicamente a las peticiones dirigidas a la API.
+
+## Responsabilidades y modelos
+
+```text
+Componente de página
+  → NewsPageDataService: decide los titulares y detalles necesarios
+    → NewsStore: datos, estados, caché y peticiones compartidas
+      → NewsContentService: contrato común
+        → adaptador seleccionado: API o fixtures
+```
+
+El contrato tiene dos operaciones:
+
+```ts
+getCategory(category: NewsTopic): Promise<readonly NewsHeadline[]>
+getArticleDetail(category: NewsTopic, uuid: string): Promise<NewsArticleDetail>
+```
+
+Los titulares usan `NewsHeadline`: `id`, `title`, `source`, `authors`, `category` y una fecha opcional. `toNewsHeadlines()` convierte `uuid → id` y `publisher → source`.
+
+Los detalles usan `NewsArticleDetail` y conservan los campos originales: `uuid`, `title`, `thumbnail`, `publisher`, `authors`, `topics`, `countries`, `languages`, `published_at`, `original_url`, `incipit` y `body`. `countries` y `languages` pueden faltar. `toFullNewsDetail()` valida los datos y el UUID, y conserva también los campos adicionales devueltos por el origen.
+
+Los modelos de datos están en `core/models/`: `NewsHeadline` y `NewsArticleDetail`. Los adaptadores y la caché utilizan estos modelos.
+
+Los modelos de presentación están en `shared/view-models/`: `NewsCardViewModel` para tarjetas y listados, y `NewsDetailViewModel` para el lector de noticias. Los componentes visuales utilizan estos modelos.
+
+Las conversiones están en `shared/mappers/news-view.mapper.ts`. `NewsStore.articlesFor()` utiliza `toNewsCardViewModel()` para combinar titulares con detalles disponibles. `DetailComponent` utiliza `toNewsDetailViewModel()` para preparar autores, imagen, sumario y párrafos. Las conversiones no modifican ni reducen el detalle completo guardado en caché.
+
+## HOME: /
+
+### Secuencia de funciones
+
+```text
+HomeComponent.ngOnInit()
+  → NewsPageDataService.loadHome()
+    → para cada categoría de homeNewsTopics, en paralelo:
+      → NewsStore.loadTopic(category)
+        → caché de titulares o petición ya en curso
+        → si hace falta: NewsContentService.getCategory(category)
+          → adaptador.getCategory(category)
+      → selectHomeDetails(category, headlines)
+        → guarda los UUID en homeDetailSelections
+      → para cada UUID seleccionado, en paralelo:
+        → NewsStore.loadDetail(category, uuid)
+          → caché de detalle o petición ya en curso
+          → si hace falta: NewsContentService.getArticleDetail(category, uuid)
+            → adaptador.getArticleDetail(category, uuid)
+
+Secciones de HOME
+  → NewsStore.articlesFor(category)
+    → toNewsCardViewModel(headline, cachedDetail)
+    → tarjetas
+```
+
+Cada categoría empieza a solicitar sus detalles cuando termina su propio listado. No necesita esperar a que terminen las demás categorías. Los titulares pueden mostrarse mientras llegan los detalles.
+
+La configuración está en `src/app/core/constants/home-news.constants.ts`:
+
+| Sección / categoría | Detalles solicitados |
+| --- | --- |
+| Principal / BUSINESS | Las dos primeras noticias |
+| Lateral / POLITICS | Ninguno; solo titulares |
+| Breaking / FINANCE | Ninguno; solo titulares |
+| Deportes / SPORTS | Las dos primeras noticias |
+| Entretenimiento / MOVIES, TV, MUSIC, GAMING | La primera de cada categoría |
+| Popular / TECHNOLOGY, SCIENCE, HEALTH, NUTRITION | Una de las dos primeras de cada categoría |
+
+HOME carga 12 categorías. ECONOMY está disponible en la página de categoría, pero no se solicita desde HOME.
+
+“Popular” selecciona una noticia después de cargar los titulares. Si solo hay una, utiliza esa. Los UUID elegidos se guardan en `homeDetailSelections`, y `HomePopularSectionComponent` utiliza esos mismos UUID para mostrar las noticias. La selección se conserva al volver a HOME durante la misma sesión.
+
+En una sesión sin caché y con suficientes noticias, HOME realiza 12 solicitudes lógicas de titulares y 12 de detalle. Con ambos orígenes esto supone 24 peticiones de datos: 12 de titulares y 12 de detalles. En fixtures, distintas noticias de la misma categoría solicitan el mismo archivo, pero cada llamada extrae únicamente el UUID solicitado. Estas cifras excluyen imágenes y otros recursos estáticos.
+
+`loadHome()` comparte las ejecuciones simultáneas y utiliza `Promise.allSettled()`: un fallo de categoría o detalle no bloquea las secciones que sí han cargado. Una nueva llamada reutiliza los datos correctos y reintenta los que fallaron, conservando la selección.
+
+## CATEGORÍA: /category/:category
+
+Ejemplo: `/category/sports`.
+
+### Secuencia de funciones
+
+```text
+CategoryComponent
+  → ActivatedRoute.paramMap → toSignal()
+  → toNewsTopic(category): valida y convierte a NewsTopic
+  → effect() al entrar o cambiar la categoría
+    → NewsPageDataService.loadCategoryPage(category)
+      → NewsStore.loadTopic(category)
+        → NewsContentService.getCategory(category), si no está en caché
+          → adaptador.getCategory(category)
+      → seleccionar headlines[0]
+      → si existe:
+        → NewsStore.loadDetail(category, first.id)
+          → NewsContentService.getArticleDetail(category, first.id), si no está en caché
+            → adaptador.getArticleDetail(category, first.id)
+
+Vista
+  → NewsStore.articlesFor(category)
+  → primera noticia: LeadStoryCardComponent
+  → restantes: StackedTitleListLayoutComponent
+```
+
+La carga de detalle empieza después de recibir los titulares. Solo se solicita la primera noticia. La lista permanece visible si falla ese detalle.
+
+- Categoría inválida: muestra “Category not found” y no solicita datos.
+- Lista vacía: muestra “No news in this category” y no solicita detalles.
+- Error de listado o detalle: muestra el error y un botón “Try again”.
+- El botón vuelve a ejecutar `loadCategoryPage()`; el store reutiliza lo que ya está cargado.
+
+## DETALLE: /:category/article/:id
+
+Ejemplo: `/sports/article/first`.
+
+### Secuencia de funciones
+
+```text
+DetailComponent
+  → ActivatedRoute.paramMap → toSignal()
+  → toNewsTopic(category) y lectura de id
+  → effect() al entrar o cambiar categoría / id
+    → NewsPageDataService.loadArticlePage(category, uuid)
+      → NewsStore.loadDetail(category, uuid)
+        → caché de detalle o petición ya en curso
+        → si hace falta: NewsContentService.getArticleDetail(category, uuid)
+          → adaptador.getArticleDetail(category, uuid)
+
+Vista
+  → NewsStore.articleFor(category, uuid)
+  → toNewsDetailViewModel(detail, category)
+  → modelo de presentación: título, autores, imagen, sumario y párrafos
+```
+
+DETALLE no solicita el listado de titulares. La categoría de la URL permite localizar el archivo de fixtures incluso al abrir un enlace directamente o recargar el navegador.
+
+Si el detalle ya se cargó desde HOME o CATEGORÍA, el store lo reutiliza. Pedir otra noticia de la misma categoría requiere una nueva llamada al adaptador si ese UUID no está en la caché del store.
+
+- Categoría inválida, UUID ausente en fixtures o respuesta HTTP 404: “Article not found”.
+- Otros errores: mensaje de carga fallida y botón “Try again”.
+- Cambiar los parámetros de la ruta cambia el artículo mostrado, aunque Angular reutilice el componente.
+
+Los enlaces de las tarjetas y de Breaking incluyen siempre categoría y UUID.
+
+## Qué hace cada adaptador
+
+| Operación | API | Fixtures |
+| --- | --- | --- |
+| `getCategory(category)` | `GET /news?language=en&topic=<category>` | `GET /news-fixtures/<category>.json` |
+| `getArticleDetail(category, uuid)` | `GET /details?uuid=<uuid>` | `GET /news-fixtures/<category>_data.json` → `newsFixtureDetail(response, uuid)` |
+
+API extrae el campo `data` con `newsResponseData()`. Fixtures lee directamente el array de titulares o el objeto de detalles. Ambos utilizan los mismos validadores y devuelven los mismos modelos.
+
+Los adaptadores no mantienen estado, cachés ni peticiones compartidas. Ambos realizan una petición, extraen los datos de su formato de respuesta y aplican los mismos validadores. Fixtures solo solicita el archivo de detalles al llamar a `getArticleDetail()`; cada llamada devuelve únicamente la noticia solicitada.
+
+Descargar el objeto completo no añade todas sus noticias al store: solo se guarda la noticia solicitada. Toda la caché de la aplicación y la deduplicación de peticiones se gestionan en `NewsStore`, con la misma lógica para API y fixtures.
+
+## Fixtures y generación
+
+Los originales están en `src/_data/<category>.json`. Son respuestas con datos completos de las noticias, incluidas las URLs de sus imágenes en `thumbnail`.
+
+`npm run generate:fixtures` ejecuta `scripts/generate-news-fixtures.mjs` y genera:
+
+```text
+public/news-fixtures/<category>.json       # array de titulares, conserva el orden
+public/news-fixtures/<category>_data.json  # objeto de detalles, indexado por UUID
+```
+
+Titulares:
+
+```json
+[
+  {
+    "uuid": "article-1",
+    "title": "Titular",
+    "publisher": "Medio",
+    "authors": ["Autor"]
+  }
+]
+```
+
+Detalles:
+
+```json
+{
+  "article-1": {
+    "uuid": "article-1",
+    "title": "Titular",
+    "publisher": "Medio",
+    "authors": ["Autor"],
+    "thumbnail": "https://example.com/sports.jpg",
+    "topics": ["sports"],
+    "published_at": "2026-09-19T19:12:00.000Z",
+    "original_url": "https://example.com/article",
+    "incipit": "Sumario",
+    "body": "Texto completo"
+  }
+}
+```
+
+Se conservan los detalles de todas las noticias, no solo las destacadas. Todas utilizan el `thumbnail` original; el generador no copia imágenes ni sustituye sus URLs por rutas locales.
+
+Los temas disponibles están en `core/constants/news-topics.constants.ts`. `NewsTopic` se deriva de ese catálogo en `core/models/news-topic.model.ts`; `toNewsTopic()` valida las rutas desde `core/utils/news-topic.utils.ts`. La sección de entretenimiento combina MOVIES, TV, MUSIC y GAMING; no utiliza una categoría ENTERTAINMENT.
+
+## Caché, estados y errores
+
+El store mantiene dos cachés independientes:
+
+- Titulares por categoría: `topicStates`.
+- Detalles completos por categoría y UUID: `detailStates`.
+
+Cada entrada tiene estado `idle`, `loading`, `loaded` o `error`. Un error conserva el motivo para consultarlo desde la página. Una carga correcta o un reintento elimina el error anterior. Un listado vacío también es una carga correcta.
+
+Las peticiones simultáneas del mismo recurso comparten una promesa. La existencia de un cuerpo no se utiliza para decidir si un detalle está cargado: se consulta su estado explícito.
+
+Selectores sin peticiones:
+
+| Selector | Resultado |
+| --- | --- |
+| `headlinesFor(category)` | Titulares originales normalizados |
+| `articlesFor(category)` | Artículos de presentación enriquecidos con detalles disponibles |
+| `articleFor(category, uuid)` | Detalle completo guardado |
+| `statusFor()` / `errorFor()` | Estado y error del listado |
+| `detailStatusFor()` / `detailErrorFor()` | Estado y error de un detalle |
+
+La caché y la selección de HOME viven en memoria durante la sesión de Angular. Se conservan al navegar y se pierden al recargar el navegador. No hay almacenamiento persistente ni backend propio.
+
+## Organización de tests
+
+Los tests están en carpetas `tests/` dentro de cada área: `src/app/tests/`, `core/services/tests/`, `core/stores/tests/`, `features/home/tests/` y `features/detail/tests/`. Se ejecutan todos con `npm test -- --watch=false`.

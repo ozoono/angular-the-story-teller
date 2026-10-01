@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { FeaturedStoryWithTitleListLayoutComponent } from '@/shared/ui/news-layouts/featured-story-with-title-list-layout/featured-story-with-title-list-layout.component.ts'
 
@@ -65,7 +65,7 @@ export class HomeEntertainmentSectionComponent {
 			.map((article) => this.toSecondaryArticle(article)),
 	)
 
-	private toFeaturedArticle(article: NewsArticle): NewsArticle {
+	private toFeaturedArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
 			title: article.title,
@@ -77,9 +77,10 @@ export class HomeEntertainmentSectionComponent {
 		}
 	}
 
-	private toSecondaryArticle(article: NewsArticle): NewsArticle {
+	private toSecondaryArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
+			category: article.category,
 			title: article.title,
 		}
 	}

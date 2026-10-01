@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { TitlePhotoCardComponent } from '@/shared/ui/news-card/title-photo-card/title-photo-card.component.ts'
 
 @Component({
@@ -9,5 +9,5 @@ import { TitlePhotoCardComponent } from '@/shared/ui/news-card/title-photo-card/
 	styleUrl: './photo-title-card-grid-layout.component.css',
 })
 export class PhotoTitleCardGridLayoutComponent {
-	articles = input<NewsArticle[]>([])
+	articles = input<NewsCardViewModel[]>([])
 }

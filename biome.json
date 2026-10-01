@@ -40,6 +40,12 @@
 			"enabled": false
 		}
 	},
+	"overrides": [
+		{
+			"includes": ["src/_data/**/*.json"],
+			"formatter": { "enabled": false }
+		}
+	],
 	"assist": {
 		"enabled": true,
 		"actions": {

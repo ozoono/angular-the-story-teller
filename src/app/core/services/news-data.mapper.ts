@@ -1,4 +1,5 @@
 import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
+import { NewsArticleNotFoundError } from '@/core/models/news-article-not-found-error.model.ts'
 import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
 import type { NewsTopic } from '@/core/models/news-topic.model.ts'
 
@@ -86,5 +87,10 @@ export const toFullNewsDetail = (
 	return detail
 }
 
-export const toNewsDetailIndex = (value: unknown): Record<string, unknown> =>
-	record(value)
+export const newsFixtureDetail = (response: unknown, uuid: string): unknown => {
+	const details = record(response)
+	if (!Object.hasOwn(details, uuid)) {
+		throw new NewsArticleNotFoundError(uuid)
+	}
+	return details[uuid]
+}

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { StorySummaryCardComponent } from '@/shared/ui/news-card/story-summary-card/story-summary-card.component.ts'
 
 @Component({
@@ -9,5 +9,5 @@ import { StorySummaryCardComponent } from '@/shared/ui/news-card/story-summary-c
 	styleUrl: './story-summary-list-layout.component.css',
 })
 export class StorySummaryListLayoutComponent {
-	listArticles = input<NewsArticle[]>([])
+	listArticles = input<NewsCardViewModel[]>([])
 }

@@ -1,153 +1,146 @@
 import { computed, inject, Injectable, signal } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
+import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
 import type { NewsTopic } from '@/core/models/news-topic.model.ts'
 import { NewsContentService } from '@/core/services/news-content.service.ts'
+import { toNewsCardViewModel } from '@/shared/mappers/news-view.mapper.ts'
 
-type NewsTopicLoadStatus = 'idle' | 'loading' | 'loaded' | 'error'
-type NewsTopicSource = 'api' | 'fixture'
+type NewsLoadStatus = 'idle' | 'loading' | 'loaded' | 'error'
 
 interface NewsTopicState {
-	articles: readonly NewsArticle[]
-	source?: NewsTopicSource
-	status: NewsTopicLoadStatus
+	headlines: readonly NewsHeadline[]
+	status: NewsLoadStatus
+	error?: unknown
+}
+
+interface NewsDetailState {
+	article?: NewsArticleDetail
+	status: NewsLoadStatus
+	error?: unknown
 }
 
 type NewsTopicStates = Partial<Record<NewsTopic, NewsTopicState>>
-interface NewsTopicLoadResult {
-	articles: NewsArticle[]
-	source: NewsTopicSource
-}
+type NewsDetailStates = Partial<Record<string, NewsDetailState>>
+
+const detailKey = (topic: NewsTopic, uuid: string) => `${topic}:${uuid}`
 
 @Injectable({ providedIn: 'root' })
 export class NewsStore {
 	private readonly newsContent = inject(NewsContentService)
-	// Cached topic articles, keyed by category.
 	private readonly topicStatesState = signal<NewsTopicStates>({})
-	// Full articles fetched on demand, keyed by UUID.
-	private readonly articleDetailsState = signal<Record<string, NewsArticle>>({})
-	// In-flight requests are shared by concurrent consumers.
+	private readonly detailStatesState = signal<NewsDetailStates>({})
 	private readonly pendingTopicLoads = new Map<
 		NewsTopic,
-		Promise<NewsArticle[]>
+		Promise<readonly NewsHeadline[]>
 	>()
-	private readonly pendingDetailLoads = new Map<string, Promise<NewsArticle>>()
+	private readonly pendingDetailLoads = new Map<
+		string,
+		Promise<NewsArticleDetail>
+	>()
 
 	readonly topicStates = this.topicStatesState.asReadonly()
-	readonly articleDetails = this.articleDetailsState.asReadonly()
+	readonly detailStates = this.detailStatesState.asReadonly()
 
-	// Selects the cached articles for a topic.
-	articlesFor(topic: NewsTopic) {
-		return computed(() => this.topicStatesState()[topic]?.articles ?? [])
+	headlinesFor(topic: NewsTopic) {
+		return computed(() => this.topicStatesState()[topic]?.headlines ?? [])
 	}
 
-	// Selects the current fixture loading state for a topic.
+	// Presentation is derived; cached headlines and full details stay separate.
+	articlesFor(topic: NewsTopic) {
+		return computed(() =>
+			(this.topicStatesState()[topic]?.headlines ?? []).map((headline) =>
+				toNewsCardViewModel(
+					headline,
+					this.detailStatesState()[detailKey(topic, headline.id)]?.article,
+				),
+			),
+		)
+	}
+
 	statusFor(topic: NewsTopic) {
 		return computed(() => this.topicStatesState()[topic]?.status ?? 'idle')
 	}
 
-	// Selects a cached full article detail by UUID.
-	articleFor(id: string) {
-		return computed(() => this.articleDetailsState()[id])
+	errorFor(topic: NewsTopic) {
+		return computed(() => this.topicStatesState()[topic]?.error)
 	}
 
-	// Loads BUSINESS from the API and all other topics from fixtures.
-	async loadTopic(topic: NewsTopic): Promise<NewsArticle[]> {
+	articleFor(topic: NewsTopic, uuid: string) {
+		return computed(
+			() => this.detailStatesState()[detailKey(topic, uuid)]?.article,
+		)
+	}
+
+	detailStatusFor(topic: NewsTopic, uuid: string) {
+		return computed(
+			() => this.detailStatesState()[detailKey(topic, uuid)]?.status ?? 'idle',
+		)
+	}
+
+	detailErrorFor(topic: NewsTopic, uuid: string) {
+		return computed(
+			() => this.detailStatesState()[detailKey(topic, uuid)]?.error,
+		)
+	}
+
+	loadTopic(topic: NewsTopic): Promise<readonly NewsHeadline[]> {
 		const currentState = this.topicStatesState()[topic]
-
 		if (currentState?.status === 'loaded') {
-			return [...currentState.articles]
+			return Promise.resolve(currentState.headlines)
 		}
-
-		const pendingLoad = this.pendingTopicLoads.get(topic)
-
-		if (pendingLoad !== undefined) {
-			return pendingLoad
+		const pending = this.pendingTopicLoads.get(topic)
+		if (pending !== undefined) {
+			return pending
 		}
-
 		this.setTopicState(topic, {
-			articles: currentState?.articles ?? [],
+			headlines: currentState?.headlines ?? [],
 			status: 'loading',
 		})
-
-		const load = this.loadTopicArticles(topic)
-			.then(({ articles, source }) => {
-				this.cacheFixtureDetails(articles)
-				this.setTopicState(topic, { articles, source, status: 'loaded' })
-
-				return articles
+		const load = this.newsContent
+			.getCategory(topic)
+			.then((headlines) => {
+				this.setTopicState(topic, { headlines, status: 'loaded' })
+				return headlines
 			})
 			.catch((error: unknown) => {
 				this.setTopicState(topic, {
-					articles: currentState?.articles ?? [],
+					headlines: currentState?.headlines ?? [],
 					status: 'error',
+					error,
 				})
-
 				throw error
 			})
 			.finally(() => this.pendingTopicLoads.delete(topic))
-
 		this.pendingTopicLoads.set(topic, load)
-
 		return load
 	}
 
-	// Loads every home topic and enriches the two featured BUSINESS articles.
-	async initTopics(topics: readonly NewsTopic[]): Promise<void> {
-		const topicLoads = topics.map((topic) => this.loadTopic(topic))
-		const businessTopicIndex = topics.indexOf('BUSINESS')
-
-		if (businessTopicIndex !== -1) {
-			try {
-				const businessArticles = await topicLoads[businessTopicIndex]
-
-				if (this.topicStatesState().BUSINESS?.source === 'api') {
-					await Promise.allSettled(
-						businessArticles
-							.slice(0, 2)
-							.map((article) => this.loadDetail(article.id)),
-					)
-				}
-			} catch {
-				// Ignored, loadTopic handles error state
-			}
+	loadDetail(topic: NewsTopic, uuid: string): Promise<NewsArticleDetail> {
+		const key = detailKey(topic, uuid)
+		const currentState = this.detailStatesState()[key]
+		if (
+			currentState?.status === 'loaded' &&
+			currentState.article !== undefined
+		) {
+			return Promise.resolve(currentState.article)
 		}
-
-		await Promise.allSettled(topicLoads)
-	}
-
-	// Loads and caches a full article detail by UUID.
-	async loadDetail(id: string): Promise<NewsArticle> {
-		const cachedDetail = this.articleDetailsState()[id]
-
-		if (cachedDetail !== undefined && cachedDetail.body !== undefined) {
-			return cachedDetail
+		const pending = this.pendingDetailLoads.get(key)
+		if (pending !== undefined) {
+			return pending
 		}
-
-		const pendingLoad = this.pendingDetailLoads.get(id)
-
-		if (pendingLoad !== undefined) {
-			return pendingLoad
-		}
-
+		this.setDetailState(key, { status: 'loading' })
 		const load = this.newsContent
-			.loadDetail(id)
-			.then((detail) => {
-				this.articleDetailsState.update((details) => ({
-					...details,
-					[id]: detail,
-				}))
-
-				return detail
+			.getArticleDetail(topic, uuid)
+			.then((article) => {
+				this.setDetailState(key, { article, status: 'loaded' })
+				return article
 			})
-			.catch(async (error) => {
-				if (cachedDetail !== undefined) {
-					return cachedDetail
-				}
+			.catch((error: unknown) => {
+				this.setDetailState(key, { status: 'error', error })
 				throw error
 			})
-			.finally(() => this.pendingDetailLoads.delete(id))
-
-		this.pendingDetailLoads.set(id, load)
+			.finally(() => this.pendingDetailLoads.delete(key))
+		this.pendingDetailLoads.set(key, load)
 		return load
 	}
 
@@ -155,40 +148,7 @@ export class NewsStore {
 		this.topicStatesState.update((states) => ({ ...states, [topic]: state }))
 	}
 
-	private cacheFixtureDetails(articles: NewsArticle[]): void {
-		const details = articles.filter((article) => article.body !== undefined)
-
-		if (details.length === 0) {
-			return
-		}
-
-		this.articleDetailsState.update((cachedDetails) => ({
-			...cachedDetails,
-			...Object.fromEntries(details.map((article) => [article.id, article])),
-		}))
-	}
-
-	private loadTopicArticles(topic: NewsTopic): Promise<NewsTopicLoadResult> {
-		if (topic !== 'BUSINESS') {
-			return this.newsContent.loadFixture(topic).then((articles) => ({
-				articles,
-				source: 'fixture',
-			}))
-		}
-
-		return this.newsContent
-			.loadBusinessList()
-			.then((articles) => {
-				if (articles.length === 0) {
-					throw new Error('No articles returned from API')
-				}
-				return { articles, source: 'api' as const }
-			})
-			.catch(() =>
-				this.newsContent.loadFixture(topic).then((articles) => ({
-					articles,
-					source: 'fixture' as const,
-				})),
-			)
+	private setDetailState(key: string, state: NewsDetailState): void {
+		this.detailStatesState.update((states) => ({ ...states, [key]: state }))
 	}
 }

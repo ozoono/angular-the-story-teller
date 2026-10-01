@@ -4,8 +4,7 @@ import { HomeMainSectionComponent } from '@/features/home/sections/home-main-sec
 import { HomePopularSectionComponent } from '@/features/home/sections/home-popular-section/home-popular-section.component.ts'
 import { HomeSportsSectionComponent } from '@/features/home/sections/home-sports-section/home-sports-section.component.ts'
 import { HomeBreakingSectionComponent } from '@/features/home/sections/home-breaking-section/home-breaking-section.ts'
-import { newsTopics } from '@/core/models/news-topic.model.ts'
-import { NewsStore } from '@/core/stores/news.store.ts'
+import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 
 @Component({
 	selector: 'app-home',
@@ -20,9 +19,9 @@ import { NewsStore } from '@/core/stores/news.store.ts'
 	styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-	private readonly newsStore = inject(NewsStore)
+	private readonly pageData = inject(NewsPageDataService)
 
 	ngOnInit(): void {
-		void this.newsStore.initTopics(newsTopics)
+		void this.pageData.loadHome()
 	}
 }

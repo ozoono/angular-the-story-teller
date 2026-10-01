@@ -4,4 +4,3 @@ export const newsApiKey =
 export const newsListUrl = `${newsApiBaseUrl}/news`
 export const newsDetailUrl = `${newsApiBaseUrl}/details`
 export const defaultNewsLanguage = 'en'
-export const defaultNewsTopic = 'world'

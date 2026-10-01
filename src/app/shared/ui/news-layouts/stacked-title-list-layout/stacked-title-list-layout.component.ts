@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { TitleOnlyCardComponent } from '@/shared/ui/news-card/title-only-card/title-only-card.component.ts'
 
 @Component({
@@ -9,5 +9,5 @@ import { TitleOnlyCardComponent } from '@/shared/ui/news-card/title-only-card/ti
 	styleUrl: './stacked-title-list-layout.component.css',
 })
 export class StackedTitleListLayoutComponent {
-	articles = input<NewsArticle[]>([])
+	articles = input<NewsCardViewModel[]>([])
 }

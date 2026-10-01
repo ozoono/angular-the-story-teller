@@ -9,6 +9,7 @@ import { NEWS_DATA_SOURCE } from '@/core/config/news-data.config.ts'
 import { provideNewsDataSource } from '@/core/config/news-data.providers.ts'
 import type { NewsDataSourceName } from '@/core/models/news-data-source.model.ts'
 import { NewsContentService } from '@/core/services/news-content.service.ts'
+import { NewsStore } from '@/core/stores/news.store.ts'
 
 const headline = {
 	uuid: 'article-1',
@@ -46,7 +47,7 @@ const setup = (source: NewsDataSourceName) => {
 afterEach(() => TestBed.inject(HttpTestingController).verify())
 
 describe('Fixture news data source', () => {
-	it('loads only headlines, then shares and caches the detail file', async () => {
+	it('loads only headlines and fetches details without keeping an adapter cache', async () => {
 		const { content, http } = setup('fixtures')
 		const headlines = content.getCategory('BUSINESS')
 		http
@@ -66,16 +67,18 @@ describe('Fixture news data source', () => {
 		const first = content.getArticleDetail('BUSINESS', headline.uuid)
 		const other = content.getArticleDetail('BUSINESS', 'article-2')
 		const secondDetail = { ...detail, uuid: 'article-2' }
-		http.expectOne('/news-fixtures/business_data.json').flush({
-			[headline.uuid]: detail,
-			'article-2': secondDetail,
-		})
+		const requests = http.match('/news-fixtures/business_data.json')
+		expect(requests).toHaveLength(2)
+		for (const request of requests) {
+			request.flush({ [headline.uuid]: detail, 'article-2': secondDetail })
+		}
 		expect(await first).toEqual(detail)
 		expect(await other).toEqual(secondDetail)
-		expect(await content.getArticleDetail('BUSINESS', headline.uuid)).toEqual(
-			detail,
-		)
-		http.expectNone('/news-fixtures/business_data.json')
+		const repeated = content.getArticleDetail('BUSINESS', headline.uuid)
+		http
+			.expectOne('/news-fixtures/business_data.json')
+			.flush({ [headline.uuid]: detail })
+		expect(await repeated).toEqual(detail)
 	})
 
 	it('can open a detail directly without loading headlines', async () => {
@@ -88,7 +91,7 @@ describe('Fixture news data source', () => {
 		http.expectNone('/news-fixtures/business.json')
 	})
 
-	it('reports a missing UUID and keeps the cached category file usable', async () => {
+	it('reports a missing UUID and can fetch another article afterwards', async () => {
 		const { content, http } = setup('fixtures')
 		const result = content.getArticleDetail('BUSINESS', 'missing')
 		const rejection = expect(result).rejects.toThrow(
@@ -98,9 +101,11 @@ describe('Fixture news data source', () => {
 			.expectOne('/news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		await rejection
-		expect(await content.getArticleDetail('BUSINESS', headline.uuid)).toEqual(
-			detail,
-		)
+		const next = content.getArticleDetail('BUSINESS', headline.uuid)
+		http
+			.expectOne('/news-fixtures/business_data.json')
+			.flush({ [headline.uuid]: detail })
+		expect(await next).toEqual(detail)
 	})
 
 	it('retries a failed download instead of caching the failure', async () => {
@@ -192,5 +197,38 @@ describe('Default news data source', () => {
 		TestBed.inject(HttpTestingController)
 			.expectOne('/news-fixtures/business.json')
 			.flush([])
+	})
+})
+
+describe.each(['api', 'fixtures'] as const)('Store cache with %s', (source) => {
+	it('shares pending requests and caches headlines and details identically', async () => {
+		const { http } = setup(source)
+		const store = TestBed.inject(NewsStore)
+		const headlines = store.loadTopic('BUSINESS')
+		expect(store.loadTopic('BUSINESS')).toBe(headlines)
+		const list = [{ ...headline, authors: [] }]
+		if (source === 'api') {
+			http
+				.expectOne((request) => request.url === newsListUrl)
+				.flush({ data: list })
+		} else {
+			http.expectOne('/news-fixtures/business.json').flush(list)
+		}
+		await headlines
+		const article = store.loadDetail('BUSINESS', headline.uuid)
+		expect(store.loadDetail('BUSINESS', headline.uuid)).toBe(article)
+		if (source === 'api') {
+			http
+				.expectOne((request) => request.url === newsDetailUrl)
+				.flush({ data: detail })
+		} else {
+			http
+				.expectOne('/news-fixtures/business_data.json')
+				.flush({ [headline.uuid]: detail })
+		}
+		expect(await article).toEqual(detail)
+		await store.loadTopic('BUSINESS')
+		expect(await store.loadDetail('BUSINESS', headline.uuid)).toEqual(detail)
+		http.expectNone(() => true)
 	})
 })

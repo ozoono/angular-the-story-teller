@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { newsTopics } from '@/core/models/news-topic.model.ts'
+import { newsTopics } from '@/core/constants/news-topics.constants.ts'
 
 @Component({
 	selector: 'app-header',

@@ -1,8 +1,8 @@
 <article class="title-summary-card">
   <a
     class="title-summary-card__link"
-    href="/article/{{ article().id }}"
-    [routerLink]="['/article', article().id]"
+    href="/{{ article().category?.toLowerCase() }}/article/{{ article().id }}"
+    [routerLink]="['/', article().category?.toLowerCase(), 'article', article().id]"
   >
     @if (hasTop()) {
       <div class="title-summary-card__top">

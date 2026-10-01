@@ -14,6 +14,7 @@ import {
 	toNewsHeadlines,
 } from '@/core/services/news-data.mapper.ts'
 
+/** Fetches headlines and full article details from the API and validates its responses. */
 @Injectable({ providedIn: 'root' })
 export class NewsApiDataSourceService implements NewsDataSource {
 	private readonly http = inject(HttpClient)

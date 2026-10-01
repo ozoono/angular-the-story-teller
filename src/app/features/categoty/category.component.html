@@ -1,0 +1,29 @@
+<section class="category-page">
+  <div class="category-page__content">
+    @if (topic(); as category) {
+      <h1 class="category-page__title">{{ category }}</h1>
+      @if (status() === 'idle' || status() === 'loading') {
+        <p role="status">Loading news…</p>
+      } @else if (status() === 'error') {
+        <p role="alert">Unable to load this category.</p>
+        <button type="button" (click)="retry()">Try again</button>
+      } @else if (firstArticle(); as article) {
+        <app-lead-story-card [article]="article" />
+        @if (detailStatus() === 'loading') {
+          <p role="status">Loading featured article…</p>
+        } @else if (detailStatus() === 'error') {
+          <p role="alert">Unable to load the featured article details.</p>
+          <button type="button" (click)="retry()">Try again</button>
+        }
+        <app-stacked-title-list-layout [articles]="remainingArticles()" />
+      } @else {
+        <p>No news in this category.</p>
+      }
+    } @else {
+      <h1>Category not found</h1>
+    }
+  </div>
+  <aside class="category-page__sidebar" aria-label="Ads">
+    <app-ads></app-ads>
+  </aside>
+</section>

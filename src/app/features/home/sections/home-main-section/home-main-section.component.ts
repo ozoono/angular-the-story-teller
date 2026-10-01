@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { LeadStoryCardComponent } from '@/shared/ui/news-card/lead-story-card/lead-story-card.component.ts'
 import { FeaturedStoryWithTitleListLayoutComponent } from '@/shared/ui/news-layouts/featured-story-with-title-list-layout/featured-story-with-title-list-layout.component.ts'
@@ -21,18 +21,18 @@ export class HomeMainSectionComponent {
 	private readonly politicalArticles = this.newsStore.articlesFor('POLITICS')
 
 	protected readonly leadArticle = computed(() => {
-		const article = this.articleWithDetail(this.articles()[0])
+		const article = this.articles()[0]
 
 		return article === undefined ? undefined : this.toFeaturedArticle(article)
 	})
 	protected readonly secondaryArticle = computed(() => {
-		const article = this.articleWithDetail(this.articles()[1])
+		const article = this.articles()[1]
 
 		return article === undefined ? undefined : this.toFeaturedArticle(article)
 	})
 	protected readonly secondaryTitleArticles = computed(() =>
 		this.articles()
-			.slice(2, 4)
+			.slice(2, 5)
 			.map((article) => this.toReducedArticle(article)),
 	)
 	protected readonly sidebarTitleArticles = computed(() =>
@@ -41,15 +41,10 @@ export class HomeMainSectionComponent {
 			.map((article) => this.toReducedArticle(article)),
 	)
 
-	private articleWithDetail(article: NewsArticle | undefined) {
-		return article === undefined
-			? undefined
-			: (this.newsStore.articleDetails()[article.id] ?? article)
-	}
-
-	private toFeaturedArticle(article: NewsArticle): NewsArticle {
+	private toFeaturedArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
+			category: article.category,
 			title: article.title,
 			summary: article.summary,
 			photoUrl: article.photoUrl,
@@ -59,9 +54,10 @@ export class HomeMainSectionComponent {
 		}
 	}
 
-	private toReducedArticle(article: NewsArticle): NewsArticle {
+	private toReducedArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
+			category: article.category,
 			title: article.title,
 			source: article.source,
 		}

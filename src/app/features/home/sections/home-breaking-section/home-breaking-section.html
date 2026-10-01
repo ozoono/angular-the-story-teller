@@ -2,8 +2,8 @@
   <section class="home-breaking-section">
     <a
       class="home-breaking-section__link"
-      href="/article/{{ article.id }}"
-      [routerLink]="['/article', article.id]"
+      href="/{{ article.category?.toLowerCase() }}/article/{{ article.id }}"
+      [routerLink]="['/', article.category?.toLowerCase(), 'article', article.id]"
     >
       <span class="home-breaking-section__badge">BREAKING:</span>
       <span class="home-breaking-section__title">{{ article.title }}</span>

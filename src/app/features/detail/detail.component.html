@@ -1,0 +1,32 @@
+<section class="article-page">
+  @if (notFound()) {
+    <h1>Article not found</h1>
+  } @else if (status() === 'idle' || status() === 'loading') {
+    <p role="status">Loading article…</p>
+  } @else if (status() === 'error') {
+    <p role="alert">Unable to load this article.</p>
+    <button type="button" (click)="retry()">Try again</button>
+  } @else if (article(); as detail) {
+    <article class="article-page__story">
+      <a href="/category/{{ topic()?.toLowerCase() }}" [routerLink]="['/category', topic()?.toLowerCase()]">{{ topic() }}</a>
+      <h1 class="article-page__title">{{ detail.title }}</h1>
+      @if (detail.summary) {
+        <p class="article-page__summary">{{ detail.summary }}</p>
+      }
+      @if (detail.photoUrl) {
+        <img class="article-page__photo" [src]="detail.photoUrl" alt="{{ detail.photoAlt }}" />
+      }
+      <div class="article-page__source">
+        @if (detail.author) {
+          <app-news-author [text]="detail.author" />
+        }
+        <app-news-source [text]="detail.source" />
+      </div>
+      <div class="article-page__body">
+        @for (paragraph of detail.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
+      </div>
+    </article>
+  }
+</section>

@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { NewsAuthorComponent } from '@/shared/ui/news-card/news-author.component.ts'
 import { NewsCategoryComponent } from '@/shared/ui/news-card/news-category.component.ts'
 import { NewsDateComponent } from '@/shared/ui/news-card/news-date.component.ts'
@@ -19,7 +19,7 @@ import { NewsSourceComponent } from '@/shared/ui/news-card/news-source.component
 	styleUrl: './title-summary-card.component.css',
 })
 export class TitleSummaryCardComponent {
-	article = input.required<NewsArticle>()
+	article = input.required<NewsCardViewModel>()
 
 	protected readonly hasTop = computed(() => {
 		const { category } = this.article()

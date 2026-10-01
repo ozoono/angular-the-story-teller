@@ -1,9 +1,9 @@
 import { Component, computed, inject } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import { homePopularTopics } from '@/core/constants/home-news.constants.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
+import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { PhotoTitleCardGridLayoutComponent } from '@/shared/ui/news-layouts/photo-title-card-grid-layout/photo-title-card-grid-layout.component.ts'
-
-const popularTopics = ['TECHNOLOGY', 'SCIENCE', 'HEALTH', 'NUTRITION'] as const
 
 @Component({
 	selector: 'app-home-popular-section',
@@ -13,22 +13,22 @@ const popularTopics = ['TECHNOLOGY', 'SCIENCE', 'HEALTH', 'NUTRITION'] as const
 })
 export class HomePopularSectionComponent {
 	private readonly newsStore = inject(NewsStore)
-	private readonly topicArticles = popularTopics.map((topic) =>
+	private readonly pageData = inject(NewsPageDataService)
+	private readonly topicArticles = homePopularTopics.map((topic) =>
 		this.newsStore.articlesFor(topic),
-	)
-	private readonly articleIndexes = popularTopics.map(() =>
-		Math.floor(Math.random() * 2),
 	)
 
 	protected readonly articles = computed(() =>
 		this.topicArticles.flatMap((topicArticles, index) => {
-			const article = topicArticles()[this.articleIndexes[index]]
+			const selectedId =
+				this.pageData.homeDetailSelections()[homePopularTopics[index]]?.[0]
+			const article = topicArticles().find((item) => item.id === selectedId)
 
 			return article === undefined ? [] : [this.toPopularArticle(article)]
 		}),
 	)
 
-	private toPopularArticle(article: NewsArticle): NewsArticle {
+	private toPopularArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
 			title: article.title,

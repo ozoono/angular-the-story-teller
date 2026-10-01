@@ -1,0 +1,30 @@
+.article-page {
+	max-width: 800px;
+	margin: var(--grid-gap) auto;
+	padding: 0 1rem;
+}
+
+.article-page__story {
+	display: grid;
+	gap: 1rem;
+}
+
+.article-page__title {
+	line-height: 1.2;
+	font-family: var(--font-serif-titles);
+	font-size: 2rem;
+}
+
+.article-page__photo {
+	width: 100%;
+	height: auto;
+}
+
+.article-page__summary {
+	font-size: 1.25rem;
+}
+
+.article-page__body {
+	line-height: 1.7;
+	overflow-wrap: anywhere;
+}

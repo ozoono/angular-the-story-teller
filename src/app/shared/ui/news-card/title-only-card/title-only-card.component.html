@@ -1,8 +1,8 @@
 <article class="title-only-card">
   <a
     class="title-only-card__link"
-    href="/article/{{ article().id }}"
-    [routerLink]="['/article', article().id]"
+    href="/{{ article().category?.toLowerCase() }}/article/{{ article().id }}"
+    [routerLink]="['/', article().category?.toLowerCase(), 'article', article().id]"
   >
     <h2 class="title-only-card__title">{{ article().title }}</h2>
 

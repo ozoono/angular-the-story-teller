@@ -17,7 +17,7 @@ export const routes: Routes = [
 			),
 	},
 	{
-		path: 'article/:id',
+		path: ':category/article/:id',
 		loadChildren: () =>
 			import('@/features/detail/detail.routes.ts').then(
 				(module) => module.detailRoutes,

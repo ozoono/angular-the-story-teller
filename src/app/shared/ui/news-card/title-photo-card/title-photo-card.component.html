@@ -1,8 +1,8 @@
 <article class="title-photo-card">
   <a
     class="title-photo-card__link"
-    href="/article/{{ article().id }}"
-    [routerLink]="['/article', article().id]"
+    href="/{{ article().category?.toLowerCase() }}/article/{{ article().id }}"
+    [routerLink]="['/', article().category?.toLowerCase(), 'article', article().id]"
   >
     @if (hasTop()) {
       <div class="title-photo-card__top">

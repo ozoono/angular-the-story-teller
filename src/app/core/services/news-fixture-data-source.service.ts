@@ -5,17 +5,14 @@ import type { NewsDataSource } from '@/core/models/news-data-source.model.ts'
 import type { NewsTopic } from '@/core/models/news-topic.model.ts'
 import {
 	toFullNewsDetail,
-	toNewsDetailIndex,
+	newsFixtureDetail,
 	toNewsHeadlines,
 } from '@/core/services/news-data.mapper.ts'
 
+/** Fetches headlines and full article details from fixture files and validates their responses. */
 @Injectable({ providedIn: 'root' })
 export class NewsFixtureDataSourceService implements NewsDataSource {
 	private readonly http = inject(HttpClient)
-	private readonly detailIndexes = new Map<
-		NewsTopic,
-		Promise<Record<string, unknown>>
-	>()
 
 	async getCategory(category: NewsTopic) {
 		const response = await firstValueFrom(
@@ -25,31 +22,11 @@ export class NewsFixtureDataSourceService implements NewsDataSource {
 	}
 
 	async getArticleDetail(category: NewsTopic, uuid: string) {
-		const details = await this.getDetailIndex(category)
-		if (!Object.hasOwn(details, uuid)) {
-			throw new Error(`News article not found: ${uuid}`)
-		}
-		return toFullNewsDetail(details[uuid], uuid)
-	}
-
-	private getDetailIndex(
-		category: NewsTopic,
-	): Promise<Record<string, unknown>> {
-		const cached = this.detailIndexes.get(category)
-		if (cached !== undefined) {
-			return cached
-		}
-		const load = firstValueFrom(
+		const response = await firstValueFrom(
 			this.http.get<unknown>(
 				`/news-fixtures/${category.toLowerCase()}_data.json`,
 			),
 		)
-			.then(toNewsDetailIndex)
-			.catch((error: unknown) => {
-				this.detailIndexes.delete(category)
-				throw error
-			})
-		this.detailIndexes.set(category, load)
-		return load
+		return toFullNewsDetail(newsFixtureDetail(response, uuid), uuid)
 	}
 }

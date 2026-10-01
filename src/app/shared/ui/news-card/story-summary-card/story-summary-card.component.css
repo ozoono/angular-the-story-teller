@@ -62,9 +62,9 @@
 
 @container (min-width: 900px) {
 	.story-summary-card__link {
-		grid-template-columns: 170px minmax(0, 1fr) 300px;
-		grid-template-areas:
-			"bottom title photo"
-			"bottom summary photo";
+		grid-template:
+			"bottom title photo" minmax(25px, auto)
+			"bottom summary photo" minmax(25px, auto)
+			/ 170px minmax(0, 1fr) 200px;
 	}
 }

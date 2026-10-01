@@ -1,8 +1,8 @@
 <article class="story-summary-card">
   <a
     class="story-summary-card__link"
-    href="/article/{{ article().id }}"
-    [routerLink]="['/article', article().id]"
+    href="/{{ article().category?.toLowerCase() }}/article/{{ article().id }}"
+    [routerLink]="['/', article().category?.toLowerCase(), 'article', article().id]"
   >
     @if (article().photoUrl; as photoUrl) {
       <img

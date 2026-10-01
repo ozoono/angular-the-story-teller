@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core'
-import type { NewsArticle } from '@/core/models/news-article.model.ts'
+import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { StorySummaryListLayoutComponent } from '@/shared/ui/news-layouts/story-summary-list-layout/story-summary-list-layout.component.ts'
 
@@ -19,9 +19,10 @@ export class HomeSportsSectionComponent {
 			.map((article) => this.toListArticle(article)),
 	)
 
-	private toListArticle(article: NewsArticle): NewsArticle {
+	private toListArticle(article: NewsCardViewModel): NewsCardViewModel {
 		return {
 			id: article.id,
+			category: article.category,
 			title: article.title,
 			summary: article.summary,
 			photoUrl: article.photoUrl,
