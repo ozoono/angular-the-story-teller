@@ -1,34 +1,31 @@
 [
   {
-    "uuid": "5660ee0b-0ac2-44f0-8346-bbb1044701e4",
-    "title": "Google’s AI model hacked three other companies during security breach",
-    "publisher": "The Independent",
-    "authors": [
-      "Erin Keller"
-    ]
-  },
-  {
-    "uuid": "20edad93-94d4-48c5-bd6f-0c52239d893e",
-    "title": "The U.S. Central Bank Delivers Massive News to Stock Market Investors",
-    "publisher": "The Motley Fool",
-    "authors": [
-      "CFA",
-      "Parkev Tatevosian"
-    ]
-  },
-  {
-    "uuid": "17547ea8-0e5d-4d9b-a977-4a33da2f0446",
-    "title": "Ignite to promote Ghanaian shea butter on the global market — MyJoyOnline",
-    "publisher": "UA.NEWS",
-    "authors": []
-  },
-  {
     "uuid": "44f6db90-8da2-4a55-955b-e7e0577e9513",
     "title": "Why London-Los Angeles Flights Curve Over Greenland Instead Of Flying Straight West",
     "publisher": "Simple Flying",
     "authors": [
       "Daniel Osipov"
     ]
+  },  
+  {
+ 		"uuid": "99eb1a59-f6b5-4013-be4f-51c5a49ee2c7",
+		"title": "US regulator opens inquiry into Anthropic, OpenAI and other AI labs",
+    "publisher": "Yahoo",
+		"authors": ["Anwesha Pattanaik"]
+  },
+  {
+    "uuid": "5660ee0b-0ac2-44f0-8346-bbb1044701e4",
+    "title": "Google’s AI model hacked three other companies during security breach",
+    "publisher": "The Independent",
+    "authors": [
+      "Erin Keller"
+    ]
+  },  
+  {
+    "uuid": "17547ea8-0e5d-4d9b-a977-4a33da2f0446",
+    "title": "Ignite to promote Ghanaian shea butter on the global market — MyJoyOnline",
+    "publisher": "UA.NEWS",
+    "authors": []
   },
   {
     "uuid": "167daa25-9f6d-4d70-be63-a3b305964e49",

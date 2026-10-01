@@ -1,18 +1,25 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, computed, effect, inject, untracked } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { ActivatedRoute, RouterLink } from '@angular/router'
-import { NewsAuthorComponent } from '@/shared/ui/news-card/news-author.component.ts'
-import { NewsSourceComponent } from '@/shared/ui/news-card/news-source.component.ts'
+import { ActivatedRoute } from '@angular/router'
+import { ArticleContentComponent } from './components/article-content/article-content.component.ts'
 import { NewsArticleNotFoundError } from '@/core/models/news-article-not-found-error.model.ts'
 import { toNewsTopic } from '@/core/utils/news-topic.utils.ts'
 import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { toNewsDetailViewModel } from '@/shared/mappers/news-view.mapper.ts'
+import { AdsComponent } from '@/shared/components/app-ads-component.ts'
+import type { NewsDetailViewModel } from '@/shared/view-models/news-detail-view.model.ts'
+
+type DetailViewState =
+	| { kind: 'not-found' }
+	| { kind: 'loading' }
+	| { kind: 'error' }
+	| { kind: 'ready'; article: NewsDetailViewModel }
 
 @Component({
 	selector: 'app-detail',
-	imports: [RouterLink, NewsAuthorComponent, NewsSourceComponent],
+	imports: [ArticleContentComponent, AdsComponent],
 	templateUrl: './detail.component.html',
 	styleUrl: './detail.component.css',
 })
@@ -53,6 +60,15 @@ export class DetailComponent {
 			(error instanceof HttpErrorResponse && error.status === 404)
 		)
 	})
+	protected readonly viewState = computed<DetailViewState>(() => {
+		if (this.notFound()) return { kind: 'not-found' }
+		if (this.status() === 'error') return { kind: 'error' }
+		const article = this.article()
+		return article === undefined
+			? { kind: 'loading' }
+			: { kind: 'ready', article }
+	})
+
 	constructor() {
 		effect(() => {
 			const topic = this.topic()
@@ -68,7 +84,7 @@ export class DetailComponent {
 		})
 	}
 
-	protected retry(): void {
+	protected onRetry(): void {
 		const topic = this.topic()
 		const uuid = this.uuid()
 		if (topic !== undefined && uuid) {

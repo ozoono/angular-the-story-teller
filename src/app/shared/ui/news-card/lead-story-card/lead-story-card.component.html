@@ -20,10 +20,6 @@
 
     @if (hasBottom()) {
       <div class="lead-story-card__bottom">
-        @if (article().date; as date) {
-          <app-news-date [date]="date" />
-        }
-
         @if (article().author; as author) {
           <app-news-author [text]="author" />
         }

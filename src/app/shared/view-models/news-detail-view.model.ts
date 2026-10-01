@@ -6,4 +6,5 @@ export interface NewsDetailViewModel extends NewsCardViewModel {
 	body: string
 	paragraphs: readonly string[]
 	originalUrl: string
+	topics: readonly string[]
 }

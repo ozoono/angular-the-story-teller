@@ -36,4 +36,5 @@ export const toNewsDetailViewModel = (
 		.split(/\n\s*\n/)
 		.filter((paragraph) => paragraph.trim()),
 	originalUrl: detail.original_url,
+	topics: detail.topics,
 })

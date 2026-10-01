@@ -1,0 +1,34 @@
+<article class="article-page__content">
+  <a
+    class="article-content__category-link"
+    href="/category/{{ topic()?.toLowerCase() }}"
+    [routerLink]="['/category', topic()?.toLowerCase()]"
+  >
+    {{ topic() }}
+  </a>
+  <h1 class="article-content__title">{{ article().title }}</h1>
+  @if (article().summary) {
+    <p class="article-content__summary">{{ article().summary }}</p>
+  }
+  @if (article().photoUrl) {
+    <img class="article-content__photo" [src]="article().photoUrl" alt="{{ article().photoAlt }}" />
+  }
+  <div class="article-content__source">
+    @if (article().author) {
+      <app-news-author [text]="article().author!" />
+    }
+    <app-news-source [text]="article().source" />
+  </div>
+  <div class="article-content__body">
+    @for (paragraph of article().paragraphs; track $index) {
+      <p>{{ paragraph }}</p>
+    }
+  </div>
+  @if (article().topics; as topics) {
+    <div class="article-content__labels">
+      @for (topic of topics; track $index) {
+        <app-news-label [text]="topic" />
+      }
+    </div>
+  }
+</article>

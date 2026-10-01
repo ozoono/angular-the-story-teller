@@ -1,0 +1,41 @@
+.article-page__content {
+	display: grid;
+	gap: var(--grid-gap);
+}
+
+.article-content__category-link {
+	display: block;
+	border-bottom: 2px solid var(--color-black);
+	font-family: var(--font-serif-titles);
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.article-content__title {
+	line-height: 1.2;
+	font-family: var(--font-serif-titles);
+	font-size: 2rem;
+}
+
+.article-content__photo {
+	width: 100%;
+	height: auto;
+}
+
+.article-content__summary {
+	font-size: 1.25rem;
+}
+
+.article-content__body {
+	line-height: 1.7;
+	overflow-wrap: anywhere;
+
+	p {
+		margin-bottom: 1rem;
+	}
+}
+
+.article-content__labels {
+	display: flex;
+	gap: 0.5rem;
+}

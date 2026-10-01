@@ -1,0 +1,9 @@
+<app-lead-story-card [article]="featured()" />
+@if (featuredDetailStatus() === 'loading') {
+  <p role="status">Loading featured article…</p>
+} @else if (featuredDetailStatus() === 'error') {
+  <p role="alert">Unable to load the featured article details.</p>
+  <button type="button" (click)="retry.emit()">Try again</button>
+}
+<h3>&rsaquo; More in this category </h3>
+<app-stacked-title-list-layout [articles]="more()" />
