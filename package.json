@@ -10,8 +10,8 @@
     "generate:fixtures": "node scripts/generate-news-fixtures.mjs",
     "lint": "biome check src/",
     "lint:fix": "biome check --write src/",
-    "lint:stylelint": "stylelint \"src/**/*.{css}\"",
-    "lint:all": "npm run lint && npm run lint:style"
+    "lint:stylelint": "stylelint \"src/**/*.css\"",
+    "lint:all": "npm run lint && npm run lint:stylelint"
   },
   "private": true,
   "packageManager": "npm@11.13.0",
