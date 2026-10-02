@@ -12,7 +12,7 @@ export const routes: Routes = [
 	{
 		path: 'category/:category',
 		loadChildren: () =>
-			import('@/features/categoty/category.routes.ts').then(
+			import('@/features/category/category.routes.ts').then(
 				(module) => module.categoryRoutes,
 			),
 	},

@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header__top">
+    <button
+      type="button"
+      class="menu__trigger"
+      (click)="openMenu()"
+    >
+      <img src="/images/menu.png" width="20" height="20" alt="Menu">
+    </button>
+    <span class="header-date">{{ currentDate }}</span>
+  </div>
+
+  <div class="header-logo">
+    <a href="/" routerLink="/">
+      <img src="/logo.webp" alt="The StoryTeller" />
+    </a>
+  </div>
+
+  <app-nav-mobile [isOpen]="isMenuOpen()" (closed)="onCloseMenu()" />
+  <app-nav-desktop />
+</header>

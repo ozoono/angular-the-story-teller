@@ -12,7 +12,7 @@ import { provideNewsDataSource } from '@/core/config/news-data.providers.ts'
 import type { NewsDataSourceName } from '@/core/models/news-data-source.model.ts'
 import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
-import { CategoryComponent } from '@/features/categoty/category.component.ts'
+import { CategoryComponent } from '@/features/category/category.component.ts'
 import { DetailComponent } from '@/features/detail/detail.component.ts'
 
 const first = {

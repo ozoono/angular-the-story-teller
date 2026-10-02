@@ -5,8 +5,8 @@ import { RouterLink } from '@angular/router'
 	selector: 'app-footer',
 	standalone: true,
 	imports: [RouterLink],
-	templateUrl: './app-footer.component.html',
-	styleUrl: './app-footer.component.css',
+	templateUrl: './footer.component.html',
+	styleUrl: './footer.component.css',
 })
 export class AppFooterComponent {
 	currentYear = new Date().getFullYear()

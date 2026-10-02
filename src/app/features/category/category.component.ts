@@ -5,7 +5,7 @@ import { CategoryArticlesComponent } from './components/category-articles/catego
 import { toNewsTopic } from '@/core/utils/news-topic.utils.ts'
 import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
-import { AdsComponent } from '@/shared/components/app-ads-component.ts'
+import { AdsComponent } from '@/shared/components/ads.component.ts'
 import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 
 type CategoryBodyState =

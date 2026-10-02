@@ -1,0 +1,12 @@
+<ul class="nav__list">
+  @for (category of categories; track category) {
+    <li>
+      <a
+        class="nav__link"
+        href="/category/{{ category.toLowerCase() }}"
+        [routerLink]="['/category', category.toLowerCase()]"
+      >
+        {{ category }}</a>
+    </li>
+  }
+</ul>

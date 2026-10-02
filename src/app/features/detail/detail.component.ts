@@ -8,7 +8,7 @@ import { toNewsTopic } from '@/core/utils/news-topic.utils.ts'
 import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { toNewsDetailViewModel } from '@/shared/mappers/news-view.mapper.ts'
-import { AdsComponent } from '@/shared/components/app-ads-component.ts'
+import { AdsComponent } from '@/shared/components/ads.component.ts'
 import type { NewsDetailViewModel } from '@/shared/view-models/news-detail-view.model.ts'
 
 type DetailViewState =

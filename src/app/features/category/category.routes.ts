@@ -4,7 +4,7 @@ export const categoryRoutes: Routes = [
 	{
 		path: '',
 		loadComponent: () =>
-			import('@/features/categoty/category.component.ts').then(
+			import('@/features/category/category.component.ts').then(
 				(module) => module.CategoryComponent,
 			),
 	},

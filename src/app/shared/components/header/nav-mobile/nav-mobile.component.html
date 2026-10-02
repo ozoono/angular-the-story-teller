@@ -1,0 +1,25 @@
+<nav
+  class="menu"
+  [class.menu--visible]="isOpen()"
+>
+  <button
+    type="button"
+    class="menu__trigger"
+    (click)="closeMenu()"
+  >
+    <img src="/images/close.png" alt="Close menu">
+  </button>
+  <ul class="menu__list">
+    @for (category of categories; track category) {
+      <li>
+        <a
+          class="menu__link"
+          href="/category/{{ category.toLowerCase() }}"
+          [routerLink]="['/category', category.toLowerCase()]"
+        >
+          {{ category }}</a>
+      </li>
+    }
+  </ul>
+</nav>
+<div class="overlay"></div>
