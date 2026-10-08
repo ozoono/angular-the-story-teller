@@ -7,6 +7,6 @@
 	padding-block: var(--grid-gap);
 }
 
-.home-sports-section__title {
-	margin: 0 0 var(--grid-gap);
+.home-sports-section__category {
+	margin-bottom: 0.5rem;
 }

@@ -1,5 +1,7 @@
 <section class="home-sports-section" aria-label="Sports">
-  <h2 class="home-sports-section__title">Sports</h2>
+  <div class="home-sports-section__category">
+    <app-news-category text="Sports"></app-news-category>
+  </div>
   <app-story-summary-list-layout
     [listArticles]="listArticles()"
   />

@@ -2,10 +2,11 @@ import { Component, computed, inject } from '@angular/core'
 import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { StorySummaryListLayoutComponent } from '@/shared/ui/news-layouts/story-summary-list-layout/story-summary-list-layout.component.ts'
+import { NewsCategoryComponent } from '@/shared//ui/news-card/news-category.component.ts'
 
 @Component({
 	selector: 'app-home-sports-section',
-	imports: [StorySummaryListLayoutComponent],
+	imports: [StorySummaryListLayoutComponent, NewsCategoryComponent],
 	templateUrl: './home-sports-section.component.html',
 	styleUrl: './home-sports-section.component.css',
 })

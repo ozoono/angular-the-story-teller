@@ -4,6 +4,7 @@ import { NewsStore } from '@/core/stores/news.store.ts'
 import { LeadStoryCardComponent } from '@/shared/ui/news-card/lead-story-card/lead-story-card.component.ts'
 import { FeaturedStoryWithTitleListLayoutComponent } from '@/shared/ui/news-layouts/featured-story-with-title-list-layout/featured-story-with-title-list-layout.component.ts'
 import { StackedTitleListLayoutComponent } from '@/shared/ui/news-layouts/stacked-title-list-layout/stacked-title-list-layout.component.ts'
+import { AdsComponent } from '@/shared/components/ads.component.ts'
 
 @Component({
 	selector: 'app-home-main-section',
@@ -11,6 +12,7 @@ import { StackedTitleListLayoutComponent } from '@/shared/ui/news-layouts/stacke
 		LeadStoryCardComponent,
 		FeaturedStoryWithTitleListLayoutComponent,
 		StackedTitleListLayoutComponent,
+		AdsComponent,
 	],
 	templateUrl: './home-main-section.component.html',
 	styleUrl: './home-main-section.component.css',
@@ -37,7 +39,7 @@ export class HomeMainSectionComponent {
 	)
 	protected readonly sidebarTitleArticles = computed(() =>
 		this.politicalArticles()
-			.slice(0, 4)
+			.slice(0, 3)
 			.map((article) => this.toReducedArticle(article)),
 	)
 
