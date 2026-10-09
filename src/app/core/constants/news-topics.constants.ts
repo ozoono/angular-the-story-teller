@@ -1,4 +1,4 @@
-export const newsTopics = [
+export const NEWS_TOPICS = [
 	'BUSINESS',
 	'ECONOMY',
 	'FINANCE',

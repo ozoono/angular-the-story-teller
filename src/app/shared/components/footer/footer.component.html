@@ -1,18 +1,22 @@
 <footer class="footer">
-  <div class="footer-content">
-    <div class="footer-brand">
-      <h2>The StoryTeller</h2>
-    </div>
+  <ul class="footer__sections">
+    @for (category of categories; track category) {
+      <li>
+        <a
+          class="footer__link"
+          href="/category/{{ category.toLowerCase() }}"
+          [routerLink]="['/category', category.toLowerCase()]"
+        >
+          {{ category }}</a>
+      </li>
+    }
+  </ul>
 
-    <div class="footer-sections">
-      <ul class="footer-links">
-        <li><a href="/" routerLink="/" class="footer-link">Home</a></li>
-        <li><a href="/category/economy" routerLink="/category/economy" class="footer-link">Economy</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; {{ currentYear }} El Periódico. Todos los derechos reservados.</p>
+  <div class="footer__brand">
+    <a href="/" routerLink="/">
+      <img src="/logo.webp" alt="The StoryTeller" width="200"/>
+    </a>
+    <p>&copy; {{ currentYear }} The StoryTeller.<br/>All rights reserved.</p>
+    <app-github />
   </div>
 </footer>

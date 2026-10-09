@@ -1,11 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core'
 import {
-	homeFeaturedCounts,
-	homeNewsTopics,
-	homePopularTopics,
+	HOME_FEATURED_COUNTS,
+	HOME_NEWS_TOPICS,
+	HOME_POPULAR_TOPICS,
 } from '@/core/constants/home-news.constants.ts'
-import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
+import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 
 type HomeDetailSelections = Partial<Record<NewsTopic, readonly string[]>>
@@ -25,7 +25,7 @@ export class NewsPageDataService {
 			return this.pendingHomeLoad
 		}
 		const load = Promise.allSettled(
-			homeNewsTopics.map(async (topic) => {
+			HOME_NEWS_TOPICS.map(async (topic) => {
 				const headlines = await this.newsStore.loadTopic(topic)
 				const selectedIds = this.selectHomeDetails(topic, headlines)
 				await Promise.allSettled(
@@ -62,12 +62,12 @@ export class NewsPageDataService {
 			return previous
 		}
 		let selected: readonly NewsHeadline[]
-		if (homePopularTopics.some((popularTopic) => popularTopic === topic)) {
+		if (HOME_POPULAR_TOPICS.some((popularTopic) => popularTopic === topic)) {
 			const candidates = headlines.slice(0, 2)
 			const article = candidates[Math.floor(Math.random() * candidates.length)]
 			selected = article === undefined ? [] : [article]
 		} else {
-			selected = headlines.slice(0, homeFeaturedCounts[topic] ?? 0)
+			selected = headlines.slice(0, HOME_FEATURED_COUNTS[topic] ?? 0)
 		}
 		const ids = selected.map((article) => article.id)
 		this.homeDetailSelectionsState.update((selections) => ({

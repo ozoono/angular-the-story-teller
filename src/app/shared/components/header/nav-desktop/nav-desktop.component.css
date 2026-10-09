@@ -15,10 +15,13 @@
 
 	a {
 		margin: 0 0.7em;
+		font-family: var(--font-sans);
 		font-size: 0.9rem;
+		;
 
 		&:hover {
-			text-decoration: underline;
+			border-bottom: 2px solid var(--color-hover);
+			text-decoration: none;
 		}
 	}
 

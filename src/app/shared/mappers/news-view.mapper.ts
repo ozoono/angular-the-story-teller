@@ -1,7 +1,7 @@
-import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
+import type { NewsArticleDetail } from '@/core/models/news/news-article-detail.model.ts'
 import type { NewsCardViewModel } from '@/shared/view-models/news-card-view.model.ts'
-import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
+import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 import type { NewsDetailViewModel } from '@/shared/view-models/news-detail-view.model.ts'
 
 export const toNewsCardViewModel = (

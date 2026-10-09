@@ -3,17 +3,32 @@
 }
 
 .home-entertainment-section {
+	border-top: var(--border-section);
+	padding-top: var(--grid-gap);
+}
+
+.home-entertainment-section__content {
 	display: grid;
 	gap: var(--grid-gap);
 }
 
 .home-entertainment-section__title {
-	grid-column: 1 / -1;
-	margin: 0;
+	width: fit-content;
+	max-width: 100%;
+	margin: 0 0 calc(var(--grid-gap) / 2);
+	letter-spacing: -2px;
+	font-size: 2rem;
+	background: linear-gradient(
+		135deg,
+		var(--color-blue-dark) 0%,
+		var(--color-blue) 100%
+	);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 @media (width >= 768px) {
-	.home-entertainment-section {
+	.home-entertainment-section__content {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }

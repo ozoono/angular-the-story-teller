@@ -6,11 +6,10 @@ import {
 import { TestBed } from '@angular/core/testing'
 import { provideRouter } from '@angular/router'
 import {
-	homeNewsTopics,
-	homePopularTopics,
+	HOME_NEWS_TOPICS,
+	HOME_POPULAR_TOPICS,
 } from '@/core/constants/home-news.constants.ts'
-import { provideNewsDataSource } from '@/core/config/news-data.providers.ts'
-import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
+import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 import { HomeComponent } from '@/features/home/home.component.ts'
 
 describe('HOME data flow', () => {
@@ -27,7 +26,6 @@ describe('HOME data flow', () => {
 				provideHttpClient(),
 				provideHttpClientTesting(),
 				provideRouter([]),
-				provideNewsDataSource('fixtures'),
 			],
 		})
 		const http = TestBed.inject(HttpTestingController)
@@ -35,7 +33,7 @@ describe('HOME data flow', () => {
 		const fixture = TestBed.createComponent(HomeComponent)
 		fixture.detectChanges()
 
-		for (const topic of homeNewsTopics) {
+		for (const topic of HOME_NEWS_TOPICS) {
 			http.expectOne(`/news-fixtures/${topic.toLowerCase()}.json`).flush(
 				Array.from({ length: 4 }, (_, index) => ({
 					uuid: `${topic}-${index + 1}`,
@@ -50,7 +48,7 @@ describe('HOME data flow', () => {
 			expect(pages.homeDetailSelections().NUTRITION).toBeDefined(),
 		)
 
-		for (const topic of homeNewsTopics) {
+		for (const topic of HOME_NEWS_TOPICS) {
 			if (topic === 'POLITICS' || topic === 'FINANCE') continue
 			const requests = http.match(
 				`/news-fixtures/${topic.toLowerCase()}_data.json`,
@@ -95,7 +93,7 @@ describe('HOME data flow', () => {
 				/^\/[a-z]+\/article\/[A-Z]+-\d+$/,
 			)
 		}
-		for (const topic of homePopularTopics) {
+		for (const topic of HOME_POPULAR_TOPICS) {
 			const card = Array.from(
 				element.querySelectorAll('.title-photo-card'),
 			).find((item) => item.textContent?.includes(`${topic} detail 2`))

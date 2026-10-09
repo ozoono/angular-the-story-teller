@@ -8,5 +8,16 @@
 }
 
 .home-popular-section__title {
-	margin: 0 0 var(--grid-gap);
+	width: fit-content;
+	max-width: 100%;
+	margin: 0 0 calc(var(--grid-gap) / 2);
+	letter-spacing: -2px;
+	font-size: 2rem;
+	background: linear-gradient(
+		135deg,
+		var(--color-blue-dark) 0%,
+		var(--color-blue) 100%
+	);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

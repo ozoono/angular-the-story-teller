@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { newsTopics } from '@/core/constants/news-topics.constants.ts'
+import { NEWS_TOPICS } from '@/core/constants/news-topics.constants.ts'
 
 @Component({
 	selector: 'app-nav-desktop',
@@ -10,5 +10,5 @@ import { newsTopics } from '@/core/constants/news-topics.constants.ts'
 	styleUrl: './nav-desktop.component.css',
 })
 export class NavDesktopComponent {
-	protected readonly categories = newsTopics
+	protected readonly categories = NEWS_TOPICS
 }

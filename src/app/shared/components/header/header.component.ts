@@ -2,11 +2,17 @@ import { Component, signal } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { NavDesktopComponent } from './nav-desktop/nav-desktop.component.ts'
 import { NavMobileComponent } from './nav-mobile/nav-mobile.component.ts'
+import { WeatherComponent } from '../weather.component.ts'
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [RouterLink, NavMobileComponent, NavDesktopComponent],
+	imports: [
+		RouterLink,
+		NavMobileComponent,
+		NavDesktopComponent,
+		WeatherComponent,
+	],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.css',
 })

@@ -1,18 +1,23 @@
 <section class="home-entertainment-section" aria-label="Entertainment">
-  <app-featured-story-with-title-list-layout
-    [article]="featuredMoviesArticle()"
-    [listArticles]="listMoviesArticles()" 
-  />
-  <app-featured-story-with-title-list-layout
-    [article]="featuredTvArticle()"
-    [listArticles]="listTvArticles()" 
-  />
-  <app-featured-story-with-title-list-layout
-    [article]="featuredMusicArticle()"
-    [listArticles]="listMusicArticles()" 
-  />
+  <h2 class="home-entertainment-section__title">Entertainment_</h2>
+  <div class="home-entertainment-section__content">
     <app-featured-story-with-title-list-layout
-    [article]="featuredGamingArticle()"
-    [listArticles]="listGamingArticles()" 
-  />
+      [article]="featuredMoviesArticle()"
+      [listArticles]="listMoviesArticles()" 
+    />
+    <app-featured-story-with-title-list-layout
+      [article]="featuredTvArticle()"
+      [listArticles]="listTvArticles()" 
+    />
+    <app-featured-story-with-title-list-layout
+      [article]="featuredMusicArticle()"
+      [listArticles]="listMusicArticles()"
+      [separator]="true"
+    />
+    <app-featured-story-with-title-list-layout
+      [article]="featuredGamingArticle()"
+      [listArticles]="listGamingArticles()" 
+      [separator]="true"
+    />
+  </div>
 </section>

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
-import { NEWS_DATA_SOURCE } from '@/core/config/news-data.config.ts'
-import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
-import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
+import { NewsContentService } from '@/core/services/news/news-content.service.ts'
+import type { NewsArticleDetail } from '@/core/models/news/news-article-detail.model.ts'
+import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 
 const headline: NewsHeadline = {
@@ -43,7 +43,7 @@ const setup = () => {
 		getArticleDetail: vi.fn<() => Promise<NewsArticleDetail>>(),
 	}
 	TestBed.configureTestingModule({
-		providers: [{ provide: NEWS_DATA_SOURCE, useValue: source }],
+		providers: [{ provide: NewsContentService, useValue: source }],
 	})
 	return { store: TestBed.inject(NewsStore), source }
 }

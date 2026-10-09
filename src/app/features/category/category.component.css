@@ -4,11 +4,9 @@
 	gap: var(--grid-gap);
 	width: 100%;
 	max-width: 1280px;
-	margin-top: var(--grid-gap);
-	margin-right: auto;
-	margin-left: auto;
-	padding-right: 1rem;
-	padding-left: 1rem;
+	margin: var(--grid-gap) auto;
+	border-bottom: var(--border-section);
+	padding: 0 1rem var(--grid-gap);
 }
 
 .category-page__content {

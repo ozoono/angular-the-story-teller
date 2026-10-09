@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing'
-import { homeNewsTopics } from '@/core/constants/home-news.constants.ts'
-import { NEWS_DATA_SOURCE } from '@/core/config/news-data.config.ts'
-import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
-import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
-import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
+import { HOME_NEWS_TOPICS } from '@/core/constants/home-news.constants.ts'
+import { NewsContentService } from '@/core/services/news/news-content.service.ts'
+import type { NewsArticleDetail } from '@/core/models/news/news-article-detail.model.ts'
+import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
+import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 
 const headlinesFor = (topic: NewsTopic): readonly NewsHeadline[] =>
@@ -39,7 +39,7 @@ const setup = () => {
 			.mockImplementation(async (topic, uuid) => detailFor(topic, uuid)),
 	}
 	TestBed.configureTestingModule({
-		providers: [{ provide: NEWS_DATA_SOURCE, useValue: source }],
+		providers: [{ provide: NewsContentService, useValue: source }],
 	})
 	return {
 		pages: TestBed.inject(NewsPageDataService),
@@ -56,7 +56,7 @@ describe('NewsPageDataService', () => {
 		const { pages, source } = setup()
 		await pages.loadHome()
 		expect(source.getCategory.mock.calls.map(([topic]) => topic)).toEqual(
-			homeNewsTopics,
+			HOME_NEWS_TOPICS,
 		)
 		expect(source.getArticleDetail.mock.calls).toEqual(
 			expect.arrayContaining([

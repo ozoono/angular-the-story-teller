@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { newsTopics } from '@/core/constants/news-topics.constants.ts'
+import { NEWS_TOPICS } from '@/core/constants/news-topics.constants.ts'
 
 @Component({
 	selector: 'app-nav-mobile',
@@ -10,7 +10,7 @@ import { newsTopics } from '@/core/constants/news-topics.constants.ts'
 	styleUrl: './nav-mobile.component.css',
 })
 export class NavMobileComponent {
-	protected readonly categories = newsTopics
+	protected readonly categories = NEWS_TOPICS
 	readonly isOpen = input.required<boolean>()
 	readonly closed = output<void>()
 

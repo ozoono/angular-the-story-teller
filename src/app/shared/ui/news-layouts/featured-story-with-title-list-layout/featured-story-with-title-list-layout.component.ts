@@ -12,4 +12,5 @@ import { StackedTitleListLayoutComponent } from '@/shared/ui/news-layouts/stacke
 export class FeaturedStoryWithTitleListLayoutComponent {
 	article = input<NewsCardViewModel>()
 	listArticles = input<NewsCardViewModel[]>([])
+	separator = input<boolean>(false)
 }

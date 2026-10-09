@@ -1,6 +1,7 @@
 .main-container {
 	display: flex;
 	flex-direction: column;
+	min-width: var(--min-width-size);
 	min-height: 100vh;
 }
 

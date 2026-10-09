@@ -4,7 +4,7 @@ import { HomeMainSectionComponent } from '@/features/home/sections/home-main-sec
 import { HomePopularSectionComponent } from '@/features/home/sections/home-popular-section/home-popular-section.component.ts'
 import { HomeSportsSectionComponent } from '@/features/home/sections/home-sports-section/home-sports-section.component.ts'
 import { HomeBreakingSectionComponent } from '@/features/home/sections/home-breaking-section/home-breaking-section.ts'
-import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
+import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 
 @Component({
 	selector: 'app-home',

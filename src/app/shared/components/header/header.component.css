@@ -1,5 +1,6 @@
 .header {
 	width: 100%;
+	min-width: var(--min-width-size);
 	margin: 1.25rem auto 0;
 	padding-right: 1.25rem;
 	padding-left: 1.25rem;
@@ -9,20 +10,25 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	gap: 1rem;
 
-	.menu__trigger {
+	.header__menu-trigger {
 		border: none;
 		background: none;
 		cursor: pointer;
 	}
 
 	.header-date {
+		flex: 1 0 auto;
 		line-height: 1;
+		text-align: right;
+		font-family: var(--font-sans);
+		font-size: .9rem;
 	}
 }
 
 .header-logo {
-	margin: 1rem 0;
+	margin-top: 2rem;
 	text-align: center;
 
 	img {
@@ -38,10 +44,13 @@
 	}
 
 	.header__top {
-		justify-content: flex-end;
-
-			.menu__trigger {
-		display: none;
+		.header__menu-trigger {
+			display: none;
+		}
 	}
+
+	.header-logo {
+		margin: 1rem 0;
 	}
 }
+

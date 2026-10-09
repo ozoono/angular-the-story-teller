@@ -2,11 +2,12 @@
   <div class="header__top">
     <button
       type="button"
-      class="menu__trigger"
+      class="header__menu-trigger"
       (click)="openMenu()"
     >
       <img src="/images/menu.png" width="20" height="20" alt="Menu">
     </button>
+    <app-weather></app-weather>
     <span class="header-date">{{ currentDate }}</span>
   </div>
 

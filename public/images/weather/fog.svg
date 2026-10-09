@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cloud artwork: (c) ammap.com | SVG weather icons. Adapted with animated fog bands. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="64" viewBox="8 0 48 64">
+  <defs>
+    <filter id="fog-shadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dy="4"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      @keyframes fog-drift {
+        0%, 100% { transform: translateX(-3px); }
+        50% { transform: translateX(3px); }
+      }
+      .fog__band { animation: fog-drift 6s ease-in-out infinite; }
+      .fog__band--middle { animation-delay: -3s; }
+      .fog__band--bottom { animation-delay: -1.5s; }
+      @media (prefers-reduced-motion: reduce) {
+        .fog__band { animation: none; }
+      }
+    </style>
+  </defs>
+  <g filter="url(#fog-shadow)">
+    <g transform="translate(20,6)">
+      <path d="M47.7,35.4     c0-4.6-3.7-8.2-8.2-8.2c-1,0-1.9,0.2-2.8,0.5c-0.3-3.4-3.1-6.2-6.6-6.2c-3.7,0-6.7,3-6.7,6.7c0,0.8,0.2,1.6,0.4,2.3     c-0.3-0.1-0.7-0.1-1-0.1c-3.7,0-6.7,3-6.7,6.7c0,3.6,2.9,6.6,6.5,6.7l17.2,0C44.2,43.3,47.7,39.8,47.7,35.4z" fill="#CCCCCC" stroke="white" stroke-linejoin="round" stroke-width="1.2" transform="translate(-20,-11)"/>
+    </g>
+    <g fill="none" stroke="#DDDDDD" stroke-width="3" stroke-linecap="round">
+      <path class="fog__band fog__band--middle" d="M14 47h18m5 0h13"/>
+      <path class="fog__band fog__band--bottom" d="M20 53h12m5 0h8"/>
+    </g>
+  </g>
+</svg>

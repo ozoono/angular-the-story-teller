@@ -1,4 +1,7 @@
-<div class="featured-story-with-title-list-layout">
+<div 
+  class="featured-story-with-title-list-layout"
+  [class.separator]="separator()"
+>
   @if (article(); as featuredArticle) {
     <app-title-photo-card [article]="featuredArticle" />
   }

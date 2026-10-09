@@ -7,10 +7,7 @@ import { TestBed } from '@angular/core/testing'
 import { provideRouter } from '@angular/router'
 import { RouterTestingHarness } from '@angular/router/testing'
 import { routes } from '@/app.routes.ts'
-import { newsDetailUrl } from '@/core/config/news-api.config.ts'
-import { provideNewsDataSource } from '@/core/config/news-data.providers.ts'
-import type { NewsDataSourceName } from '@/core/models/news-data-source.model.ts'
-import { NewsPageDataService } from '@/core/services/news-page-data.service.ts'
+import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { CategoryComponent } from '@/features/category/category.component.ts'
 import { DetailComponent } from '@/features/detail/detail.component.ts'
@@ -33,12 +30,11 @@ const detail = {
 	body: 'Full body paragraph',
 }
 
-const setup = async (source: NewsDataSourceName = 'fixtures') => {
+const setup = async () => {
 	TestBed.configureTestingModule({
 		providers: [
 			provideHttpClient(),
 			provideHttpClientTesting(),
-			provideNewsDataSource(source),
 			provideRouter(routes),
 		],
 	})
@@ -147,11 +143,11 @@ describe('Category and article routes', () => {
 		http.expectNone(() => true)
 	})
 
-	it('shows a missing article when the API returns 404', async () => {
-		const { harness, http, store } = await setup('api')
+	it('shows a missing article when the fixture file returns 404', async () => {
+		const { harness, http, store } = await setup()
 		await harness.navigateByUrl('/sports/article/missing', DetailComponent)
 		http
-			.expectOne((request) => request.url === newsDetailUrl)
+			.expectOne('/news-fixtures/sports_data.json')
 			.flush('Missing', { status: 404, statusText: 'Not Found' })
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'missing')()).toBe('error'),

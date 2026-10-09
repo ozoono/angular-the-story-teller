@@ -20,11 +20,14 @@
 	--color-gray-light: #bbb;
 	--color-gray-lightest: #eee;
 	--color-red: rgb(251 60 60);
+	--color-blue-dark: rgb(28 83 118);
+	--color-blue: rgb(96 193 254);
 	--color-white: #fff;
 
 	--color-bg: var(--color-white);
 	--color-text: var(--color-black);
 	--color-breaking: var(--color-red);
+	--color-hover: var(--color-blue);
 	--color-advertisement: var(--color-black);
 
 	--grid-column-size: 32px;
@@ -36,4 +39,5 @@
 	--font-sans: "Helvetica Neue", Arial, sans-serif;
 
 	--max-width-site: 1280px;
+	--min-width-size: 350px;
 }

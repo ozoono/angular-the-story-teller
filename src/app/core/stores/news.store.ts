@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core'
-import type { NewsArticleDetail } from '@/core/models/news-article-detail.model.ts'
-import type { NewsHeadline } from '@/core/models/news-headline.model.ts'
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
-import { NewsContentService } from '@/core/services/news-content.service.ts'
+import type { NewsArticleDetail } from '@/core/models/news/news-article-detail.model.ts'
+import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
+import { NewsContentService } from '@/core/services/news/news-content.service.ts'
 import { toNewsCardViewModel } from '@/shared/mappers/news-view.mapper.ts'
 
 type NewsLoadStatus = 'idle' | 'loading' | 'loaded' | 'error'

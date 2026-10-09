@@ -1,4 +1,4 @@
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 
 export interface NewsHeadline {
 	id: string

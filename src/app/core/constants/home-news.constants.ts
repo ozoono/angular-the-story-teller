@@ -1,6 +1,6 @@
-import type { NewsTopic } from '@/core/models/news-topic.model.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 
-export const homeNewsTopics = [
+export const HOME_NEWS_TOPICS = [
 	'BUSINESS',
 	'POLITICS',
 	'FINANCE',
@@ -15,14 +15,14 @@ export const homeNewsTopics = [
 	'NUTRITION',
 ] as const satisfies readonly NewsTopic[]
 
-export const homePopularTopics = [
+export const HOME_POPULAR_TOPICS = [
 	'TECHNOLOGY',
 	'SCIENCE',
 	'HEALTH',
 	'NUTRITION',
 ] as const satisfies readonly NewsTopic[]
 
-export const homeFeaturedCounts: Partial<Record<NewsTopic, number>> = {
+export const HOME_FEATURED_COUNTS: Partial<Record<NewsTopic, number>> = {
 	BUSINESS: 2,
 	SPORTS: 2,
 	MOVIES: 1,
