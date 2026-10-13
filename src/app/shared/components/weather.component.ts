@@ -25,7 +25,6 @@ import { WeatherApiDataService } from '@/core/services/weather/weather-api-data.
     }
 
     .weather {
-			border: 1px solid var(--color-gray-lightest);
 			border-radius: .25rem;	
 			padding: 0 .3rem;
       font-family: var(--font-sans);
