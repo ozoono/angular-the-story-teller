@@ -9,15 +9,9 @@ A digital newspaper demo built with **Angular** and Signals. It features a **res
 
 ## Preview
 
-*Screenshot and live demo coming soon.*
-
-<!-- Add the screenshot here once available:
 ![The StoryTeller homepage](docs/images/screenshot.png)
--->
 
-<!-- Add the live demo link below the screenshot once deployed:
-[View the live demo](YOUR_DEMO_URL)
--->
+[View the live demo](https://ozoono.github.io/angular-the-story-teller/)
 
 ## Features
 
@@ -69,3 +63,15 @@ npm run generate:fixtures
 News is loaded on demand and kept in an in-memory store. When navigating between pages, previously loaded headlines and article details are reused, avoiding repeated file requests for the same data. The cache is cleared when the browser reloads.
 
 The demo follows the same loading and caching approach an application would use with a news API, using local JSON files as its data source.
+
+## Tech stack
+
+| Technology | Purpose |
+| --- | --- |
+| Angular 22 | UI, routing and reactive state with Signals |
+| TypeScript | Application logic and type checking |
+| CSS | Responsive layouts and styling |
+| Vitest | Unit and component tests |
+| Biome | Formatting and linting |
+| Stylelint | CSS linting |
+| GitHub Actions & Pages | Automated deployment and static hosting |

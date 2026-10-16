@@ -41,12 +41,12 @@ export const WEATHER_ICON_GROUPS = {
 } as const
 
 export const WEATHER_ICONS = {
-	clear: '/images/weather/clear.svg',
-	cloudy: '/images/weather/cloudy.svg',
-	fog: '/images/weather/fog.svg',
-	rain: '/images/weather/rain.svg',
-	snow: '/images/weather/snow.svg',
-	thunderstorm: '/images/weather/thunderstorm.svg',
+	clear: 'images/weather/clear.svg',
+	cloudy: 'images/weather/cloudy.svg',
+	fog: 'images/weather/fog.svg',
+	rain: 'images/weather/rain.svg',
+	snow: 'images/weather/snow.svg',
+	thunderstorm: 'images/weather/thunderstorm.svg',
 } as const
 
 export const WEATHER_CODE_ICONS: Readonly<Record<number, string | undefined>> =

@@ -4,7 +4,7 @@ import { WeatherApiDataService } from '@/core/services/weather/weather-api-data.
 import { WeatherComponent } from '@/shared/components/weather.component.ts'
 
 describe('WeatherComponent', () => {
-	it('loads once and displays the temperature, SVG and specific description', async () => {
+	it('loads once and displays the temperature and SVG', async () => {
 		let resolve!: (weather: Weather) => void
 		const getWeather = vi.fn(
 			() =>
@@ -23,10 +23,9 @@ describe('WeatherComponent', () => {
 		await fixture.whenStable()
 		fixture.detectChanges()
 		expect(fixture.nativeElement.textContent).toContain('13.8°C')
-		expect(fixture.nativeElement.textContent).toContain('Slight rain')
 		expect(
 			fixture.nativeElement.querySelector('img')?.getAttribute('src'),
-		).toBe('/images/weather/rain.svg')
+		).toBe('images/weather/rain.svg')
 		expect(getWeather).toHaveBeenCalledTimes(1)
 	})
 

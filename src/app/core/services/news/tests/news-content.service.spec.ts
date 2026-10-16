@@ -43,7 +43,7 @@ describe('NewsContentService', () => {
 		const { content, http } = setup()
 		const headlines = content.getCategory('BUSINESS')
 		http
-			.expectOne('/news-fixtures/business.json')
+			.expectOne('news-fixtures/business.json')
 			.flush([{ ...headline, authors: [] }])
 		expect(await headlines).toEqual([
 			{
@@ -54,12 +54,12 @@ describe('NewsContentService', () => {
 				category: 'BUSINESS',
 			},
 		])
-		http.expectNone('/news-fixtures/business_data.json')
+		http.expectNone('news-fixtures/business_data.json')
 
 		const first = content.getArticleDetail('BUSINESS', headline.uuid)
 		const other = content.getArticleDetail('BUSINESS', 'article-2')
 		const secondDetail = { ...detail, uuid: 'article-2' }
-		const requests = http.match('/news-fixtures/business_data.json')
+		const requests = http.match('news-fixtures/business_data.json')
 		expect(requests).toHaveLength(2)
 		for (const request of requests) {
 			request.flush({ [headline.uuid]: detail, 'article-2': secondDetail })
@@ -68,7 +68,7 @@ describe('NewsContentService', () => {
 		expect(await other).toEqual(secondDetail)
 		const repeated = content.getArticleDetail('BUSINESS', headline.uuid)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		expect(await repeated).toEqual(detail)
 	})
@@ -77,10 +77,10 @@ describe('NewsContentService', () => {
 		const { content, http } = setup()
 		const result = content.getArticleDetail('BUSINESS', headline.uuid)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		expect(await result).toEqual(detail)
-		http.expectNone('/news-fixtures/business.json')
+		http.expectNone('news-fixtures/business.json')
 	})
 
 	it('reports a missing UUID and can fetch another article afterwards', async () => {
@@ -90,12 +90,12 @@ describe('NewsContentService', () => {
 			'News article not found: missing',
 		)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		await rejection
 		const next = content.getArticleDetail('BUSINESS', headline.uuid)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		expect(await next).toEqual(detail)
 	})
@@ -104,14 +104,14 @@ describe('NewsContentService', () => {
 		const { content, http } = setup()
 		const failed = content.getArticleDetail('BUSINESS', headline.uuid)
 		const rejection = expect(failed).rejects.toBeDefined()
-		http.expectOne('/news-fixtures/business_data.json').flush('Failed', {
+		http.expectOne('news-fixtures/business_data.json').flush('Failed', {
 			status: 500,
 			statusText: 'Server Error',
 		})
 		await rejection
 		const retried = content.getArticleDetail('BUSINESS', headline.uuid)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		expect(await retried).toEqual(detail)
 	})
@@ -124,12 +124,12 @@ describe('Store cache with fixtures', () => {
 		const headlines = store.loadTopic('BUSINESS')
 		expect(store.loadTopic('BUSINESS')).toBe(headlines)
 		const list = [{ ...headline, authors: [] }]
-		http.expectOne('/news-fixtures/business.json').flush(list)
+		http.expectOne('news-fixtures/business.json').flush(list)
 		await headlines
 		const article = store.loadDetail('BUSINESS', headline.uuid)
 		expect(store.loadDetail('BUSINESS', headline.uuid)).toBe(article)
 		http
-			.expectOne('/news-fixtures/business_data.json')
+			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		expect(await article).toEqual(detail)
 		await store.loadTopic('BUSINESS')

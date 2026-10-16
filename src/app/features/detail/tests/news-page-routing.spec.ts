@@ -52,11 +52,11 @@ describe('Category and article routes', () => {
 	it('loads category headlines then the first detail, and reuses it on navigation', async () => {
 		const { harness, http, pages, store } = await setup()
 		await harness.navigateByUrl('/category/sports', CategoryComponent)
-		http.expectOne('/news-fixtures/sports.json').flush([first, second])
+		http.expectOne('news-fixtures/sports.json').flush([first, second])
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'first')()).toBe('loading'),
 		)
-		http.expectOne('/news-fixtures/sports_data.json').flush({
+		http.expectOne('news-fixtures/sports_data.json').flush({
 			first: detail,
 			second: { ...detail, uuid: 'second', title: 'Second full article' },
 		})
@@ -78,7 +78,7 @@ describe('Category and article routes', () => {
 			'Full body paragraph',
 		)
 		await harness.navigateByUrl('/sports/article/second', DetailComponent)
-		http.expectOne('/news-fixtures/sports_data.json').flush({
+		http.expectOne('news-fixtures/sports_data.json').flush({
 			second: { ...detail, uuid: 'second', title: 'Second full article' },
 		})
 		await pages.loadArticlePage('SPORTS', 'second')
@@ -92,7 +92,7 @@ describe('Category and article routes', () => {
 	it('opens an article directly without downloading category headlines', async () => {
 		const { harness, http, pages } = await setup()
 		await harness.navigateByUrl('/sports/article/first', DetailComponent)
-		http.expectOne('/news-fixtures/sports_data.json').flush({ first: detail })
+		http.expectOne('news-fixtures/sports_data.json').flush({ first: detail })
 		await pages.loadArticlePage('SPORTS', 'first')
 		harness.detectChanges()
 		expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toBe(
@@ -101,19 +101,19 @@ describe('Category and article routes', () => {
 		expect(
 			harness.routeNativeElement?.querySelector('img')?.getAttribute('src'),
 		).toBe('/photo.jpg')
-		http.expectNone('/news-fixtures/sports.json')
+		http.expectNone('news-fixtures/sports.json')
 	})
 
 	it('shows an empty category without requesting detail data', async () => {
 		const { harness, http, pages } = await setup()
 		await harness.navigateByUrl('/category/sports', CategoryComponent)
-		http.expectOne('/news-fixtures/sports.json').flush([])
+		http.expectOne('news-fixtures/sports.json').flush([])
 		await pages.loadCategoryPage('SPORTS')
 		harness.detectChanges()
 		expect(harness.routeNativeElement?.textContent).toContain(
 			'No news in this category',
 		)
-		http.expectNone('/news-fixtures/sports_data.json')
+		http.expectNone('news-fixtures/sports_data.json')
 	})
 
 	it('rejects invalid categories without making requests', async () => {
@@ -132,7 +132,7 @@ describe('Category and article routes', () => {
 	it('shows a missing fixture article and does not automatically retry it', async () => {
 		const { harness, http, store } = await setup()
 		await harness.navigateByUrl('/sports/article/missing', DetailComponent)
-		http.expectOne('/news-fixtures/sports_data.json').flush({ first: detail })
+		http.expectOne('news-fixtures/sports_data.json').flush({ first: detail })
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'missing')()).toBe('error'),
 		)
@@ -147,7 +147,7 @@ describe('Category and article routes', () => {
 		const { harness, http, store } = await setup()
 		await harness.navigateByUrl('/sports/article/missing', DetailComponent)
 		http
-			.expectOne('/news-fixtures/sports_data.json')
+			.expectOne('news-fixtures/sports_data.json')
 			.flush('Missing', { status: 404, statusText: 'Not Found' })
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'missing')()).toBe('error'),
@@ -161,12 +161,12 @@ describe('Category and article routes', () => {
 	it('keeps category headlines visible after a detail error and supports retry', async () => {
 		const { harness, http, store, pages } = await setup()
 		await harness.navigateByUrl('/category/sports', CategoryComponent)
-		http.expectOne('/news-fixtures/sports.json').flush([first, second])
+		http.expectOne('news-fixtures/sports.json').flush([first, second])
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'first')()).toBe('loading'),
 		)
 		http
-			.expectOne('/news-fixtures/sports_data.json')
+			.expectOne('news-fixtures/sports_data.json')
 			.flush('Failed', { status: 500, statusText: 'Server Error' })
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'first')()).toBe('error'),
@@ -180,12 +180,12 @@ describe('Category and article routes', () => {
 		await vi.waitFor(() =>
 			expect(store.detailStatusFor('SPORTS', 'first')()).toBe('loading'),
 		)
-		http.expectOne('/news-fixtures/sports_data.json').flush({ first: detail })
+		http.expectOne('news-fixtures/sports_data.json').flush({ first: detail })
 		await pages.loadCategoryPage('SPORTS')
 		harness.detectChanges()
 		expect(harness.routeNativeElement?.textContent).toContain(
 			'First full article',
 		)
-		http.expectNone('/news-fixtures/sports.json')
+		http.expectNone('news-fixtures/sports.json')
 	})
 })

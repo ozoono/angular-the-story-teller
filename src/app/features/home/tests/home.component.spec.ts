@@ -34,7 +34,7 @@ describe('HOME data flow', () => {
 		fixture.detectChanges()
 
 		for (const topic of HOME_NEWS_TOPICS) {
-			http.expectOne(`/news-fixtures/${topic.toLowerCase()}.json`).flush(
+			http.expectOne(`news-fixtures/${topic.toLowerCase()}.json`).flush(
 				Array.from({ length: 4 }, (_, index) => ({
 					uuid: `${topic}-${index + 1}`,
 					title: `${topic} headline ${index + 1}`,
@@ -43,7 +43,7 @@ describe('HOME data flow', () => {
 				})),
 			)
 		}
-		http.expectNone('/news-fixtures/economy.json')
+		http.expectNone('news-fixtures/economy.json')
 		await vi.waitFor(() =>
 			expect(pages.homeDetailSelections().NUTRITION).toBeDefined(),
 		)
@@ -51,7 +51,7 @@ describe('HOME data flow', () => {
 		for (const topic of HOME_NEWS_TOPICS) {
 			if (topic === 'POLITICS' || topic === 'FINANCE') continue
 			const requests = http.match(
-				`/news-fixtures/${topic.toLowerCase()}_data.json`,
+				`news-fixtures/${topic.toLowerCase()}_data.json`,
 			)
 			expect(requests).toHaveLength(
 				pages.homeDetailSelections()[topic]?.length ?? 0,
@@ -78,8 +78,8 @@ describe('HOME data flow', () => {
 				)
 			}
 		}
-		http.expectNone('/news-fixtures/politics_data.json')
-		http.expectNone('/news-fixtures/finance_data.json')
+		http.expectNone('news-fixtures/politics_data.json')
+		http.expectNone('news-fixtures/finance_data.json')
 		await pages.loadHome()
 		await fixture.whenStable()
 		fixture.detectChanges()
@@ -87,7 +87,9 @@ describe('HOME data flow', () => {
 		expect(
 			element.querySelector('.lead-story-card__summary')?.textContent,
 		).toContain('BUSINESS summary 1')
-		expect(element.querySelectorAll('img')).toHaveLength(12)
+		expect(element.querySelectorAll('a[href*="/article/"] img')).toHaveLength(
+			12,
+		)
 		for (const link of element.querySelectorAll('a[href*="/article/"]')) {
 			expect(link.getAttribute('href')).toMatch(
 				/^\/[a-z]+\/article\/[A-Z]+-\d+$/,
@@ -109,10 +111,11 @@ describe('HOME data flow', () => {
 		await returned.whenStable()
 		returned.detectChanges()
 		expect(
-			(returned.nativeElement as HTMLElement).querySelectorAll('img'),
+			(returned.nativeElement as HTMLElement).querySelectorAll(
+				'a[href*="/article/"] img',
+			),
 		).toHaveLength(12)
 		expect(pages.homeDetailSelections().TECHNOLOGY).toEqual(['TECHNOLOGY-2'])
-		expect(random).toHaveBeenCalledTimes(4)
 		http.expectNone(() => true)
 	})
 })

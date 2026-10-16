@@ -17,7 +17,7 @@ export class NewsContentService {
 	async getCategory(category: NewsTopic) {
 		const response = await firstValueFrom(
 			this.http.get<readonly NewsHeadlineFixture[]>(
-				`/news-fixtures/${category.toLowerCase()}.json`,
+				`news-fixtures/${category.toLowerCase()}.json`,
 			),
 		)
 		return toNewsHeadlines(response, category)
@@ -26,7 +26,7 @@ export class NewsContentService {
 	async getArticleDetail(category: NewsTopic, uuid: string) {
 		const response = await firstValueFrom(
 			this.http.get<Record<string, NewsArticleDetail>>(
-				`/news-fixtures/${category.toLowerCase()}_data.json`,
+				`news-fixtures/${category.toLowerCase()}_data.json`,
 			),
 		)
 		return newsFixtureDetail(response, uuid)
