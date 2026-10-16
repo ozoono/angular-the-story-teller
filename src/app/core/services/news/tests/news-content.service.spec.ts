@@ -39,7 +39,7 @@ const setup = () => {
 afterEach(() => TestBed.inject(HttpTestingController).verify())
 
 describe('NewsContentService', () => {
-	it('loads only headlines and fetches details without keeping a service cache', async () => {
+	it('loads headlines separately from category details', async () => {
 		const { content, http } = setup()
 		const headlines = content.getCategory('BUSINESS')
 		http
@@ -55,85 +55,81 @@ describe('NewsContentService', () => {
 			},
 		])
 		http.expectNone('news-fixtures/business_data.json')
+		const details = content.getCategoryDetails('BUSINESS')
+		http
+			.expectOne('news-fixtures/business_data.json')
+			.flush({ [headline.uuid]: detail })
+		expect(await details).toEqual({ [headline.uuid]: detail })
+	})
+})
 
-		const first = content.getArticleDetail('BUSINESS', headline.uuid)
-		const other = content.getArticleDetail('BUSINESS', 'article-2')
+describe('Store cache with fixtures', () => {
+	it('shares a category download across UUIDs and caches every article', async () => {
+		const { http } = setup()
+		const store = TestBed.inject(NewsStore)
+		const first = store.loadDetail('BUSINESS', headline.uuid)
+		expect(store.loadDetail('BUSINESS', headline.uuid)).toBe(first)
+		const second = store.loadDetail('BUSINESS', 'article-2')
 		const secondDetail = { ...detail, uuid: 'article-2' }
-		const requests = http.match('news-fixtures/business_data.json')
-		expect(requests).toHaveLength(2)
-		for (const request of requests) {
-			request.flush({ [headline.uuid]: detail, 'article-2': secondDetail })
-		}
+		const thirdDetail = { ...detail, uuid: 'article-3' }
+		http.expectOne('news-fixtures/business_data.json').flush({
+			[headline.uuid]: detail,
+			'article-2': secondDetail,
+			'article-3': thirdDetail,
+		})
 		expect(await first).toEqual(detail)
-		expect(await other).toEqual(secondDetail)
-		const repeated = content.getArticleDetail('BUSINESS', headline.uuid)
-		http
-			.expectOne('news-fixtures/business_data.json')
-			.flush({ [headline.uuid]: detail })
-		expect(await repeated).toEqual(detail)
+		expect(await second).toEqual(secondDetail)
+		expect(store.articleFor('BUSINESS', 'article-3')()).toEqual(thirdDetail)
+		expect(store.detailStatusFor('BUSINESS', 'article-3')()).toBe('loaded')
+		expect(await store.loadDetail('BUSINESS', 'article-3')).toEqual(thirdDetail)
+		http.expectNone(() => true)
 	})
 
-	it('can open a detail directly without loading headlines', async () => {
-		const { content, http } = setup()
-		const result = content.getArticleDetail('BUSINESS', headline.uuid)
-		http
-			.expectOne('news-fixtures/business_data.json')
-			.flush({ [headline.uuid]: detail })
-		expect(await result).toEqual(detail)
-		http.expectNone('news-fixtures/business.json')
-	})
-
-	it('reports a missing UUID and can fetch another article afterwards', async () => {
-		const { content, http } = setup()
-		const result = content.getArticleDetail('BUSINESS', 'missing')
-		const rejection = expect(result).rejects.toThrow(
+	it('keeps the downloaded category when a requested UUID is missing', async () => {
+		const { http } = setup()
+		const store = TestBed.inject(NewsStore)
+		const missing = store.loadDetail('BUSINESS', 'missing')
+		const rejection = expect(missing).rejects.toThrow(
 			'News article not found: missing',
 		)
 		http
 			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
 		await rejection
-		const next = content.getArticleDetail('BUSINESS', headline.uuid)
-		http
-			.expectOne('news-fixtures/business_data.json')
-			.flush({ [headline.uuid]: detail })
-		expect(await next).toEqual(detail)
+		expect(await store.loadDetail('BUSINESS', headline.uuid)).toEqual(detail)
+		await expect(store.loadDetail('BUSINESS', 'missing')).rejects.toThrow(
+			'News article not found: missing',
+		)
+		http.expectNone(() => true)
 	})
 
-	it('retries a failed download instead of caching the failure', async () => {
-		const { content, http } = setup()
-		const failed = content.getArticleDetail('BUSINESS', headline.uuid)
+	it('caches an empty category without downloading it again', async () => {
+		const { http } = setup()
+		const store = TestBed.inject(NewsStore)
+		const result = store.loadDetail('BUSINESS', 'missing')
+		const rejection = expect(result).rejects.toThrow('News article not found')
+		http.expectOne('news-fixtures/business_data.json').flush({})
+		await rejection
+		await expect(store.loadDetail('BUSINESS', 'other')).rejects.toThrow(
+			'News article not found',
+		)
+		http.expectNone(() => true)
+	})
+
+	it('retries a failed category download', async () => {
+		const { http } = setup()
+		const store = TestBed.inject(NewsStore)
+		const failed = store.loadDetail('BUSINESS', headline.uuid)
 		const rejection = expect(failed).rejects.toBeDefined()
 		http.expectOne('news-fixtures/business_data.json').flush('Failed', {
 			status: 500,
 			statusText: 'Server Error',
 		})
 		await rejection
-		const retried = content.getArticleDetail('BUSINESS', headline.uuid)
+		const retry = store.loadDetail('BUSINESS', headline.uuid)
 		http
 			.expectOne('news-fixtures/business_data.json')
 			.flush({ [headline.uuid]: detail })
-		expect(await retried).toEqual(detail)
-	})
-})
-
-describe('Store cache with fixtures', () => {
-	it('shares pending requests and caches headlines and details', async () => {
-		const { http } = setup()
-		const store = TestBed.inject(NewsStore)
-		const headlines = store.loadTopic('BUSINESS')
-		expect(store.loadTopic('BUSINESS')).toBe(headlines)
-		const list = [{ ...headline, authors: [] }]
-		http.expectOne('news-fixtures/business.json').flush(list)
-		await headlines
-		const article = store.loadDetail('BUSINESS', headline.uuid)
-		expect(store.loadDetail('BUSINESS', headline.uuid)).toBe(article)
-		http
-			.expectOne('news-fixtures/business_data.json')
-			.flush({ [headline.uuid]: detail })
-		expect(await article).toEqual(detail)
-		await store.loadTopic('BUSINESS')
-		expect(await store.loadDetail('BUSINESS', headline.uuid)).toEqual(detail)
-		http.expectNone(() => true)
+		expect(await retry).toEqual(detail)
 	})
 })

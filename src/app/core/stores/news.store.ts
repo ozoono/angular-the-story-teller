@@ -1,5 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core'
 import type { NewsArticleDetail } from '@/core/models/news/news-article-detail.model.ts'
+import { NewsArticleNotFoundError } from '@/core/models/news/news-article-not-found-error.model.ts'
 import type { NewsHeadline } from '@/core/models/news/news-headline.model.ts'
 import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 import { NewsContentService } from '@/core/services/news/news-content.service.ts'
@@ -37,6 +38,8 @@ export class NewsStore {
 		string,
 		Promise<NewsArticleDetail>
 	>()
+	// Successful downloads stay registered; failed downloads can be retried.
+	private readonly categoryDetailLoads = new Map<NewsTopic, Promise<void>>()
 
 	readonly topicStates = this.topicStatesState.asReadonly()
 	readonly detailStates = this.detailStatesState.asReadonly()
@@ -96,21 +99,7 @@ export class NewsStore {
 			headlines: currentState?.headlines ?? [],
 			status: 'loading',
 		})
-		const load = this.newsContent
-			.getCategory(topic)
-			.then((headlines) => {
-				this.setTopicState(topic, { headlines, status: 'loaded' })
-				return headlines
-			})
-			.catch((error: unknown) => {
-				this.setTopicState(topic, {
-					headlines: currentState?.headlines ?? [],
-					status: 'error',
-					error,
-				})
-				throw error
-			})
-			.finally(() => this.pendingTopicLoads.delete(topic))
+		const load = this.fetchTopic(topic, currentState?.headlines ?? [])
 		this.pendingTopicLoads.set(topic, load)
 		return load
 	}
@@ -129,19 +118,91 @@ export class NewsStore {
 			return pending
 		}
 		this.setDetailState(key, { status: 'loading' })
-		const load = this.newsContent
-			.getArticleDetail(topic, uuid)
-			.then((article) => {
-				this.setDetailState(key, { article, status: 'loaded' })
-				return article
-			})
-			.catch((error: unknown) => {
-				this.setDetailState(key, { status: 'error', error })
-				throw error
-			})
-			.finally(() => this.pendingDetailLoads.delete(key))
+		const load = this.fetchDetail(topic, uuid)
 		this.pendingDetailLoads.set(key, load)
 		return load
+	}
+
+	loadCategoryDetails(topic: NewsTopic): Promise<void> {
+		const existing = this.categoryDetailLoads.get(topic)
+		if (existing !== undefined) return existing
+
+		const headlines = this.topicStatesState()[topic]?.headlines ?? []
+		for (const { id } of headlines) {
+			this.setDetailState(detailKey(topic, id), { status: 'loading' })
+		}
+
+		const load = this.fetchCategoryDetails(topic, headlines)
+		this.categoryDetailLoads.set(topic, load)
+		return load
+	}
+
+	private async fetchTopic(
+		topic: NewsTopic,
+		previousHeadlines: readonly NewsHeadline[],
+	): Promise<readonly NewsHeadline[]> {
+		try {
+			const headlines = await this.newsContent.getCategory(topic)
+			this.setTopicState(topic, { headlines, status: 'loaded' })
+			return headlines
+		} catch (error: unknown) {
+			this.setTopicState(topic, {
+				headlines: previousHeadlines,
+				status: 'error',
+				error,
+			})
+			throw error
+		} finally {
+			this.pendingTopicLoads.delete(topic)
+		}
+	}
+
+	private async fetchDetail(
+		topic: NewsTopic,
+		uuid: string,
+	): Promise<NewsArticleDetail> {
+		const key = detailKey(topic, uuid)
+		try {
+			await this.loadCategoryDetails(topic)
+			const article = this.detailStatesState()[key]?.article
+			if (article === undefined) throw new NewsArticleNotFoundError(uuid)
+			return article
+		} catch (error: unknown) {
+			this.setDetailState(key, { status: 'error', error })
+			throw error
+		} finally {
+			this.pendingDetailLoads.delete(key)
+		}
+	}
+
+	private async fetchCategoryDetails(
+		topic: NewsTopic,
+		headlines: readonly NewsHeadline[],
+	): Promise<void> {
+		try {
+			const articles = await this.newsContent.getCategoryDetails(topic)
+			this.detailStatesState.update((states) => {
+				const updated = { ...states }
+				for (const { id } of headlines) {
+					if (!Object.hasOwn(articles, id)) {
+						updated[detailKey(topic, id)] = {
+							status: 'error',
+							error: new NewsArticleNotFoundError(id),
+						}
+					}
+				}
+				for (const [uuid, article] of Object.entries(articles)) {
+					updated[detailKey(topic, uuid)] = { article, status: 'loaded' }
+				}
+				return updated
+			})
+		} catch (error: unknown) {
+			this.categoryDetailLoads.delete(topic)
+			for (const { id } of headlines) {
+				this.setDetailState(detailKey(topic, id), { status: 'error', error })
+			}
+			throw error
+		}
 	}
 
 	private setTopicState(topic: NewsTopic, state: NewsTopicState): void {

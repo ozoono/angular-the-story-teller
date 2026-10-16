@@ -29,14 +29,19 @@ const detailFor = (topic: NewsTopic, uuid: string): NewsArticleDetail => ({
 	body: 'Full article',
 })
 
+const detailsFor = (topic: NewsTopic) =>
+	Object.fromEntries(
+		headlinesFor(topic).map(({ id }) => [id, detailFor(topic, id)]),
+	)
+
 const setup = () => {
 	const source = {
 		getCategory: vi
 			.fn<(topic: NewsTopic) => Promise<readonly NewsHeadline[]>>()
 			.mockImplementation(async (topic) => headlinesFor(topic)),
-		getArticleDetail: vi
-			.fn<(topic: NewsTopic, uuid: string) => Promise<NewsArticleDetail>>()
-			.mockImplementation(async (topic, uuid) => detailFor(topic, uuid)),
+		getCategoryDetails: vi
+			.fn<(topic: NewsTopic) => Promise<Record<string, NewsArticleDetail>>>()
+			.mockImplementation(async (topic) => detailsFor(topic)),
 	}
 	TestBed.configureTestingModule({
 		providers: [{ provide: NewsContentService, useValue: source }],
@@ -51,30 +56,25 @@ const setup = () => {
 afterEach(() => vi.restoreAllMocks())
 
 describe('NewsPageDataService', () => {
-	it('loads only home categories and the selected featured details', async () => {
+	it('loads home headlines and downloads details once per required category', async () => {
 		vi.spyOn(Math, 'random').mockReturnValue(0.9)
-		const { pages, source } = setup()
+		const { pages, source, store } = setup()
+		const loadCategoryDetails = vi.spyOn(store, 'loadCategoryDetails')
+		const loadDetail = vi.spyOn(store, 'loadDetail')
 		await pages.loadHome()
 		expect(source.getCategory.mock.calls.map(([topic]) => topic)).toEqual(
 			HOME_NEWS_TOPICS,
 		)
-		expect(source.getArticleDetail.mock.calls).toEqual(
-			expect.arrayContaining([
-				['BUSINESS', 'BUSINESS-1'],
-				['BUSINESS', 'BUSINESS-2'],
-				['SPORTS', 'SPORTS-1'],
-				['SPORTS', 'SPORTS-2'],
-				['MOVIES', 'MOVIES-1'],
-				['TV', 'TV-1'],
-				['MUSIC', 'MUSIC-1'],
-				['GAMING', 'GAMING-1'],
-				['TECHNOLOGY', 'TECHNOLOGY-2'],
-				['SCIENCE', 'SCIENCE-2'],
-				['HEALTH', 'HEALTH-2'],
-				['NUTRITION', 'NUTRITION-2'],
-			]),
+		expect(
+			source.getCategoryDetails.mock.calls.map(([topic]) => topic),
+		).toEqual(
+			HOME_NEWS_TOPICS.filter(
+				(topic) => topic !== 'POLITICS' && topic !== 'FINANCE',
+			),
 		)
-		expect(source.getArticleDetail).toHaveBeenCalledTimes(12)
+		expect(source.getCategoryDetails).toHaveBeenCalledTimes(10)
+		expect(loadCategoryDetails).toHaveBeenCalledTimes(10)
+		expect(loadDetail).not.toHaveBeenCalled()
 		expect(pages.homeDetailSelections().TECHNOLOGY).toEqual(['TECHNOLOGY-2'])
 		expect(pages.homeDetailSelections().POLITICS).toEqual([])
 		expect(pages.homeDetailSelections().FINANCE).toEqual([])
@@ -91,7 +91,7 @@ describe('NewsPageDataService', () => {
 		await pages.loadHome()
 		expect(pages.homeDetailSelections()).toBe(selections)
 		expect(source.getCategory).toHaveBeenCalledTimes(12)
-		expect(source.getArticleDetail).toHaveBeenCalledTimes(12)
+		expect(source.getCategoryDetails).toHaveBeenCalledTimes(10)
 		expect(random).toHaveBeenCalledTimes(4)
 	})
 
@@ -99,18 +99,18 @@ describe('NewsPageDataService', () => {
 		vi.spyOn(Math, 'random').mockReturnValue(0)
 		const { pages, store, source } = setup()
 		const error = new Error('Detail failed')
-		source.getArticleDetail.mockImplementation(async (topic, uuid) => {
+		source.getCategoryDetails.mockImplementation(async (topic) => {
 			if (topic === 'TECHNOLOGY') throw error
-			return detailFor(topic, uuid)
+			return detailsFor(topic)
 		})
 		await pages.loadHome()
 		expect(store.detailErrorFor('TECHNOLOGY', 'TECHNOLOGY-1')()).toBe(error)
 		expect(store.articleFor('SPORTS', 'SPORTS-1')()).toBeDefined()
-		source.getArticleDetail.mockImplementation(async (topic, uuid) =>
-			detailFor(topic, uuid),
+		source.getCategoryDetails.mockImplementation(async (topic) =>
+			detailsFor(topic),
 		)
 		await pages.loadHome()
-		expect(source.getArticleDetail).toHaveBeenCalledTimes(13)
+		expect(source.getCategoryDetails).toHaveBeenCalledTimes(11)
 		expect(store.detailErrorFor('TECHNOLOGY', 'TECHNOLOGY-1')()).toBeUndefined()
 		expect(pages.homeDetailSelections().TECHNOLOGY).toEqual(['TECHNOLOGY-1'])
 	})
@@ -127,7 +127,7 @@ describe('NewsPageDataService', () => {
 		expect(store.statusFor('BUSINESS')()).toBe('error')
 		expect(store.statusFor('SPORTS')()).toBe('loaded')
 		expect(
-			source.getArticleDetail.mock.calls.some(
+			source.getCategoryDetails.mock.calls.some(
 				([topic]) => topic === 'BUSINESS' || topic === 'SPORTS',
 			),
 		).toBe(false)
@@ -135,7 +135,7 @@ describe('NewsPageDataService', () => {
 		expect(store.articleFor('MOVIES', 'MOVIES-1')()).toBeDefined()
 	})
 
-	it('waits for category headlines before requesting only the first detail', async () => {
+	it('waits for category headlines before downloading the category details', async () => {
 		const { pages, store, source } = setup()
 		let resolve!: (value: readonly NewsHeadline[]) => void
 		source.getCategory.mockReturnValue(
@@ -144,29 +144,26 @@ describe('NewsPageDataService', () => {
 			}),
 		)
 		const load = pages.loadCategoryPage('SPORTS')
-		expect(source.getArticleDetail).not.toHaveBeenCalled()
+		expect(source.getCategoryDetails).not.toHaveBeenCalled()
 		resolve(headlinesFor('SPORTS'))
 		await load
-		expect(source.getArticleDetail).toHaveBeenCalledExactlyOnceWith(
-			'SPORTS',
-			'SPORTS-1',
-		)
+		expect(source.getCategoryDetails).toHaveBeenCalledExactlyOnceWith('SPORTS')
 		expect(store.headlinesFor('SPORTS')()).toHaveLength(4)
 		await pages.loadCategoryPage('SPORTS')
-		expect(source.getArticleDetail).toHaveBeenCalledTimes(1)
+		expect(source.getCategoryDetails).toHaveBeenCalledTimes(1)
 	})
 
 	it('does not request a detail for an empty category', async () => {
 		const { pages, source } = setup()
 		source.getCategory.mockResolvedValue([])
 		await pages.loadCategoryPage('SPORTS')
-		expect(source.getArticleDetail).not.toHaveBeenCalled()
+		expect(source.getCategoryDetails).not.toHaveBeenCalled()
 	})
 
 	it('exposes category detail failures without discarding headlines', async () => {
 		const { pages, store, source } = setup()
 		const error = new Error('Detail failed')
-		source.getArticleDetail.mockRejectedValue(error)
+		source.getCategoryDetails.mockRejectedValue(error)
 		await expect(pages.loadCategoryPage('SPORTS')).rejects.toBe(error)
 		expect(store.headlinesFor('SPORTS')()).toHaveLength(4)
 		expect(store.detailErrorFor('SPORTS', 'SPORTS-1')()).toBe(error)
@@ -179,9 +176,6 @@ describe('NewsPageDataService', () => {
 		)
 		await pages.loadArticlePage('SPORTS', 'SPORTS-3')
 		expect(source.getCategory).not.toHaveBeenCalled()
-		expect(source.getArticleDetail).toHaveBeenCalledExactlyOnceWith(
-			'SPORTS',
-			'SPORTS-3',
-		)
+		expect(source.getCategoryDetails).toHaveBeenCalledExactlyOnceWith('SPORTS')
 	})
 })

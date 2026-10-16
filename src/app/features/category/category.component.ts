@@ -1,8 +1,9 @@
 import { Component, computed, effect, inject, untracked } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { ActivatedRoute } from '@angular/router'
-import { CategoryArticlesComponent } from './components/category-articles/category-articles.component.ts'
+import { CategoryArticlesComponent } from '@/features/category/components/category-articles/category-articles.component.ts'
 import { toNewsTopic } from '@/core/utils/news-topic.utils.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { AdsComponent } from '@/shared/components/ads.component.ts'
@@ -65,18 +66,23 @@ export class CategoryComponent {
 		effect(() => {
 			const topic = this.topic()
 			if (topic !== undefined) {
-				untracked(
-					() =>
-						void this.pageData.loadCategoryPage(topic).catch(() => undefined),
-				)
+				untracked(() => void this.loadPage(topic))
 			}
 		})
 	}
 
-	protected onRetry(): void {
+	protected async onRetry(): Promise<void> {
 		const topic = this.topic()
 		if (topic !== undefined) {
-			void this.pageData.loadCategoryPage(topic).catch(() => undefined)
+			await this.loadPage(topic)
+		}
+	}
+
+	private async loadPage(topic: NewsTopic): Promise<void> {
+		try {
+			await this.pageData.loadCategoryPage(topic)
+		} catch {
+			// The store exposes the error to the template.
 		}
 	}
 }

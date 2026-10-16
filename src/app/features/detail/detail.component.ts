@@ -2,9 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Component, computed, effect, inject, untracked } from '@angular/core'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { ActivatedRoute } from '@angular/router'
-import { ArticleContentComponent } from './components/article-content/article-content.component.ts'
+import { ArticleContentComponent } from '@/features/detail/components/article-content/article-content.component.ts'
 import { NewsArticleNotFoundError } from '@/core/models/news/news-article-not-found-error.model.ts'
 import { toNewsTopic } from '@/core/utils/news-topic.utils.ts'
+import type { NewsTopic } from '@/core/models/news/news-topic.model.ts'
 import { NewsPageDataService } from '@/core/services/news/news-page-data.service.ts'
 import { NewsStore } from '@/core/stores/news.store.ts'
 import { toNewsDetailViewModel } from '@/shared/mappers/news-view.mapper.ts'
@@ -74,21 +75,24 @@ export class DetailComponent {
 			const topic = this.topic()
 			const uuid = this.uuid()
 			if (topic !== undefined && uuid) {
-				untracked(
-					() =>
-						void this.pageData
-							.loadArticlePage(topic, uuid)
-							.catch(() => undefined),
-				)
+				untracked(() => void this.loadPage(topic, uuid))
 			}
 		})
 	}
 
-	protected onRetry(): void {
+	protected async onRetry(): Promise<void> {
 		const topic = this.topic()
 		const uuid = this.uuid()
 		if (topic !== undefined && uuid) {
-			void this.pageData.loadArticlePage(topic, uuid).catch(() => undefined)
+			await this.loadPage(topic, uuid)
+		}
+	}
+
+	private async loadPage(topic: NewsTopic, uuid: string): Promise<void> {
+		try {
+			await this.pageData.loadArticlePage(topic, uuid)
+		} catch {
+			// The store exposes the error to the template.
 		}
 	}
 }

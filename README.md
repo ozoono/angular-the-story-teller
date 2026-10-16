@@ -60,7 +60,7 @@ npm run generate:fixtures
 
 ## News loading and caching
 
-News is loaded on demand and kept in an in-memory store. When navigating between pages, previously loaded headlines and article details are reused, avoiding repeated file requests for the same data. The cache is cleared when the browser reloads.
+News is loaded on demand and kept in an in-memory store. When a category detail file is downloaded, all its articles are cached, so opening other articles in that category does not request the file again. Concurrent requests share the same download. Headlines are also cached, and everything is cleared when the browser reloads.
 
 The demo follows the same loading and caching approach an application would use with a news API, using local JSON files as its data source.
 

@@ -40,7 +40,8 @@ const deferred = <T>() => {
 const setup = () => {
 	const source = {
 		getCategory: vi.fn<() => Promise<readonly NewsHeadline[]>>(),
-		getArticleDetail: vi.fn<() => Promise<NewsArticleDetail>>(),
+		getCategoryDetails:
+			vi.fn<() => Promise<Record<string, NewsArticleDetail>>>(),
 	}
 	TestBed.configureTestingModule({
 		providers: [{ provide: NewsContentService, useValue: source }],
@@ -63,7 +64,7 @@ describe('NewsStore', () => {
 		expect(status()).toBe('loaded')
 		expect(await store.loadTopic('BUSINESS')).toEqual([headline])
 		expect(source.getCategory).toHaveBeenCalledExactlyOnceWith('BUSINESS')
-		expect(source.getArticleDetail).not.toHaveBeenCalled()
+		expect(source.getCategoryDetails).not.toHaveBeenCalled()
 		expect(store.detailStates()).toEqual({})
 	})
 
@@ -92,21 +93,20 @@ describe('NewsStore', () => {
 
 	it('shares detail requests and preserves full data, even with an empty body', async () => {
 		const { store, source } = setup()
-		const request = deferred<NewsArticleDetail>()
-		source.getArticleDetail.mockReturnValue(request.promise)
+		const request = deferred<Record<string, NewsArticleDetail>>()
+		source.getCategoryDetails.mockReturnValue(request.promise)
 		const status = store.detailStatusFor('BUSINESS', headline.id)
 		expect(status()).toBe('idle')
 		const first = store.loadDetail('BUSINESS', headline.id)
 		expect(status()).toBe('loading')
 		expect(store.loadDetail('BUSINESS', headline.id)).toBe(first)
-		request.resolve(detail)
+		request.resolve({ [headline.id]: detail })
 		expect(await first).toBe(detail)
 		expect(store.articleFor('BUSINESS', headline.id)()).toBe(detail)
 		expect(status()).toBe('loaded')
 		expect(await store.loadDetail('BUSINESS', headline.id)).toBe(detail)
-		expect(source.getArticleDetail).toHaveBeenCalledExactlyOnceWith(
+		expect(source.getCategoryDetails).toHaveBeenCalledExactlyOnceWith(
 			'BUSINESS',
-			headline.id,
 		)
 		expect(source.getCategory).not.toHaveBeenCalled()
 	})
@@ -118,9 +118,9 @@ describe('NewsStore', () => {
 		const articles = store.articlesFor('BUSINESS')
 		expect(articles()[0].summary).toBeUndefined()
 		const error = new Error('Detail failed')
-		source.getArticleDetail
+		source.getCategoryDetails
 			.mockRejectedValueOnce(error)
-			.mockResolvedValueOnce(detail)
+			.mockResolvedValueOnce({ [headline.id]: detail })
 		await expect(store.loadDetail('BUSINESS', headline.id)).rejects.toBe(error)
 		expect(store.detailStatusFor('BUSINESS', headline.id)()).toBe('error')
 		expect(store.detailErrorFor('BUSINESS', headline.id)()).toBe(error)
@@ -139,12 +139,14 @@ describe('NewsStore', () => {
 
 	it('keeps detail caches independent across categories', async () => {
 		const { store, source } = setup()
-		source.getArticleDetail
-			.mockResolvedValueOnce(detail)
-			.mockResolvedValueOnce({ ...detail, topics: ['sports'] })
+		source.getCategoryDetails
+			.mockResolvedValueOnce({ [headline.id]: detail })
+			.mockResolvedValueOnce({
+				[headline.id]: { ...detail, topics: ['sports'] },
+			})
 		await store.loadDetail('BUSINESS', headline.id)
 		await store.loadDetail('SPORTS', headline.id)
-		expect(source.getArticleDetail).toHaveBeenCalledTimes(2)
+		expect(source.getCategoryDetails).toHaveBeenCalledTimes(2)
 		expect(store.articleFor('BUSINESS', headline.id)()?.topics).toEqual([
 			'business',
 			'technology',
@@ -165,6 +167,6 @@ describe('NewsStore', () => {
 		])
 		expect(store.statusFor('BUSINESS')()).toBe('error')
 		expect(store.statusFor('SPORTS')()).toBe('loaded')
-		expect(source.getArticleDetail).not.toHaveBeenCalled()
+		expect(source.getCategoryDetails).not.toHaveBeenCalled()
 	})
 })

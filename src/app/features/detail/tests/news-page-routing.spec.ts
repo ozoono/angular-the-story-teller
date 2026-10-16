@@ -65,11 +65,15 @@ describe('Category and article routes', () => {
 		expect(harness.routeNativeElement?.textContent).toContain(
 			'First full article',
 		)
-		expect(harness.routeNativeElement?.textContent).toContain('Second headline')
+		expect(harness.routeNativeElement?.textContent).toContain(
+			'Second full article',
+		)
 		expect(
 			harness.routeNativeElement?.querySelector('a')?.getAttribute('href'),
 		).toBe('/sports/article/first')
-		expect(store.articleFor('SPORTS', 'second')()).toBeUndefined()
+		expect(store.articleFor('SPORTS', 'second')()?.title).toBe(
+			'Second full article',
+		)
 
 		await harness.navigateByUrl('/sports/article/first', DetailComponent)
 		await pages.loadArticlePage('SPORTS', 'first')
@@ -78,9 +82,6 @@ describe('Category and article routes', () => {
 			'Full body paragraph',
 		)
 		await harness.navigateByUrl('/sports/article/second', DetailComponent)
-		http.expectOne('news-fixtures/sports_data.json').flush({
-			second: { ...detail, uuid: 'second', title: 'Second full article' },
-		})
 		await pages.loadArticlePage('SPORTS', 'second')
 		harness.detectChanges()
 		expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toBe(

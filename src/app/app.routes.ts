@@ -4,23 +4,17 @@ export const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		loadChildren: () =>
-			import('@/features/home/home.routes.ts').then(
-				(module) => module.homeRoutes,
-			),
+		loadChildren: async () =>
+			(await import('@/features/home/home.routes.ts')).homeRoutes,
 	},
 	{
 		path: 'category/:category',
-		loadChildren: () =>
-			import('@/features/category/category.routes.ts').then(
-				(module) => module.categoryRoutes,
-			),
+		loadChildren: async () =>
+			(await import('@/features/category/category.routes.ts')).categoryRoutes,
 	},
 	{
 		path: ':category/article/:id',
-		loadChildren: () =>
-			import('@/features/detail/detail.routes.ts').then(
-				(module) => module.detailRoutes,
-			),
+		loadChildren: async () =>
+			(await import('@/features/detail/detail.routes.ts')).detailRoutes,
 	},
 ]

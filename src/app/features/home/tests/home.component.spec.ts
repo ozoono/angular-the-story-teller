@@ -53,9 +53,7 @@ describe('HOME data flow', () => {
 			const requests = http.match(
 				`news-fixtures/${topic.toLowerCase()}_data.json`,
 			)
-			expect(requests).toHaveLength(
-				pages.homeDetailSelections()[topic]?.length ?? 0,
-			)
+			expect(requests).toHaveLength(1)
 			for (const request of requests) {
 				request.flush(
 					Object.fromEntries(

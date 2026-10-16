@@ -24,21 +24,25 @@ export class NewsPageDataService {
 		if (this.pendingHomeLoad !== undefined) {
 			return this.pendingHomeLoad
 		}
-		const load = Promise.allSettled(
-			HOME_NEWS_TOPICS.map(async (topic) => {
-				const headlines = await this.newsStore.loadTopic(topic)
-				const selectedIds = this.selectHomeDetails(topic, headlines)
-				await Promise.allSettled(
-					selectedIds.map((uuid) => this.newsStore.loadDetail(topic, uuid)),
-				)
-			}),
-		)
-			.then(() => undefined)
-			.finally(() => {
-				this.pendingHomeLoad = undefined
-			})
+		const load = this.fetchHome()
 		this.pendingHomeLoad = load
 		return load
+	}
+
+	private async fetchHome(): Promise<void> {
+		try {
+			await Promise.allSettled(
+				HOME_NEWS_TOPICS.map(async (topic) => {
+					const headlines = await this.newsStore.loadTopic(topic)
+					const selectedIds = this.selectHomeDetails(topic, headlines)
+					if (selectedIds.length > 0) {
+						await this.newsStore.loadCategoryDetails(topic)
+					}
+				}),
+			)
+		} finally {
+			this.pendingHomeLoad = undefined
+		}
 	}
 
 	async loadCategoryPage(topic: NewsTopic): Promise<void> {
@@ -49,8 +53,8 @@ export class NewsPageDataService {
 		}
 	}
 
-	loadArticlePage(topic: NewsTopic, uuid: string) {
-		return this.newsStore.loadDetail(topic, uuid)
+	async loadArticlePage(topic: NewsTopic, uuid: string) {
+		return await this.newsStore.loadDetail(topic, uuid)
 	}
 
 	private selectHomeDetails(
