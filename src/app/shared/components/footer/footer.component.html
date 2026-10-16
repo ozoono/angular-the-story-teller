@@ -1,18 +1,20 @@
 <footer class="footer">
-  <ul class="footer__sections">
-    @for (category of categories; track category) {
-      <li>
-        <a
-          class="footer__link"
-          href="/category/{{ category.toLowerCase() }}"
-          [routerLink]="['/category', category.toLowerCase()]"
-        >
-          {{ category }}</a>
-      </li>
-    }
-  </ul>
-
-  <div class="footer__brand">
+  <div class="footer__left">
+    <ul class="footer__sections">
+      @for (category of categories; track category) {
+        <li>
+          <a
+            class="footer__link"
+            href="/category/{{ category.toLowerCase() }}"
+            [routerLink]="['/category', category.toLowerCase()]"
+          >
+            {{ category }}</a>
+        </li>
+      }
+    </ul>
+    <p class="footer__disclaimer">The StoryTeller is a responsive digital newspaper demo built with <a href="https://angular.dev" target="_blank" rel="noopener">Angular</a>. It displays real news sourced from <a href="https://www.freenewsapi.io" target="_blank" rel="noopener">FreeNewsApi.io</a>, stored locally and not updated automatically.</p>
+  </div>
+  <div class="footer__right">
     <a href="/" routerLink="/">
       <img src="/logo.webp" alt="The StoryTeller" width="200"/>
     </a>
